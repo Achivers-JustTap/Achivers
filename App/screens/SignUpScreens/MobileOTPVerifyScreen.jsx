@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const MobileOTPVerifyScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
@@ -7,7 +7,7 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
 
   const handleVerifyOTP = async () => {
     try {
-      const response = await fetch('https://0ae9-2405-201-c425-3854-896a-1718-3788-6c64.ngrok-free.app/signup/signup', {
+      const response = await fetch('https://38f5-2405-201-c425-3854-d847-da6f-e1c-b4e9.ngrok-free.app/signup/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set content type for JSON data
@@ -34,7 +34,7 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enter OTP</Text>
-      <Text>A verification code has been sent to {phoneNumber}</Text>
+      <Text style={{color:'white'}}>A verification code has been sent to {phoneNumber}</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter OTP"
@@ -42,16 +42,36 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
         value={otp}
         onChangeText={setOtp}
       />
-      <Button title="Verify OTP" onPress={handleVerifyOTP} />
+      <TouchableOpacity style={styles.button} onPress={handleVerifyOTP}>
+        <Text style={styles.buttonText}>Verify OTP</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0F4A97',
+  },
+  title:{
+    color:'white'
+  },
+  input:{
+    color: 'white'
+  },
+  button: {
+    backgroundColor: 'white', // Button background color
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  buttonText: {
+    color: 'black', // Button text color
+    fontSize: 16,
+  },
 });
 
 export default MobileOTPVerifyScreen;

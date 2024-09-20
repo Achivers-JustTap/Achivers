@@ -78,7 +78,14 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     width: Dimensions.get('window').width - 3,
     alignSelf: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#0F4A97',
+
+    // Shadow properties
+    shadowColor: 'white',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 15,
+    elevation: 7, // For Android
   },
   image: {
     flex: 0.7,
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
   },
   caption: {
     fontSize: 16,
-    color: '#A0D6C0',
+    color: 'white',
     textAlign: 'left',
     fontWeight: '500',
     flexWrap: 'wrap',

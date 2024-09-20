@@ -1,52 +1,98 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useFonts } from 'expo-font';
+
 import MyCarousel from '../../../components/MyCarousal';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WelcomeScreen = ({ navigation }) => {
-  return (
+  // Load the custom font
+  const [fontsLoaded] = useFonts({
+    'SofadiOne': require('../../../assets/fonts/SofadiOne-Regular.ttf'), // Adjust the path as per your project structure
+  });
 
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Welcome to JUST TAP!</Text>
-      <MyCarousel style ={styles.carauselContainer}/>
-      <Text style={styles.description}>
-        Become a captain and earn money on your own terms.
+ 
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>
+        Welcome to{' '}
+        <Text style={styles.justTapText}>JUST TAP!</Text>
       </Text>
-      <Button title="Register" onPress={() => navigation.navigate('MobileOTPScreen')} style={styles.registerButton} />
+      <MyCarousel style={styles.carouselContainer} />
+      <Text style={styles.memberText}>
+        Want to be a member?{' '} 
+        <Text style={{fontSize:19,fontFamily:'SofadiOne'}}>JUST TAP!</Text>
+      </Text>
+
+      {/* Custom TouchableOpacity button */}
+      <TouchableOpacity
+        style={styles.registerButton}
+        onPress={() => navigation.navigate('MobileOTPScreen')}
+      >
+        <Text style={styles.registerButtonText}>Register</Text>
+      </TouchableOpacity>
+
       <Text style={styles.description}>
-          Just Tap is your one-stop solution for convenient rides and flexible earnings.
-          Join our community of drivers and start making a difference today!
-        </Text>
-    </SafeAreaView>
+        Just Tap is your one-stop solution for convenient rides and flexible earnings.
+        Join our community of drivers and start making a difference today!
+      </Text>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black', // Black background
+    backgroundColor: '#0F4A97', // Black background
     alignItems: 'center',
     justifyContent: 'center',
   },
   title: {
-    alignContent:'flex-start',
-    fontSize: 24,
+    paddingTop: 20,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: '#FF9900', // Orange text
+    color: 'white',
     marginBottom: 10,
   },
-  carouselContainer:{
+  justTapText: {
+    fontFamily: 'SofadiOne', // Use the custom font
+    fontSize: 35,
+    color: 'white', // Primary color for the text
 
+    // Adding shadow for double shade effect
+    textShadowColor: 'rgba(0, 0, 0, 0.75)', // Shadow color (dark)
+    textShadowOffset: { width: 2, height: 2 }, // Shadow offset for the shadow position
+    textShadowRadius: 4, // Blurring effect for the shadow
+  },
+  carouselContainer: {
+    alignContent: 'flex-start',
+    marginBottom: 30,
+  },
+  memberText: {
+    fontWeight:'700',
+    textAlign: 'center',
+    color: 'white',
+    marginBottom: 30, // Adjusted margin
+  },
+  registerButton: {
+    backgroundColor: 'white', // Button background color
+    padding: 12,
+    borderRadius: 5,
+    marginBottom: 100, // Adjust as needed
+    width: '50%',
+    alignItems: 'center', // Center the text inside
+  },
+  registerButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   description: {
     textAlign: 'center',
-    color: '#FF9900', // Orange text
-    marginBottom: 20,
-  },
-  registerButton: {
-    backgroundColor: '#FF9900', // Orange background
-    padding: 10,
-    borderRadius: 5,
+    color: 'white',
+    marginBottom: 100,
+    paddingHorizontal: 20, // Optional padding for better text alignment
+     
   },
 });
 

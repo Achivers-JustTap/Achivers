@@ -1,39 +1,38 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker'; 
 
 const ProfileDetailsScreen = ({ route, navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState(new Date()); // Initialize with current date
+  const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const { phoneNumber } = route.params; // Extract phone number from params
+  const { phoneNumber } = route.params;
 
   const handleNext = async () => {
     // Implement logic to submit profile details (e.g., backend API call)
-    console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber }); // Log for demonstration
+    console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber });
 
     // Handle successful submission (e.g., navigate to next screen or show success message)
     navigation.navigate('ProfileImageScreen');
   };
-  
-
 
   const showDatePicker = () => {
     setIsDatePickerVisible(true);
   };
 
-
   const hideDatePicker = (date) => {
     setIsDatePickerVisible(false);
-    setDateOfBirth(date); // Set the selected date to the state
+    if (date) {
+      setDateOfBirth(date);
+    }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Enter Profile Details</Text>
-      <TextInput
+      <TextInput 
         style={styles.input}
         placeholder="Enter Name"
         value={name}
@@ -56,9 +55,8 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Select Date of Birth"
-          value={dateOfBirth.toLocaleDateString()} // Display selected date
+          value={dateOfBirth.toLocaleDateString()}
           editable={false}
-          onPress={showDatePicker}
         />
       </TouchableOpacity>
       <DateTimePicker
@@ -67,26 +65,29 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
         onConfirm={hideDatePicker}
         onCancel={hideDatePicker}
       />
-      <Button title="Next" onPress={handleNext} />
+      <TouchableOpacity style={styles.button} onPress={handleNext}>
+        <Text style={styles.buttonText}>Next</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-
-
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#0F4A97',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color:'white'
   },
   input: {
+    color:'black',
     width: '80%',
     height: 40,
     borderWidth: 1,
@@ -94,6 +95,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
+    backgroundColor:'white'
+  },
+  button: {
+    backgroundColor: 'white', // Button background color
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 20,
+    width: '80%',
+    alignItems: 'center', // Center the text inside the button
+  },
+  buttonText: {
+    color: 'black', // Button text color
+    fontSize: 16,
   },
 });
 

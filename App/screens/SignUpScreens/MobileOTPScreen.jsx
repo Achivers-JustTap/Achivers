@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 const MobileOTPScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -9,7 +9,7 @@ const MobileOTPScreen = ({ navigation }) => {
     setIsSendingOTP(true); // Set sending state to show loading indicator
 
     try {
-      const response = await fetch('https://0ae9-2405-201-c425-3854-896a-1718-3788-6c64.ngrok-free.app/signup/signup', {
+      const response = await fetch('https://38f5-2405-201-c425-3854-d847-da6f-e1c-b4e9.ngrok-free.app/signup/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set content type for JSON data
@@ -44,25 +44,34 @@ const MobileOTPScreen = ({ navigation }) => {
         value={phoneNumber}
         onChangeText={setPhoneNumber}
       />
-      <Button
-        title={isSendingOTP ? 'Sending OTP...' : 'Send OTP'}
+      
+      {/* Custom TouchableOpacity button */}
+      <TouchableOpacity
+        style={[styles.button, isSendingOTP && styles.disabledButton]} // Apply disabled style when sending OTP
         onPress={handleSendOTP}
         disabled={isSendingOTP} // Disable button while sending
-      />
+      >
+        <Text style={styles.buttonText}>
+          {isSendingOTP ? 'Sending OTP...' : 'Send OTP'}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    backgroundColor: '#0F4A97',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: 'white',
   },
   input: {
     height: 40,
@@ -70,6 +79,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     marginBottom: 20,
+    width: '100%',
+    borderRadius: 5,
+    backgroundColor: 'white',
+  },
+  button: {
+    backgroundColor: 'white', // Button background color
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  disabledButton: {
+    backgroundColor: 'gray', // Button color when disabled
+  },
+  buttonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
