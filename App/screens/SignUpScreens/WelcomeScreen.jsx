@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, SafeAreaView ,Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { useFonts } from 'expo-font';
-
 import MyCarousel from '../../../components/MyCarousal';
+
 
 const WelcomeScreen = ({ navigation }) => {
   // Load the custom font
@@ -10,10 +10,17 @@ const WelcomeScreen = ({ navigation }) => {
     'SofadiOne': require('../../../assets/fonts/SofadiOne-Regular.ttf'), // Adjust the path as per your project structure
   });
 
- 
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
+  if (!fontsLoaded) {
+    // Show loading indicator while the fonts are loading
+    return <ActivityIndicator size="large" color="#fff" style={styles.loader} />;
+  }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>
         Welcome to{' '}
         <Text style={styles.justTapText}>JUST TAP!</Text>
@@ -21,7 +28,7 @@ const WelcomeScreen = ({ navigation }) => {
       <MyCarousel style={styles.carouselContainer} />
       <Text style={styles.memberText}>
         Want to be a member?{' '} 
-        <Text style={{fontSize:19,fontFamily:'SofadiOne'}}>JUST TAP!</Text>
+        <Text style={{ fontSize: 19, fontFamily: 'SofadiOne' }}>JUST TAP!</Text>
       </Text>
 
       {/* Custom TouchableOpacity button */}
@@ -36,7 +43,7 @@ const WelcomeScreen = ({ navigation }) => {
         Just Tap is your one-stop solution for convenient rides and flexible earnings.
         Join our community of drivers and start making a difference today!
       </Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -47,8 +54,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  loader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0F4A97', // Ensure the background is consistent
+  },
   title: {
-    paddingTop: 20,
+    paddingTop: 50,
     fontSize: 22,
     fontWeight: 'bold',
     color: 'white',
@@ -69,7 +82,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   memberText: {
-    fontWeight:'700',
+    fontWeight: '700',
     textAlign: 'center',
     color: 'white',
     marginBottom: 30, // Adjusted margin
@@ -92,7 +105,6 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 100,
     paddingHorizontal: 20, // Optional padding for better text alignment
-     
   },
 });
 

@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 
 const MobileOTPVerifyScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
   const { phoneNumber } = route.params; // Extract phone number from params
+  
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
 
   const handleVerifyOTP = async () => {
     try {
@@ -32,7 +36,7 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Enter OTP</Text>
       <Text style={{color:'white'}}>A verification code has been sent to {phoneNumber}</Text>
       <TextInput
@@ -45,7 +49,7 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleVerifyOTP}>
         <Text style={styles.buttonText}>Verify OTP</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { manipulateAsync } from 'expo-image-manipulator';
 
-const ProfilePicture = ({ navigation,route }) => {
+const AadharImage = ({ navigation,route }) => {
   const { name } = route.params;
   const [permission, requestPermission] = useCameraPermissions();
   const [base64Image, setBase64Image] = useState(null);
@@ -51,7 +51,7 @@ const ProfilePicture = ({ navigation,route }) => {
 
   const handleUpload = () => {
     console.log('Upload button pressed');
-    navigation.navigate('AadharUpload',{name});
+    navigation.navigate('DriverLicense',{name});
   };
 
   const handleRetake = () => {
@@ -136,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfilePicture;
+export default AadharImage;

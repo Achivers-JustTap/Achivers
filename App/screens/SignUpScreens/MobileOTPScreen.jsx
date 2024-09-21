@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MobileOTPScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSendingOTP, setIsSendingOTP] = useState(false); // Track OTP sending state
+   useEffect(()=>{
+    navigation.setOptions({ headerShown: false});
+   },[navigation])
 
   const handleSendOTP = async () => {
     setIsSendingOTP(true); // Set sending state to show loading indicator
@@ -35,7 +39,7 @@ const MobileOTPScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Enter Your Mobile Number</Text>
       <TextInput
         style={styles.input}
@@ -55,7 +59,7 @@ const MobileOTPScreen = ({ navigation }) => {
           {isSendingOTP ? 'Sending OTP...' : 'Send OTP'}
         </Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

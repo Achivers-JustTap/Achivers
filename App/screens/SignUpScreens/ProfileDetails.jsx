@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker'; 
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const ProfileDetailsScreen = ({ route, navigation }) => {
   const [name, setName] = useState('');
@@ -10,12 +10,16 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const { phoneNumber } = route.params;
 
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   const handleNext = async () => {
     // Implement logic to submit profile details (e.g., backend API call)
     console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber });
 
     // Handle successful submission (e.g., navigate to next screen or show success message)
-    navigation.navigate('ProfileImageScreen');
+    navigation.navigate('TakeSelfie', { name: name });
   };
 
   const showDatePicker = () => {
@@ -30,26 +34,26 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Enter Profile Details</Text>
       <TextInput 
         style={styles.input}
         placeholder="Enter Name"
         value={name}
-        onChangeText={setName}
+        onChangeText={(text) => setName(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Enter Email"
         keyboardType="email-address"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         style={styles.input}
         placeholder="Enter Gender"
         value={gender}
-        onChangeText={setGender}
+        onChangeText={(text) => setGender(text)}
       />
       <TouchableOpacity onPress={showDatePicker}>
         <TextInput
@@ -68,7 +72,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
       <TouchableOpacity style={styles.button} onPress={handleNext}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
