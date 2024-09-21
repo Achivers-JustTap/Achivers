@@ -13,7 +13,7 @@ const MobileOTPScreen = ({ navigation }) => {
     setIsSendingOTP(true); // Set sending state to show loading indicator
 
     try {
-      const response = await fetch('https://a407-2405-201-c425-3854-74e4-6234-b576-883a.ngrok-free.app/signup/signup', {
+      const response = await fetch('https://d6c0-2406-7400-35-63be-f448-a1a8-5680-2115.ngrok-free.app/signup/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set content type for JSON data

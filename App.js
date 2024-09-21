@@ -16,6 +16,7 @@ import DriverLicense from './App/screens/SignUpScreens/DriverLicense';
 import LicenseImageUpload from './App/screens/SignUpScreens/LicenseImageUpload';
 import RC from './App/screens/SignUpScreens/RC';
 import RCUpload from './App/screens/SignUpScreens/RCUpload';
+import Processing from './App/screens/SignUpScreens/Processing';
 
 
 
@@ -39,6 +40,8 @@ export default function App() {
         <Stack.Screen name = "LicenseImageUpload" component={LicenseImageUpload}/>
         <Stack.Screen name = "RC" component={RC}/>
         <Stack.Screen name = "RCUpload" component={RCUpload}/>
+        <Stack.Screen name = "Processing" component={Processing}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

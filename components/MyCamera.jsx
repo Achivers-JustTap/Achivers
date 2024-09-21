@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { manipulateAsync } from 'expo-image-manipulator';
@@ -6,16 +6,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const MyCamera = ({ onUpload, onRetake, initialCameraView = 'front' }) => {
   const [permission, requestPermission] = useCameraPermissions();
-  const [base64Image, setBase64Image] = useState(null);
+  const [base64Image, setBase64Image] = useState(null);  // State for storing base64 image
   const [showImage, setShowImage] = useState(false);
-  const [cameraView, setCameraView] = useState(initialCameraView); // Allow setting default camera view
+  const [cameraView, setCameraView] = useState(initialCameraView);
   const cameraRef = useRef(null);
-
-  useEffect(() => {
-    if (base64Image) {
-      console.log("Base64 Image: ", base64Image);
-    }
-  }, [base64Image]);
 
   if (!permission) {
     return <View />;
@@ -38,8 +32,10 @@ const MyCamera = ({ onUpload, onRetake, initialCameraView = 'front' }) => {
         const photo = await cameraRef.current.takePictureAsync();
         if (photo && photo.uri) {
           const { base64 } = await manipulateAsync(photo.uri, [], { base64: true });
-          setBase64Image(`data:image/jpeg;base64,${base64}`);
-          setShowImage(true);
+          const base64Str = `data:image/jpeg;base64,${base64}`;
+          setBase64Image(base64Str);  // Store the base64 image in state
+          setShowImage(true);  // Show image preview
+          onUpload(base64Str);  // Call the onUpload prop to pass the base64 image back to parent
         } else {
           console.error('Failed to capture photo: photo or photo.uri is undefined');
         }
@@ -53,14 +49,10 @@ const MyCamera = ({ onUpload, onRetake, initialCameraView = 'front' }) => {
     setCameraView(cameraView === 'front' ? 'back' : 'front');
   };
 
-  const handleUpload = () => {
-    onUpload(base64Image); // Trigger upload action via prop
-  };
-
   const handleRetake = () => {
     setShowImage(false);
-    setBase64Image(null);
-    onRetake(); // Trigger retake action via prop
+    setBase64Image(null);  // Clear the base64 image on retake
+    onRetake();  // Trigger the retake action via prop
   };
 
   return (
@@ -69,7 +61,7 @@ const MyCamera = ({ onUpload, onRetake, initialCameraView = 'front' }) => {
         <View style={styles.imageContainer}>
           <Image source={{ uri: base64Image }} style={styles.image} />
           <View style={styles.buttonContainerImage}>
-            <TouchableOpacity style={styles.button} onPress={handleUpload}>
+            <TouchableOpacity style={styles.button} onPress={() => onUpload(base64Image)}>
               <Text style={styles.text}>Upload</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleRetake}>

@@ -6,7 +6,6 @@ const RcNumber = ({ navigation }) => {
   const [RC , setRcNumber ] = useState('');
 
   useEffect(() => {
-    console.log('RC Number  component mounted');
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
