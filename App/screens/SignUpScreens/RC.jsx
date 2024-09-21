@@ -1,48 +1,48 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
-const AadharUpload = ({ navigation, route }) => {
-  const { name } = route.params;
-  const [aadharNumber, setAadharNumber] = useState('');
+const RcNumber = ({ navigation }) => {
+  
+  const [RC , setRcNumber ] = useState('');
 
   useEffect(() => {
-    console.log('AadharUpload component mounted');
+    console.log('RC Number  component mounted');
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const handleTakeAadharImage = () => {
-    
-    console.log('Taking Aadhar image...');
-    navigation.navigate('AadharImageUpload', { name });
+  const handleTakeRCImage = () => {
+    // Implement functionality to take Aadhar image
+    console.log('Taking RC Number image...');
+    navigation.navigate('RCUpload');
   };
 
   const handleUploadFromFiles = () => {
-    
-    console.log('Uploading Aadhar from files...');
+    // Implement functionality to upload from files
+    console.log('Uploading RC Number  from files...');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{name}, you moved to the next step in registration</Text>
+      <Text style={styles.title}>Upload Your Registration Certificate</Text>
       
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
-          {' '}to enter your Aadhar number and upload image
+          {' '}to enter your RC Number and upload image
         </Text>
 
         <TextInput
           style={styles.input}
-          placeholder="Enter Aadhar Number"
-          value={aadharNumber}
-          onChangeText={setAadharNumber}
-          keyboardType="numeric" // To restrict input to numbers
+          placeholder="Vehicle Number Plate "
+          value={RC}
+          onChangeText={setRcNumber}
+          keyboardType="numeric"
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleTakeAadharImage}>
-          <Text style={styles.buttonText}>Take Aadhar Image</Text>
+        <TouchableOpacity style={styles.button} onPress={handleTakeRCImage}>
+          <Text style={styles.buttonText}>RC Image</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
           <Text style={styles.buttonText}>Upload from Files</Text>
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AadharUpload;
+export default RcNumber;

@@ -11,7 +11,7 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
 
   const handleVerifyOTP = async () => {
     try {
-      const response = await fetch('https://38f5-2405-201-c425-3854-d847-da6f-e1c-b4e9.ngrok-free.app/signup/signup', {
+      const response = await fetch('https://a407-2405-201-c425-3854-74e4-6234-b576-883a.ngrok-free.app/signup/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set content type for JSON data

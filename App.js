@@ -10,7 +10,12 @@ import TakeSelfie from './App/screens/SignUpScreens/TakeSelfie';
 import ProfileImageScreen from './App/screens/SignUpScreens/ProfileImageScreen';
 import AadharUpload from './App/screens/SignUpScreens/AadharUpload';
 import AadharImageUpload from './App/screens/SignUpScreens/AadharImageUpload';
+import PanCard from './App/screens/SignUpScreens/PanCard';
+import PanCardUpload from './App/screens/SignUpScreens/PanCardUpload';
 import DriverLicense from './App/screens/SignUpScreens/DriverLicense';
+import LicenseImageUpload from './App/screens/SignUpScreens/LicenseImageUpload';
+import RC from './App/screens/SignUpScreens/RC';
+import RCUpload from './App/screens/SignUpScreens/RCUpload';
 
 
 
@@ -28,7 +33,12 @@ export default function App() {
         <Stack.Screen name = "ProfileImageScreen" component={ProfileImageScreen}/>
         <Stack.Screen name = "AadharUpload" component={AadharUpload}/>
         <Stack.Screen name = "AadharImageUpload" component={AadharImageUpload}/>
+        <Stack.Screen name = "PanCard" component={PanCard}/>
+        <Stack.Screen name = "PanCardUpload" component={PanCardUpload}/>
         <Stack.Screen name = "DriverLicense" component={DriverLicense}/>
+        <Stack.Screen name = "LicenseImageUpload" component={LicenseImageUpload}/>
+        <Stack.Screen name = "RC" component={RC}/>
+        <Stack.Screen name = "RCUpload" component={RCUpload}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

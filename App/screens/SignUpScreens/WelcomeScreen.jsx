@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   justTapText: {
-    fontFamily: 'SofadiOne', // Use the custom font
+    fontFamily: 'SofadiOne',
     fontSize: 35,
-    color: 'white', // Primary color for the text
+    color: 'white',
 
-    // Adding shadow for double shade effect
+    
     textShadowColor: 'rgba(0, 0, 0, 0.75)', // Shadow color (dark)
     textShadowOffset: { width: 2, height: 2 }, // Shadow offset for the shadow position
     textShadowRadius: 4, // Blurring effect for the shadow

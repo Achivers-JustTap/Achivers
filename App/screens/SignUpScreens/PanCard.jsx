@@ -1,48 +1,48 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
-const AadharUpload = ({ navigation, route }) => {
-  const { name } = route.params;
-  const [aadharNumber, setAadharNumber] = useState('');
+const PanCard = ({ navigation }) => {
+ 
+  const [PanNumber, setPanNumber] = useState('');
 
   useEffect(() => {
-    console.log('AadharUpload component mounted');
+    console.log('Pan Card component mounted');
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const handleTakeAadharImage = () => {
+  const handleTakePanCardImage = () => {
     
-    console.log('Taking Aadhar image...');
-    navigation.navigate('AadharImageUpload', { name });
+    console.log('Taking PanCard image...');
+    navigation.navigate('PanCardUpload');
   };
 
   const handleUploadFromFiles = () => {
     
-    console.log('Uploading Aadhar from files...');
+    console.log('Uploading Pan Card from files...');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>{name}, you moved to the next step in registration</Text>
+      <Text style={styles.title}>Pan Card Upload</Text>
       
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
-          {' '}to enter your Aadhar number and upload image
+          {' '}to enter your PanCard number and upload image
         </Text>
 
         <TextInput
           style={styles.input}
-          placeholder="Enter Aadhar Number"
-          value={aadharNumber}
-          onChangeText={setAadharNumber}
-          keyboardType="numeric" // To restrict input to numbers
+          placeholder="Enter PAN Number"
+          value={PanNumber}
+          onChangeText={setPanNumber}
+          keyboardType="default" 
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleTakeAadharImage}>
-          <Text style={styles.buttonText}>Take Aadhar Image</Text>
+        <TouchableOpacity style={styles.button} onPress={handleTakePanCardImage}>
+          <Text style={styles.buttonText}>PAN Image</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
           <Text style={styles.buttonText}>Upload from Files</Text>
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AadharUpload;
+export default PanCard;
