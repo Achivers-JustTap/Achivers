@@ -11,7 +11,7 @@ const RcNumber = ({ navigation }) => {
 
   const validateRC = () => {
     if (!RC.trim()) return 'Please enter your RC Number.';
-    return null; // Return null if there's no validation error
+    return null; 
   };
 
   const handleTakeRCImage = () => {
@@ -25,12 +25,12 @@ const RcNumber = ({ navigation }) => {
   };
 
   const handleUploadFromFiles = async () => {
-
-    const validationError = validateRc();
-    if(validationError){
-      Alert.alert('Error',validationError);
+    const validationError = validateRC();
+    if (validationError) {
+      Alert.alert('Error', validationError);
       return;
     }
+    
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: '*/*',
@@ -46,7 +46,7 @@ const RcNumber = ({ navigation }) => {
     } catch (error) {
       console.error('Error picking file:', error);
     }
-    navigation.navigate('Processing')
+    navigation.navigate('Processing');
   };
 
   return (
