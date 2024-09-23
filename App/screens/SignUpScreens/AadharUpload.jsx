@@ -1,5 +1,6 @@
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import * as DocumentPicker from 'expo-document-picker';
 
 const AadharUpload = ({ navigation, route }) => {
   const { name } = route.params;
@@ -10,21 +11,48 @@ const AadharUpload = ({ navigation, route }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  const validateAadharNumber = () => {
+    if (!aadharNumber.trim()) return 'Please enter your Aadhar Number.';
+  };
+
   const handleTakeAadharImage = () => {
-    
+    const validationError = validateAadharNumber();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
     console.log('Taking Aadhar image...');
     navigation.navigate('AadharImageUpload', { name });
   };
 
-  const handleUploadFromFiles = () => {
-    
-    console.log('Uploading Aadhar from files...');
+  const handleUploadFromFiles = async () => {
+    const validationError = validateAadharNumber();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: true,
+      });
+
+      if (result.type === 'success') {
+        console.log('Selected file:', result);
+        Alert.alert('File Selected', `File Name: ${result.name}`);
+      } else {
+        console.log('Document picker canceled');
+      }
+    } catch (error) {
+      console.error('Error picking file:', error);
+    }
+    navigation.navigate('PanCard')
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{name}, you moved to the next step in registration</Text>
-      
+
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>

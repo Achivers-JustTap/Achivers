@@ -1,6 +1,7 @@
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import * as DocumentPicker from 'expo-document-picker';
 
 const DriverLicense = ({ navigation }) => {
   const [LicenseNumber, setLicenseNumber] = useState('');
@@ -12,13 +13,43 @@ const DriverLicense = ({ navigation }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  const validateLicense = () => {
+    if (!LicenseNumber.trim()) return 'Please enter your DL Number.';
+    return null;
+  };
+
   const handleTakeLicenseImage = () => {
+    const validationError = validateLicense();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
     console.log('Taking License image...');
     navigation.navigate('LicenseImageUpload');
   };
 
-  const handleUploadFromFiles = () => {
-    console.log('Uploading License from files...');
+  const handleUploadFromFiles = async () => {
+    const validationError = validateLicense();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: true,
+      });
+
+      if (result.type === 'success') {
+        console.log('Selected file:', result);
+        Alert.alert('File Selected', `File Name: ${result.name}`);
+      } else {
+        console.log('Document picker canceled');
+      }
+    } catch (error) {
+      console.error('Error picking file:', error);
+    }
+    navigation.navigate('RC');
   };
 
   const showDatePicker = () => {
@@ -28,7 +59,7 @@ const DriverLicense = ({ navigation }) => {
   const hideDatePicker = (date) => {
     setIsDatePickerVisible(false);
     if (date) {
-      setDateOfBirth(date);
+      setDateOfBirth(date.toLocaleDateString());
     }
   };
 
@@ -59,7 +90,7 @@ const DriverLicense = ({ navigation }) => {
           <TextInput
             style={styles.input}
             placeholder="Select Date of Birth"
-            value={dateOfBirth.toLocaleDateString()}
+            value={dateOfBirth || ''}
             editable={false}
           />
         </TouchableOpacity>

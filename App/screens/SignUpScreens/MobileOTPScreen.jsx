@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MobileOTPScreen = ({ navigation }) => {
@@ -9,11 +9,20 @@ const MobileOTPScreen = ({ navigation }) => {
     navigation.setOptions({ headerShown: false});
    },[navigation])
 
-  const handleSendOTP = async () => {
-    setIsSendingOTP(true); // Set sending state to show loading indicator
+   const validatePhoneNumber = () => {
+    return phoneNumber.trim() !== ''; 
+  };
 
+  const handleSendOTP = async () => {
+    
+    if (!validatePhoneNumber()) {
+      Alert.alert('Error', 'Mobile number is required.');
+      return;
+    }
+
+    setIsSendingOTP(true); 
     try {
-      const response = await fetch('https://d6c0-2406-7400-35-63be-f448-a1a8-5680-2115.ngrok-free.app/signup/signup', {
+      const response = await fetch('https://7ab3-2405-201-c425-3854-824-6e90-fdea-1b76.ngrok-free.app/signup/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set content type for JSON data

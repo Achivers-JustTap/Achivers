@@ -1,29 +1,58 @@
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import * as DocumentPicker from 'expo-document-picker';
 
 const RcNumber = ({ navigation }) => {
-  
-  const [RC , setRcNumber ] = useState('');
+  const [RC, setRcNumber] = useState('');
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  const validateRC = () => {
+    if (!RC.trim()) return 'Please enter your RC Number.';
+    return null; // Return null if there's no validation error
+  };
+
   const handleTakeRCImage = () => {
-    // Implement functionality to take Aadhar image
-    console.log('Taking RC Number image...');
+    const validationError = validateRC();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
+    console.log('Taking RC image...');
     navigation.navigate('RCUpload');
   };
 
-  const handleUploadFromFiles = () => {
-    // Implement functionality to upload from files
-    console.log('Uploading RC Number  from files...');
+  const handleUploadFromFiles = async () => {
+
+    const validationError = validateRc();
+    if(validationError){
+      Alert.alert('Error',validationError);
+      return;
+    }
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: true,
+      });
+
+      if (result.type === 'success') {
+        console.log('Selected file:', result);
+        Alert.alert('File Selected', `File Name: ${result.name}`);
+      } else {
+        console.log('Document picker canceled');
+      }
+    } catch (error) {
+      console.error('Error picking file:', error);
+    }
+    navigation.navigate('Processing')
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Upload Your Registration Certificate</Text>
-      
+
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
@@ -32,10 +61,10 @@ const RcNumber = ({ navigation }) => {
 
         <TextInput
           style={styles.input}
-          placeholder="Vehicle Number Plate "
+          placeholder="Vehicle Number Plate"
           value={RC}
           onChangeText={setRcNumber}
-          keyboardType="numeric"
+          keyboardType="default"  // Change to default to allow alphanumeric input
         />
       </View>
 

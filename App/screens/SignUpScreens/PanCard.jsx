@@ -1,8 +1,8 @@
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import * as DocumentPicker from 'expo-document-picker';
 
 const PanCard = ({ navigation }) => {
- 
   const [PanNumber, setPanNumber] = useState('');
 
   useEffect(() => {
@@ -10,15 +10,43 @@ const PanCard = ({ navigation }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  const validatePAN = () => {
+    if (!PanNumber.trim()) return 'Please enter your PAN Number.';
+    return null;
+  };
+
   const handleTakePanCardImage = () => {
-    
-    console.log('Taking PanCard image...');
+    const validationError = validatePAN();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
+    console.log('Taking PAN image...');
     navigation.navigate('PanCardUpload');
   };
 
-  const handleUploadFromFiles = () => {
-    
-    console.log('Uploading Pan Card from files...');
+  const handleUploadFromFiles = async () => {
+    const validationError = validatePAN();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: '*/*',
+        copyToCacheDirectory: true,
+      });
+
+      if (result.type === 'success') {
+        console.log('Selected file:', result);
+        Alert.alert('File Selected', `File Name: ${result.name}`);
+      } else {
+        console.log('Document picker canceled');
+      }
+    } catch (error) {
+      console.error('Error picking file:', error);
+    }
+    navigation.navigate('DriverLicense');
   };
 
   return (
@@ -75,7 +103,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 20, // Adjust the margin as needed
+    marginBottom: 20,
     backgroundColor: 'white',
     color: 'black',
   },

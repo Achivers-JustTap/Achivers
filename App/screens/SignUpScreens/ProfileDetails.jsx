@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Picker } from '@react-native-picker/picker';
 
@@ -15,9 +15,23 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const handleNext = async () => {
+  const validateFields = () => {
+    if (!name.trim()) return 'Please enter your name.';
+    if (!email.trim()) return 'Please enter your email.';
+    if (!gender) return 'Please select your gender.';
+    if (!dateOfBirth) return 'Please select your date of birth.';
+    return null; 
+  };
+
+  const handleNext = () => {
+    const validationError = validateFields();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
+
     console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber });
-    navigation.navigate('TakeSelfie', { name: name });
+    navigation.navigate('TakeSelfie', { name });
   };
 
   const showDatePicker = () => {
@@ -27,7 +41,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   const hideDatePicker = (date) => {
     setIsDatePickerVisible(false);
     if (date) {
-      setDateOfBirth(date);
+      setDateOfBirth(date.toLocaleDateString());
     }
   };
 
@@ -71,7 +85,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Select Date of Birth"
-          value={dateOfBirth.toLocaleDateString()}
+          value={dateOfBirth || ''}
           editable={false}
         />
       </TouchableOpacity>

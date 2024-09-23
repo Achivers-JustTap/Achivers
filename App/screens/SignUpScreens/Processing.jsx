@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFonts } from 'expo-font';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Processing = () => {
@@ -36,16 +37,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   subHeader: {
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: 40,
     color: '#333',
     textAlign: 'center',
   },
   brandName: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 25,
+    fontFamily: 'SofadiOne',
     color: '#0F4A97',
-    textDecorationLine: 'underline',  // Apply unique style to Just Tap
+    //textDecorationLine: 'underline',  // Apply unique style to Just Tap
   },
   noteContainer: {
     borderTopWidth: 1,

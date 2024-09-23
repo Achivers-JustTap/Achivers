@@ -7,7 +7,7 @@ import MyCarousel from '../../../components/MyCarousal';
 const WelcomeScreen = ({ navigation }) => {
   // Load the custom font
   const [fontsLoaded] = useFonts({
-    'SofadiOne': require('../../../assets/fonts/SofadiOne-Regular.ttf'), // Adjust the path as per your project structure
+    'SofadiOne': require('../../../assets/fonts/SofadiOne-Regular.ttf'), 
   });
 
   useEffect(() => {
