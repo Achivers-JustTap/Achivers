@@ -1,77 +1,62 @@
+import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import * as DocumentPicker from 'expo-document-picker';
 
 const PanCard = ({ navigation }) => {
-  const [PanNumber, setPanNumber] = useState('');
+  const [panNumber, setPanNumber] = useState('');
 
   useEffect(() => {
-    console.log('Pan Card component mounted');
+    console.log('PanCard component mounted');
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const validatePAN = () => {
-    if (!PanNumber.trim()) return 'Please enter your PAN Number.';
-    return null;
+  const validatePanNumber = () => {
+    if (!panNumber.trim()) return 'Please enter your PAN Number.';
   };
 
-  const handleTakePanCardImage = () => {
-    const validationError = validatePAN();
+  const handleTakePanImage = () => {
+    const validationError = validatePanNumber();
     if (validationError) {
       Alert.alert('Error', validationError);
       return;
     }
-    console.log('Taking PAN image...');
-    navigation.navigate('PanCardUpload');
+    navigation.navigate('PanCardImageUpload', { panNumber });
   };
 
-  const handleUploadFromFiles = async () => {
-    const validationError = validatePAN();
+  const handleUploadFromFiles = () => {
+    const validationError = validatePanNumber();
     if (validationError) {
       Alert.alert('Error', validationError);
       return;
     }
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: '*/*',
-        copyToCacheDirectory: true,
-      });
-
-      if (result.type === 'success') {
-        console.log('Selected file:', result);
-        Alert.alert('File Selected', `File Name: ${result.name}`);
-      } else {
-        console.log('Document picker canceled');
-      }
-    } catch (error) {
-      console.error('Error picking file:', error);
-    }
-    navigation.navigate('DriverLicense');
+    navigation.navigate('PanCardUploadFromFile', { panNumber });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Pan Card Upload</Text>
-      
+      <Text style={styles.title}>Upload PAN Card</Text>
+
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
-          {' '}to enter your PanCard number and upload image
+          {' '}to enter your PAN number and upload files
         </Text>
 
         <TextInput
           style={styles.input}
           placeholder="Enter PAN Number"
-          value={PanNumber}
+          value={panNumber}
           onChangeText={setPanNumber}
-          keyboardType="default" 
+          keyboardType="default"
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleTakePanCardImage}>
-          <Text style={styles.buttonText}>PAN Image</Text>
+        {/* Button to Take PAN Image */}
+        <TouchableOpacity style={styles.button} onPress={handleTakePanImage}>
+          <Text style={styles.buttonText}>Take PAN Image</Text>
         </TouchableOpacity>
+
+        {/* Button to Upload PAN from Files */}
         <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
           <Text style={styles.buttonText}>Upload from Files</Text>
         </TouchableOpacity>

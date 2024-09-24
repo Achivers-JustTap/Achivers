@@ -1,6 +1,5 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import * as DocumentPicker from 'expo-document-picker';
 
 const RcNumber = ({ navigation }) => {
   const [RC, setRcNumber] = useState('');
@@ -20,33 +19,16 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    console.log('Taking RC image...');
-    navigation.navigate('RCUpload');
+    navigation.navigate('RCImageUpload', { RC }); // Navigate to the screen for taking RC image
   };
 
-  const handleUploadFromFiles = async () => {
+  const handleUploadFromFiles = () => {
     const validationError = validateRC();
     if (validationError) {
       Alert.alert('Error', validationError);
       return;
     }
-    
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: '*/*',
-        copyToCacheDirectory: true,
-      });
-
-      if (result.type === 'success') {
-        console.log('Selected file:', result);
-        Alert.alert('File Selected', `File Name: ${result.name}`);
-      } else {
-        console.log('Document picker canceled');
-      }
-    } catch (error) {
-      console.error('Error picking file:', error);
-    }
-    navigation.navigate('Processing');
+    navigation.navigate('RCUploadFromFiles', { RC }); // Navigate to the screen for uploading from files
   };
 
   return (
@@ -69,9 +51,12 @@ const RcNumber = ({ navigation }) => {
       </View>
 
       <View style={styles.buttonContainer}>
+        {/* Button to take RC image */}
         <TouchableOpacity style={styles.button} onPress={handleTakeRCImage}>
-          <Text style={styles.buttonText}>RC Image</Text>
+          <Text style={styles.buttonText}>Take RC Image</Text>
         </TouchableOpacity>
+
+        {/* Button to upload from files */}
         <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
           <Text style={styles.buttonText}>Upload from Files</Text>
         </TouchableOpacity>

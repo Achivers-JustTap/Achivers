@@ -1,6 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import * as DocumentPicker from 'expo-document-picker';
 
 const AadharUpload = ({ navigation, route }) => {
   const { name } = route.params;
@@ -21,32 +20,16 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    console.log('Taking Aadhar image...');
     navigation.navigate('AadharImageUpload', { name });
   };
 
-  const handleUploadFromFiles = async () => {
+  const handleUploadFromFiles = () => {
     const validationError = validateAadharNumber();
     if (validationError) {
       Alert.alert('Error', validationError);
       return;
     }
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: '*/*',
-        copyToCacheDirectory: true,
-      });
-
-      if (result.type === 'success') {
-        console.log('Selected file:', result);
-        Alert.alert('File Selected', `File Name: ${result.name}`);
-      } else {
-        console.log('Document picker canceled');
-      }
-    } catch (error) {
-      console.error('Error picking file:', error);
-    }
-    navigation.navigate('PanCard')
+    navigation.navigate('AadharUploadFromFile', { name });
   };
 
   return (
@@ -56,7 +39,7 @@ const AadharUpload = ({ navigation, route }) => {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
-          {' '}to enter your Aadhar number and upload image
+          {' '}to enter your Aadhar number and upload files
         </Text>
 
         <TextInput
@@ -64,14 +47,17 @@ const AadharUpload = ({ navigation, route }) => {
           placeholder="Enter Aadhar Number"
           value={aadharNumber}
           onChangeText={setAadharNumber}
-          keyboardType="numeric" // To restrict input to numbers
+          keyboardType="numeric"
         />
       </View>
 
       <View style={styles.buttonContainer}>
+        {/* Button to Take Aadhar Image */}
         <TouchableOpacity style={styles.button} onPress={handleTakeAadharImage}>
           <Text style={styles.buttonText}>Take Aadhar Image</Text>
         </TouchableOpacity>
+
+        {/* Button to Upload Aadhar from Files */}
         <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
           <Text style={styles.buttonText}>Upload from Files</Text>
         </TouchableOpacity>
@@ -103,7 +89,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 20, // Adjust the margin as needed
+    marginBottom: 20,
     backgroundColor: 'white',
     color: 'black',
   },
