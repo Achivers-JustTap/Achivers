@@ -19,7 +19,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardImageUpload', { panNumber });
+    navigation.navigate('PanCardUpload', { panNumber });
   };
 
   const handleUploadFromFiles = () => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
 
-const LicenseImage = ({ navigation }) => {
+const LicenseImage = ({ navigation,route }) => {
   const [licenseFrontImage, setLicenseFrontImage] = useState(null);  // State for front image
   const [licenseBackImage, setLicenseBackImage] = useState(null);   // State for back image
   const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')

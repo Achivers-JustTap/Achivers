@@ -19,7 +19,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCImageUpload', { RC }); // Navigate to the screen for taking RC image
+    navigation.navigate('RCUpload', { RC }); // Navigate to the screen for taking RC image
   };
 
   const handleUploadFromFiles = () => {
