@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
 
 const AadharUpload = ({ navigation, route }) => {
   const { name } = route.params;
@@ -37,8 +37,12 @@ const AadharUpload = ({ navigation, route }) => {
       <Text style={styles.title}>{name}, you moved to the next step in registration</Text>
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
-          <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
+        <Text style={styles.text}>Enter your Aadhaar and we'll get your information from UIDAI.
+           By sharing your Aadhaar details, you hereby confirm that you have shared such details voluntarily.</Text>
+        <Image source={require('../../../assets/images/aadhar.png')} style={styles.image} resizeMode="contain"/>
+
+        <Text style={styles.justTapText}>
+          <Text style={styles.justTapFont}>Just Tap!</Text>
           {' '}to enter your Aadhar number and upload files
         </Text>
 
@@ -52,12 +56,12 @@ const AadharUpload = ({ navigation, route }) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        {/* Button to Take Aadhar Image */}
+      
         <TouchableOpacity style={styles.button} onPress={handleTakeAadharImage}>
           <Text style={styles.buttonText}>Take Aadhar Image</Text>
         </TouchableOpacity>
 
-        {/* Button to Upload Aadhar from Files */}
+        
         <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
           <Text style={styles.buttonText}>Upload from Files</Text>
         </TouchableOpacity>
@@ -80,7 +84,27 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
+    marginTop: 20,
     marginBottom: 10,
+  },
+  text: {
+    color: 'white',
+    padding: 10,
+    fontSize: 15,
+  },
+  image: {
+    width: 250,
+    height: 200,
+  },
+  justTapText: {
+    color: 'white',
+    padding: 20,
+    marginBottom: 5, 
+  },
+  justTapFont: {
+    color: 'white',
+    fontSize: 19,
+    fontFamily: 'SofadiOne',
   },
   input: {
     width: '80%',
@@ -92,6 +116,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: 'white',
     color: 'black',
+    marginBottom: 90,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -105,6 +130,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flex: 1,
     marginHorizontal: 5,
+    marginBottom: 30,
   },
   buttonText: {
     color: 'black',

@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, SafeAreaView ,Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, SafeAreaView, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { useFonts } from 'expo-font';
 import MyCarousel from '../../../components/MyCarousal';
 
-
 const WelcomeScreen = ({ navigation }) => {
-  // Load the custom font
   const [fontsLoaded] = useFonts({
-    'SofadiOne': require('../../../assets/fonts/SofadiOne-Regular.ttf'), 
+    'SofadiOne': require('../../../assets/fonts/SofadiOne-Regular.ttf'),
   });
 
   useEffect(() => {
@@ -15,7 +13,6 @@ const WelcomeScreen = ({ navigation }) => {
   }, [navigation]);
 
   if (!fontsLoaded) {
-    // Show loading indicator while the fonts are loading
     return <ActivityIndicator size="large" color="#fff" style={styles.loader} />;
   }
 
@@ -27,16 +24,21 @@ const WelcomeScreen = ({ navigation }) => {
       </Text>
       <MyCarousel style={styles.carouselContainer} />
       <Text style={styles.memberText}>
-        Want to be a member?{' '} 
+        Want to be a member?{' '}
         <Text style={{ fontSize: 19, fontFamily: 'SofadiOne' }}>JUST TAP!</Text>
       </Text>
 
-      {/* Custom TouchableOpacity button */}
       <TouchableOpacity
         style={styles.registerButton}
-        onPress={() => navigation.navigate('MobileOTPScreen')}
+        onPress={() => navigation.navigate('WhichVehicleScreen', { isRegister: true })}
       >
         <Text style={styles.registerButtonText}>Register</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('MobileOTPScreen', { isRegister: false })}
+      >
+        <Text style={styles.loginText}>Have An Account? Log In</Text>
       </TouchableOpacity>
 
       <Text style={styles.description}>
@@ -50,7 +52,7 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0F4A97', // Black background
+    backgroundColor: '#0F4A97',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0F4A97', // Ensure the background is consistent
+    backgroundColor: '#0F4A97',
   },
   title: {
     paddingTop: 50,
@@ -71,11 +73,9 @@ const styles = StyleSheet.create({
     fontFamily: 'SofadiOne',
     fontSize: 35,
     color: 'white',
-
-    
-    textShadowColor: 'rgba(0, 0, 0, 0.75)', // Shadow color (dark)
-    textShadowOffset: { width: 2, height: 2 }, // Shadow offset for the shadow position
-    textShadowRadius: 4, // Blurring effect for the shadow
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
   },
   carouselContainer: {
     alignContent: 'flex-start',
@@ -85,26 +85,33 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     color: 'white',
-    marginBottom: 30, // Adjusted margin
+    marginBottom: 30,
   },
   registerButton: {
-    backgroundColor: 'white', // Button background color
+    backgroundColor: 'white',
     padding: 12,
     borderRadius: 5,
-    marginBottom: 100, // Adjust as needed
+    marginBottom: 10,
     width: '50%',
-    alignItems: 'center', // Center the text inside
+    alignItems: 'center',
   },
   registerButtonText: {
     color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
   },
+  loginText: {
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 100,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
   description: {
     textAlign: 'center',
     color: 'white',
-    marginBottom: 100,
-    paddingHorizontal: 20, // Optional padding for better text alignment
+    marginBottom: 40,
+    paddingHorizontal: 20,
   },
 });
 

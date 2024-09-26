@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const DrivingLicense = ({ navigation }) => {
@@ -58,7 +58,9 @@ const DrivingLicense = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Upload Your Driver License</Text>
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+      <Image source={require('../../../assets/images/driverlicense.png')} style={styles.image} resizeMode="contain" />
+
+      <View style={styles.inputContainer}>
         <Text style={styles.tapText}>
           <Text style={styles.justTapText}>Just Tap!</Text>
           {' '}to enter your DL number and upload image
@@ -74,11 +76,11 @@ const DrivingLicense = ({ navigation }) => {
           keyboardType="default"
         />
 
-        <Text style={{ alignContent: 'center', color: 'white', fontSize: 16 }}>Date of Birth</Text>
+        <Text style={styles.DOBtext}>Date of Birth</Text>
 
         <TouchableOpacity onPress={showDatePicker}>
           <TextInput
-            style={styles.input}
+            style={styles.DOB}
             placeholder="Select Date of Birth"
             value={dateOfBirth || ''}
             editable={false}
@@ -111,7 +113,7 @@ const DrivingLicense = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#0F4A97',
   },
@@ -122,12 +124,18 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
+    marginTop: 30,
     marginBottom: 10,
+  },
+  image: {
+    width: 300,
+    height: 270,
   },
   tapText: {
     color: 'white',
-    padding: 20,
-    marginBottom: 10,
+    paddingVertical: 5,
+    paddingRight:10,
+    paddingLeft:10,
     textAlign: 'center',
   },
   justTapText: {
@@ -138,6 +146,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginBottom: 5,
+    textAlign: 'left', 
+    width: '80%',
+  },
+  DOBtext:{
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 5,
+    textAlign: 'center', 
+  },
+  inputContainer: {
+    alignItems: 'center',
+    width: '100%',
   },
   input: {
     width: '80%',
@@ -146,7 +166,18 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 20,
+    marginBottom: 7, 
+    backgroundColor: 'white',
+    color: 'black',
+  },
+  DOB: {
+    width: '80%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 20, 
     backgroundColor: 'white',
     color: 'black',
   },
@@ -161,6 +192,8 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     flex: 1,
+    marginTop: 80,
+    marginBottom: 30,
     marginHorizontal: 5,
   },
   buttonText: {

@@ -33,10 +33,13 @@ const RcNumber = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Upload Your Registration Certificate</Text>
+      <Text style={styles.title}>Upload Your RC-Registration Certificate</Text>
+      
+      <Text style={styles.text}>Enter your vehicle number plate and date of birth and we'll get the required information 
+        from the Parivahan.</Text>
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
+        <Text style={{ color: 'white', padding: 10, marginBottom: 10 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
           {' '}to enter your RC Number and upload image
         </Text>
@@ -74,12 +77,18 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingTop: 50,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
     fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
-    marginBottom: 10,
+    marginTop: 30,
+    marginBottom: 40,
+  },
+  text: {
+    color: 'white',
+    padding: 10,
+    fontSize: 15,
   },
   input: {
     width: '80%',
@@ -88,7 +97,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 20, // Adjust the margin as needed
+    marginBottom: 250, // Adjust the margin as needed
     backgroundColor: 'white',
     color: 'black',
   },
@@ -103,6 +112,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     flex: 1,
+    marginBottom: 30,
     marginHorizontal: 5,
   },
   buttonText: {

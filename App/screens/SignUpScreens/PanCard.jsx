@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
 
 const PanCard = ({ navigation }) => {
   const [panNumber, setPanNumber] = useState('');
@@ -34,9 +34,14 @@ const PanCard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Upload PAN Card</Text>
+      <Text style={styles.text}>Enter your PAN card number and we'll get the required information from the NSDL.</Text>
+      
+      <Image source={require('../../../assets/images/pancard.png')} style={styles.image} resizeMode="contain"/>
+     
+
 
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'white', padding: 20, marginBottom: 10 }}>
+        <Text style={{ color: 'white', padding: 20, justifyContent: 'center', alignItems: 'center',marginBottom: 3 }}>
           <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
           {' '}to enter your PAN number and upload files
         </Text>
@@ -79,7 +84,17 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
+    marginTop: 20,
     marginBottom: 10,
+  },
+  text: {
+    color: 'white',
+    padding: 10,
+    fontSize: 15,
+  },
+  image: {
+    width: 400,
+    height: 270,
   },
   input: {
     width: '80%',
@@ -88,7 +103,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 20,
+    marginBottom: 200,
     backgroundColor: 'white',
     color: 'black',
   },
@@ -96,7 +111,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '80%',
-    marginBottom: 20,
+    marginBottom: 50,
   },
   button: {
     backgroundColor: 'white',

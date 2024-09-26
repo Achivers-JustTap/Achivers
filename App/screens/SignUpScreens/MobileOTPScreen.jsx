@@ -2,48 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const MobileOTPScreen = ({ navigation }) => {
+const MobileOTPScreen = ({ navigation, route }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [isSendingOTP, setIsSendingOTP] = useState(false); // Track OTP sending state
-   useEffect(()=>{
-    navigation.setOptions({ headerShown: false});
-   },[navigation])
+  const [isSendingOTP, setIsSendingOTP] = useState(false); 
 
-   const validatePhoneNumber = () => {
-    return phoneNumber.trim() !== ''; 
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
+  const validatePhoneNumber = () => {
+    return phoneNumber.trim() !== '';
   };
 
   const handleSendOTP = async () => {
-    
     if (!validatePhoneNumber()) {
       Alert.alert('Error', 'Mobile number is required.');
       return;
     }
 
-    setIsSendingOTP(true); 
+   setIsSendingOTP(true);
     try {
-      const response = await fetch('https://d6c0-2406-7400-35-63be-f448-a1a8-5680-2115.ngrok-free.app/signup/signup', {
+      const response = await fetch('https://6ab8-2405-201-c425-3854-a936-1e27-553c-27bf.ngrok-free.app/signup/signup', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Set content type for JSON data
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ phoneNumber }), // Send phone number in request body
+        body: JSON.stringify({ phoneNumber }),
       });
 
       if (!response.ok) {
-        throw new Error('Error sending OTP'); // Handle non-2xx responses
+        throw new Error('Error sending OTP');
       }
 
       const data = await response.json();
       console.log('OTP sent successfully:', data);
 
-      navigation.navigate('MobileOTPVerifyScreen', { phoneNumber }); // Pass phone number
+      navigation.navigate('MobileOTPVerifyScreen', { phoneNumber, isRegister: route.params.isRegister });
 
-    } catch (error) {
+   } catch (error) {
       console.error('Error sending OTP:', error);
-      alert('Failed to send OTP. Please try again.'); // Inform user about error
+      alert('Failed to send OTP. Please try again.');
     } finally {
-      setIsSendingOTP(false); // Reset sending state for UI updates
+      setIsSendingOTP(false);
     }
   };
 
@@ -57,12 +57,11 @@ const MobileOTPScreen = ({ navigation }) => {
         value={phoneNumber}
         onChangeText={setPhoneNumber}
       />
-      
-      {/* Custom TouchableOpacity button */}
+
       <TouchableOpacity
-        style={[styles.button, isSendingOTP && styles.disabledButton]} // Apply disabled style when sending OTP
+        style={[styles.button, isSendingOTP && styles.disabledButton]}
         onPress={handleSendOTP}
-        disabled={isSendingOTP} // Disable button while sending
+        disabled={isSendingOTP}
       >
         <Text style={styles.buttonText}>
           {isSendingOTP ? 'Sending OTP...' : 'Send OTP'}
@@ -97,14 +96,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   button: {
-    backgroundColor: 'white', // Button background color
+    backgroundColor: 'white',
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 5,
     alignItems: 'center',
   },
   disabledButton: {
-    backgroundColor: 'gray', // Button color when disabled
+    backgroundColor: 'gray',
   },
   buttonText: {
     color: 'black',

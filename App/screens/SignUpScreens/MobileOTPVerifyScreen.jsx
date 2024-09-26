@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } fro
 
 const MobileOTPVerifyScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
-  const { phoneNumber } = route.params; // Extract phone number from params
+  const { phoneNumber, isRegister } = route.params; 
   
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -11,27 +11,32 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
 
     const handleVerifyOTP = async () => {
     try {
-      const response = await fetch('https://d6c0-2406-7400-35-63be-f448-a1a8-5680-2115.ngrok-free.app/signup/verify', {
+      const response = await fetch('https://6ab8-2405-201-c425-3854-a936-1e27-553c-27bf.ngrok-free.app/signup/verify', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Set content type for JSON data
+          'Content-Type': 'application/json', 
         },
-        body: JSON.stringify({ otp }), // Send OTP in request body
+        body: JSON.stringify({ otp }), 
       });
-
       if (!response.ok) {
-        throw new Error('Error verifying OTP'); // Handle non-2xx responses
+        throw new Error('Error verifying OTP'); 
       }
 
       const data = await response.json();
       console.log('OTP verified successfully:', data);
 
-      // Handle successful verification (navigate to Profile Details)
-      navigation.navigate('ProfileDetailsScreen', { phoneNumber }); // Pass phone number
+      
+      if (isRegister) {
+        
+        navigation.navigate('ProfileDetailsScreen', { phoneNumber });
+      } else {
+       
+        navigation.navigate('HomePage');
+      }
 
     } catch (error) {
       console.error('Error verifying OTP:', error);
-      alert('Invalid OTP. Please try again.'); // Inform user about error
+      alert('Invalid OTP. Please try again.'); 
     }
   };
 
@@ -67,13 +72,13 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   button: {
-    backgroundColor: 'white', // Button background color
+    backgroundColor: 'white', 
     padding: 10,
     borderRadius: 5,
     marginTop: 20,
   },
   buttonText: {
-    color: 'black', // Button text color
+    color: 'black', 
     fontSize: 16,
   },
 });
