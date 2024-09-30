@@ -1,11 +1,16 @@
+import { useRoute } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const DrivingLicense = ({ navigation }) => {
   const [licenseNumber, setLicenseNumber] = useState(''); // State for Driving License number
-  const [dateOfBirth, setDateOfBirth] = useState(''); // State for Date of Birth
+  const [dateOfBirth1, setDateOfBirth] = useState(''); // State for Date of Birth
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false); // State for date picker visibility
+  
+  const route = useRoute();
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   useEffect(() => {
     console.log('DrivingLicense component mounted');
@@ -15,7 +20,7 @@ const DrivingLicense = ({ navigation }) => {
   // Validation for Driving License number
   const validateLicenseNumber = () => {
     if (!licenseNumber.trim()) return 'Please enter your Driving License Number.';
-    if (!dateOfBirth.trim()) return 'Please select your Date of Birth.';
+    if (!dateOfBirth1.trim()) return 'Please select your Date of Birth.';
   };
 
   // Handle taking a Driving License image
@@ -25,7 +30,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('LicenseImageUpload', { licenseNumber, dateOfBirth }); // Navigate to the next screen
+    navigation.navigate('LicenseImageUpload', { licenseNumber, dateOfBirth1, vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the next screen
   };
 
   // Handle uploading Driving License from files
@@ -35,7 +40,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('DrivingLicenseUpload', { licenseNumber, dateOfBirth }); // Navigate to file upload screen
+    navigation.navigate('DrivingLicenseUpload', { licenseNumber, dateOfBirth1,vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to file upload screen
   };
 
   // Show date picker
@@ -82,7 +87,7 @@ const DrivingLicense = ({ navigation }) => {
           <TextInput
             style={styles.DOB}
             placeholder="Select Date of Birth"
-            value={dateOfBirth || ''}
+            value={dateOfBirth1 || ''}
             editable={false}
           />
         </TouchableOpacity>

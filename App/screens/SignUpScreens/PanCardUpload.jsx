@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
+import { useRoute } from '@react-navigation/native';
 
 const PanCardUpload = ({ navigation }) => {
   const [panFrontImage, setPanFrontImage] = useState(null);
   const [panBackImage, setPanBackImage] = useState(null);
   const [isCapturing, setIsCapturing] = useState(null); // Tracks which image (front or back) is being captured
-
+   
+  const route = useRoute();
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
   // Pan Front Image Upload
   const handleFrontUpload = (base64Image) => {
     setPanFrontImage(base64Image);
@@ -59,7 +63,7 @@ const PanCardUpload = ({ navigation }) => {
           {panFrontImage && panBackImage && (
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={() => navigation.navigate('DriverLicense')}
+              onPress={() => navigation.navigate('DriverLicense',{vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64})}
             >
               <Text style={styles.submitText}>Next</Text>
             </TouchableOpacity>

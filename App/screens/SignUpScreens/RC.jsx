@@ -1,8 +1,13 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { useRoute } from '@react-navigation/native';
 
 const RcNumber = ({ navigation }) => {
   const [RC, setRcNumber] = useState('');
+
+  const route = useRoute();
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -19,7 +24,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUpload', { RC }); // Navigate to the screen for taking RC image
+    navigation.navigate('RCUpload', { RC , vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the screen for taking RC image
   };
 
   const handleUploadFromFiles = () => {
@@ -28,7 +33,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUploadFromFiles', { RC }); // Navigate to the screen for uploading from files
+    navigation.navigate('RCUploadFromFiles', { RC,vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 }); // Navigate to the screen for uploading from files
   };
 
   return (

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import { useRoute } from '@react-navigation/native';
 
 const RCUploadFromFiles = ({ navigation }) => {
   const [rcFrontFile, setRcFrontFile] = useState(null);  // State for RC front file
   const [rcBackFile, setRcBackFile] = useState(null);    // State for RC back file
+  
+  const route = useRoute();
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   const handleUploadFile = async (type) => {
     try {
@@ -35,7 +40,7 @@ const RCUploadFromFiles = ({ navigation }) => {
     }
 
     // Navigate to the next screen with both files
-    navigation.navigate('Processing', { rcFrontFile, rcBackFile }); // Replace 'NextScreen' with the actual next screen name
+    navigation.navigate('Processing', { rcFrontFile, rcBackFile,vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Replace 'NextScreen' with the actual next screen name
   };
 
   return (

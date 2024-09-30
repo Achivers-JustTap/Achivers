@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
+import { useRoute } from '@react-navigation/native';
 
 const RcUpload = ({ navigation }) => {
   const [rcFrontImage, setRcFrontImage] = useState(null);  // State for front image
   const [rcBackImage, setRcBackImage] = useState(null);   // State for back image
   const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
+ 
+  const route = useRoute();
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   // Handle the upload of the front image
   const handleFrontUpload = (base64Image) => {
@@ -86,6 +91,8 @@ const RcUpload = ({ navigation }) => {
             navigation.navigate('Processing', {
               rcFront: rcFrontImage,
               rcBack: rcBackImage,
+              vehicleImage,
+              name,email,gender,dateOfBirth,phoneNumber,profileImageBase64
             });
           }}
         >

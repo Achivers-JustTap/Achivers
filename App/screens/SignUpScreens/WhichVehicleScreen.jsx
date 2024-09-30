@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, Text, View, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
 
 const WhichVehicleScreen = ({ navigation, route }) => {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
@@ -9,18 +9,18 @@ const WhichVehicleScreen = ({ navigation, route }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-
   const vehicles = [
-    { id: 'bike', name: 'Bike', image: null },
-    { id: 'auto', name: 'Auto', image: null },
-    { id: 'car', name: 'Car', image: null },
+    { id: 'bike', name: 'Bike', image: require('../../../assets/images/bike.png') },
+    { id: 'auto', name: 'Auto', image: require('../../../assets/images/auto3.png') },
+    { id: 'car', name: 'Car', image: require('../../../assets/images/car.png') },
   ];
 
   const handleConfirm = () => {
     if (selectedVehicle) {
-      navigation.navigate('MobileOTPScreen', { isRegister });
+      const vehicleImage = vehicles.find(v => v.id === selectedVehicle).image;
+      navigation.navigate('MobileOTPScreen', { isRegister, vehicleImage });
     } else {
-      alert('Please select a vehicle type');
+      Alert.alert('Please select a vehicle type');
     }
   };
 
@@ -31,10 +31,7 @@ const WhichVehicleScreen = ({ navigation, route }) => {
         {vehicles.map((vehicle) => (
           <View key={vehicle.id} style={styles.vehicleItem}>
             <TouchableOpacity
-              style={[
-                styles.vehicleBox,
-                selectedVehicle === vehicle.id && styles.selectedBox, 
-              ]}
+              style={[styles.vehicleBox, selectedVehicle === vehicle.id && styles.selectedBox]}
               onPress={() => setSelectedVehicle(vehicle.id)}
             >
               <View style={styles.imagePlaceholder}>
@@ -60,69 +57,61 @@ const WhichVehicleScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#F5F5F5',
+    alignItems: 'center',
+    padding: 16,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   vehicleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 30,
+    width: '100%',
+    marginBottom: 20,
   },
   vehicleItem: {
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   vehicleBox: {
-    backgroundColor: '#FFFFFF',
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderColor: '#ccc',
+    borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    marginBottom: 10, 
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5, 
   },
   selectedBox: {
-    backgroundColor: '#5184C7', 
-  },
-  vehicleText: {
-    fontSize: 16,
-    color: '#000',
+    borderColor: '#0F4A97',
   },
   imagePlaceholder: {
-    width: 50,
-    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E0E0E0',
-    borderRadius: 5,
+    width: '100%',
+    height: '100%',
   },
-  imageText: {
-    color: '#808080',
+  vehicleImage: {
+    width: '80%',
+    height: '80%',
+    resizeMode: 'contain',
+  },
+  vehicleText: {
+    marginTop: 8,
+    textAlign: 'center',
   },
   confirmButton: {
     backgroundColor: '#0F4A97',
-    padding: 15,
-    borderRadius: 10,
+    padding: 12,
+    borderRadius: 8,
+    width: '80%',
     alignItems: 'center',
-    marginTop: 20,
   },
   confirmButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 16,
   },
 });
 

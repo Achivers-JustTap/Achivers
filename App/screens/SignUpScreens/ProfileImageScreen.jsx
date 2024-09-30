@@ -3,8 +3,9 @@ import { View } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
 
 const ProfilePicture = ({ navigation, route }) => {
-  const { name } = route.params;
-  
+  const { phoneNumber } = route.params;
+  const { name,email,gender,dateOfBirth} = route.params;
+  const vehicleImage = route.params?.vehicleImage;
   // State to hold the base64 of the profile image
   const [profileImageBase64, setProfileImageBase64] = useState(null);
 
@@ -13,7 +14,7 @@ const ProfilePicture = ({ navigation, route }) => {
     setProfileImageBase64(base64Image);
 
     // Pass the base64 image to the next screen (AadharUpload)
-    navigation.navigate('AadharUpload', { name, profileImageBase64: base64Image });
+    navigation.navigate('AadharUpload', {  name,email,gender,dateOfBirth, profileImageBase64: base64Image ,vehicleImage,phoneNumber});
   };
 
   const handleRetake = () => {

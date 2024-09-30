@@ -23,9 +23,10 @@ import RCUploadFromFiles from './App/screens/SignUpScreens/RCUploadFromFiles';
 import RCUpload from './App/screens/SignUpScreens/RCUpload';
 import Processing from './App/screens/SignUpScreens/Processing';
 import FileDetailsScreen from './App/screens/SignUpScreens/FileDetailsScreen';
-import HomePage from './App/screens/InsideAppScreens/HomePage';
+import TabNavigationComponent from './App/screens/InsideAppScreens/TabNavigationComponent'; // Import TabNavigation
 import { UserLocationProvider } from './App/Context/UserLocationContext';
 import React, { useState } from 'react';
+import ProfiledetailsPage from './App/screens/InsideAppScreens/ProfiledetailsPage';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ export default function App() {
     <UserLocationProvider>
       <NavigationContainer>
         <Stack.Navigator>
+          {/* Initial Sign Up Screens */}
           <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
           <Stack.Screen name="WhichVehicleScreen" component={WhichVehicleScreen} />
           <Stack.Screen name="MobileOTPScreen" component={MobileOTPScreen} />
@@ -57,10 +59,17 @@ export default function App() {
           <Stack.Screen name="RCUpload" component={RCUpload} />
           <Stack.Screen name="Processing" component={Processing} />
           <Stack.Screen name="FileDetailsScreen" component={FileDetailsScreen} />
-          <Stack.Screen name="HomePage" component={HomePage} />
+          
+          {/* Home Tab Navigation */}
+          <Stack.Screen
+          name="HomeTabs"
+          component={TabNavigationComponent}
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen name="ProfileDetailsPage" component={ProfiledetailsPage} />
         </Stack.Navigator>
       </NavigationContainer>
-      </UserLocationProvider>
+    </UserLocationProvider>
   );
 }
 

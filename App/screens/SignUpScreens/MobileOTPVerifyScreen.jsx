@@ -5,12 +5,14 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
   const { phoneNumber, isRegister } = route.params; 
   
+  const vehicleImage = route.params?.vehicleImage;
+
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
     const handleVerifyOTP = async () => {
-    try {
+    /* try {
       const response = await fetch('https://6ab8-2405-201-c425-3854-a936-1e27-553c-27bf.ngrok-free.app/signup/verify', {
         method: 'POST',
         headers: {
@@ -23,21 +25,21 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
       }
 
       const data = await response.json();
-      console.log('OTP verified successfully:', data);
+      console.log('OTP verified successfully:', data);*/
 
       
       if (isRegister) {
         
-        navigation.navigate('ProfileDetailsScreen', { phoneNumber });
+        navigation.navigate('ProfileDetailsScreen', { phoneNumber,vehicleImage });
       } else {
        
-        navigation.navigate('HomePage');
+        navigation.navigate('HomeTabs');
       }
 
-    } catch (error) {
+   /* } catch (error) {
       console.error('Error verifying OTP:', error);
       alert('Invalid OTP. Please try again.'); 
-    }
+    }*/
   };
 
   return (

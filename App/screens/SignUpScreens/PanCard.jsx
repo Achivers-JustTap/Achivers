@@ -1,9 +1,13 @@
+import { useRoute } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
 
 const PanCard = ({ navigation }) => {
   const [panNumber, setPanNumber] = useState('');
-
+  
+  const route = useRoute();
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
   useEffect(() => {
     console.log('PanCard component mounted');
     navigation.setOptions({ headerShown: false });
@@ -19,7 +23,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUpload', { panNumber });
+    navigation.navigate('PanCardUpload', { panNumber , vehicleImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64});
   };
 
   const handleUploadFromFiles = () => {
@@ -28,7 +32,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUploadFromFile', { panNumber });
+    navigation.navigate('PanCardUploadFromFile', { panNumber, vehicleImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 });
   };
 
   return (

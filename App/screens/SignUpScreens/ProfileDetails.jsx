@@ -11,6 +11,8 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const { phoneNumber } = route.params;
 
+  const vehicleImage = route.params?.vehicleImage;
+
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
@@ -31,7 +33,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
     }
 
     console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber });
-    navigation.navigate('TakeSelfie', { name });
+    navigation.navigate('TakeSelfie', { name ,vehicleImage,phoneNumber});
   };
 
   const showDatePicker = () => {

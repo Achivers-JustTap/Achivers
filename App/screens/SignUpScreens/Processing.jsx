@@ -1,9 +1,14 @@
+import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 
 const Processing = ({navigation}) => {
   const [verificationStatus, setVerificationStatus] = useState('processing'); 
   const [loading, setLoading] = useState(true); 
+
+  const route = useRoute();
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
   //function to fetching verification status from backend
   const fetchVerificationStatus = async () => {
     
@@ -19,7 +24,7 @@ const Processing = ({navigation}) => {
 
   const handleProceed = () => {
     console.log('Proceeding to the homepage...');
-    navigation.navigate('HomePage'); 
+    navigation.navigate('HomeTabs',{vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); 
   };
   return (
     <View style={styles.container}>

@@ -2,20 +2,23 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
-const AadharUploadFromFile = ({ navigation }) => {
-  const [aadharFrontFile, setAadharFrontFile] = useState(null);  // State for Aadhar front file
-  const [aadharBackFile, setAadharBackFile] = useState(null);   // State for Aadhar back file
+const AadharUploadFromFile = ({ navigation,route }) => {
+  const [aadharFrontFile, setAadharFrontFile] = useState(null);
+  const [aadharBackFile, setAadharBackFile] = useState(null); 
+
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,  } = route.params;
+  const vehicleImage = route.params?.vehicleImage;
 
   const handleUploadFile = async (type) => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: ['application/pdf', 'image/*'],  // Restrict to PDF and images
+        type: ['application/pdf', 'image/*'], 
         copyToCacheDirectory: true,
       });
       console.log(" Result ", result)
       if (!result.canceled) {
         console.log(" Result inside if ", result)
-        const file = result.assets[0];  // Get the selected file
+        const file = result.assets[0];  
         if (type === 'front') {
           setAadharFrontFile(file);
         } else {
@@ -35,15 +38,13 @@ const AadharUploadFromFile = ({ navigation }) => {
       return;
     }
 
-    // Navigate to the next screen with both files
-    navigation.navigate('PanCard', { aadharFrontFile, aadharBackFile });
+    navigation.navigate('PanCard', {name,email,gender,dateOfBirth,phoneNumber, aadharFrontFile, aadharBackFile, vehicleImage,profileImageBase64 });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Upload Aadhar Card</Text>
 
-      {/* Section for Aadhar Front File Upload */}
       <View style={styles.section}>
         <Text style={styles.label}>Aadhar Front</Text>
         {aadharFrontFile ? (
@@ -55,7 +56,6 @@ const AadharUploadFromFile = ({ navigation }) => {
         )}
       </View>
 
-      {/* Section for Aadhar Back File Upload */}
       <View style={styles.section}>
         <Text style={styles.label}>Aadhar Back</Text>
         {aadharBackFile ? (
@@ -67,7 +67,6 @@ const AadharUploadFromFile = ({ navigation }) => {
         )}
       </View>
 
-      {/* Proceed button once both files are uploaded */}
       {aadharFrontFile && aadharBackFile && (
         <TouchableOpacity style={styles.proceedButton} onPress={proceedToNext}>
           <Text style={styles.buttonText}>Proceed</Text>

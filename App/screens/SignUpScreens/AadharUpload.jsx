@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
 
 const AadharUpload = ({ navigation, route }) => {
-  const { name } = route.params;
+ 
   const [aadharNumber, setAadharNumber] = useState('');
+  
+  const vehicleImage = route.params?.vehicleImage;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,  } = route.params;
 
   useEffect(() => {
     console.log('AadharUpload component mounted');
@@ -20,7 +23,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharImageUpload', { name });
+    navigation.navigate('AadharImageUpload', { name,email,gender,dateOfBirth, vehicleImage,phoneNumber,profileImageBase64});
   };
 
   const handleUploadFromFiles = () => {
@@ -29,7 +32,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharUploadFromFile', { name });
+    navigation.navigate('AadharUploadFromFile', {  name,email,gender,dateOfBirth, vehicleImage,phoneNumber, profileImageBase64});
   };
 
   return (

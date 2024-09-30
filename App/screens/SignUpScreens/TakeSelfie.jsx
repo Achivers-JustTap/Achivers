@@ -2,7 +2,10 @@ import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Image } from 'r
 import React, { useEffect } from 'react';
 
 const Takeselfie = ({ navigation, route }) => {
-  const { name } = route.params;
+  const { phoneNumber } = route.params;
+  const { name,email,gender,dateOfBirth} = route.params;
+
+  const vehicleImage = route.params?.vehicleImage;
 
   useEffect(() => {
     console.log('Takeselfie component mounted');
@@ -10,7 +13,7 @@ const Takeselfie = ({ navigation, route }) => {
   }, [navigation]);
 
   const handleTakeSelfie = () => {
-    navigation.navigate('ProfileImageScreen', { name });
+    navigation.navigate('ProfileImageScreen', { name,email,gender,dateOfBirth,vehicleImage,phoneNumber});
   };
 
   return (
