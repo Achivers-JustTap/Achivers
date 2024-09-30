@@ -7,7 +7,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState(''); 
-  const [dateOfBirth, setDateOfBirth] = useState(new Date());
+  const [dateOfBirth, setDateOfBirth] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const { phoneNumber } = route.params;
 
@@ -33,7 +33,14 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
     }
 
     console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber });
-    navigation.navigate('TakeSelfie', { name ,vehicleImage,phoneNumber});
+    navigation.navigate('TakeSelfie', { 
+      name, 
+      email, 
+      gender,
+      dateOfBirth,
+      vehicleImage,
+      phoneNumber 
+    });
   };
 
   const showDatePicker = () => {
@@ -43,7 +50,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   const hideDatePicker = (date) => {
     setIsDatePickerVisible(false);
     if (date) {
-      setDateOfBirth(date.toLocaleDateString());
+      setDateOfBirth(date.toLocaleDateString()); // Store date in a readable format
     }
   };
 

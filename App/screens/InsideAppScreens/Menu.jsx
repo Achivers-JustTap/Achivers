@@ -5,6 +5,7 @@ const Menu = ({navigation,route}) => {
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
     }, [navigation]);
+    const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth } = route.params;
 
   return (
     <SafeAreaView>

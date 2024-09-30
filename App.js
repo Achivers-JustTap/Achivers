@@ -66,7 +66,7 @@ export default function App() {
           component={TabNavigationComponent}
           options={{ headerShown: false }} 
         />
-        <Stack.Screen name="ProfileDetailsPage" component={ProfiledetailsPage} />
+        <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>

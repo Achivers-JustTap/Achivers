@@ -5,10 +5,10 @@ import * as Location from 'expo-location';
 import { UserLocationContext } from '../../Context/UserLocationContext';
 
 const HomePage = ({ navigation, route }) => {
-    const { profileImageBase64 } = route.params; // Receive the profile image
     const { location, setLocation } = useContext(UserLocationContext);
     const [errorMsg, setErrorMsg] = useState(null);
     const [searchText, setSearchText] = useState('');
+    const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth } = route.params;
 
     useEffect(() => {
         (async () => {
@@ -35,24 +35,28 @@ const HomePage = ({ navigation, route }) => {
         navigation.setOptions({ headerShown: false });
     }, [navigation]);
 
-    // Function to navigate to ProfileDetailsPage
     const handleProfileImagePress = () => {
-        navigation.navigate('ProfiledetailsPage'); // Ensure 'ProfileDetailsPage' is the correct route name
+        navigation.navigate('ProfiledetailsPage', {
+            profileImageBase64, name, email, phoneNumber, gender, dateOfBirth
+        });
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>JUST TAP!</Text>
-                {profileImageBase64 && (
+                {profileImageBase64 ? (
                     <TouchableOpacity onPress={handleProfileImagePress}>
                         <View style={styles.profileContainer}>
                             <Image
-                                source={{ uri: `data:image/png;base64,${profileImageBase64}` }}
+                                source={{ uri: `data:image/png;base64,${profileImageBase64}` }} 
                                 style={styles.profileImage}
+                                onError={(error) => console.log('Error loading image: ', error)}
                             />
                         </View>
                     </TouchableOpacity>
+                ) : (
+                    <Text>No profile image available</Text>
                 )}
             </View>
 

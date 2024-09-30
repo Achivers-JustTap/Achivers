@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 
 const ProfiledetailsPage = ({ route }) => {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 100,
     height: 100,
-    borderRadius: 50, // Make it circular
+    borderRadius: 50, 
     marginBottom: 20,
   },
   text: {
