@@ -36,7 +36,7 @@ const HomePage = ({ navigation, route }) => {
     }, [navigation]);
 
     const handleProfileImagePress = () => {
-        navigation.navigate('ProfiledetailsPage', {
+        navigation.navigate('ProfileDetailsPage', {
             profileImageBase64, name, email, phoneNumber, gender, dateOfBirth
         });
     };
@@ -112,19 +112,19 @@ const styles = StyleSheet.create({
         textShadowRadius: 4,
     },
     profileContainer: {
-        width: 50,  // Adjust width for the circular container
-        height: 50, // Adjust height for the circular container
-        borderRadius: 25, // Make it circular
-        overflow: 'hidden', // Crop image to fit the container
+        width: 50,  
+        height: 50, 
+        borderRadius: 25, 
+        overflow: 'hidden', 
         borderWidth: 2,
-        borderColor: '#0F4A97', // Optional: border color
+        borderColor: '#0F4A97', 
         justifyContent: 'center',
         alignItems: 'center',
     },
     profileImage: {
         width: 50,
         height: 50,
-        resizeMode: 'cover', // Ensure the image covers the entire circular area
+        resizeMode: 'cover', 
     },
     mapContainer: {
         flex: 1,

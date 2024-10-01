@@ -23,10 +23,17 @@ import RCUploadFromFiles from './App/screens/SignUpScreens/RCUploadFromFiles';
 import RCUpload from './App/screens/SignUpScreens/RCUpload';
 import Processing from './App/screens/SignUpScreens/Processing';
 import FileDetailsScreen from './App/screens/SignUpScreens/FileDetailsScreen';
-import TabNavigationComponent from './App/screens/InsideAppScreens/TabNavigationComponent'; // Import TabNavigation
+import TabNavigationComponent from './App/screens/InsideAppScreens/TabNavigationComponent';
 import { UserLocationProvider } from './App/Context/UserLocationContext';
 import React, { useState } from 'react';
 import ProfiledetailsPage from './App/screens/InsideAppScreens/ProfiledetailsPage';
+import Inbox from './App/screens/InsideAppScreens/MenuScreens/Inbox';
+import ReferFriends from './App/screens/InsideAppScreens/MenuScreens/ReferFriends';
+import Oppurtunities from './App/screens/InsideAppScreens/MenuScreens/Oppurtunities';
+import Earnings from './App/screens/InsideAppScreens/MenuScreens/Earnings';
+import Wallet from './App/screens/InsideAppScreens/MenuScreens/Wallet';
+import Help from './App/screens/InsideAppScreens/MenuScreens/Help';
+import TipsandInfo from './App/screens/InsideAppScreens/MenuScreens/Tips&Info';
 
 const Stack = createStackNavigator();
 
@@ -67,6 +74,13 @@ export default function App() {
           options={{ headerShown: false }} 
         />
         <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
+        <Stack.Screen name="Inbox" component={Inbox} />
+        <Stack.Screen name="ReferFriends" component={ReferFriends} />
+        <Stack.Screen name="Oppurtunities" component={Oppurtunities} />
+        <Stack.Screen name="Earnings" component={Earnings} />
+        <Stack.Screen name="Wallet" component={Wallet} />
+        <Stack.Screen name="Help" component={Help} />
+        <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>

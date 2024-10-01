@@ -10,6 +10,7 @@ const ProfilePicture = ({ navigation, route }) => {
   const [profileImageBase64, setProfileImageBase64] = useState(null);
 
   const handleUpload = (base64Image) => {
+    console.log('Base64 Image:', base64Image);
     // Set the base64 image in the component state
     setProfileImageBase64(base64Image);
 

@@ -23,7 +23,7 @@ const MobileOTPScreen = ({ navigation, route }) => {
       return;
     }
 
- setIsSendingOTP(true);
+   /* setIsSendingOTP(true);
     try {
       const response = await fetch('https://6ab8-2405-201-c425-3854-a936-1e27-553c-27bf.ngrok-free.app/signup/signup', {
         method: 'POST',
@@ -38,16 +38,16 @@ const MobileOTPScreen = ({ navigation, route }) => {
       }
 
       const data = await response.json();
-      console.log('OTP sent successfully:', data);
+      console.log('OTP sent successfully:', data);*/
 
       navigation.navigate('MobileOTPVerifyScreen', { phoneNumber, isRegister: route.params.isRegister,vehicleImage });
 
-    } catch (error) {
+   /* } catch (error) {
       console.error('Error sending OTP:', error);
       alert('Failed to send OTP. Please try again.');
     } finally {
       setIsSendingOTP(false);
-    }
+    }*/
   };
 
   return (
