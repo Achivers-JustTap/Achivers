@@ -5,7 +5,7 @@ import MyCamera from '../../../components/MyCamera';
 const ProfilePicture = ({ navigation, route }) => {
   const { phoneNumber } = route.params;
   const { name,email,gender,dateOfBirth} = route.params;
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   // State to hold the base64 of the profile image
   const [profileImageBase64, setProfileImageBase64] = useState(null);
 
@@ -15,7 +15,7 @@ const ProfilePicture = ({ navigation, route }) => {
     setProfileImageBase64(base64Image);
 
     // Pass the base64 image to the next screen (AadharUpload)
-    navigation.navigate('AadharUpload', {  name,email,gender,dateOfBirth, profileImageBase64: base64Image ,vehicleImage,phoneNumber});
+    navigation.navigate('AadharUpload', {  name,email,gender,dateOfBirth, profileImageBase64: base64Image ,vehicleAltImage,phoneNumber});
   };
 
   const handleRetake = () => {

@@ -6,7 +6,7 @@ const PanCard = ({ navigation }) => {
   const [panNumber, setPanNumber] = useState('');
   
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
   useEffect(() => {
     console.log('PanCard component mounted');
@@ -23,7 +23,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUpload', { panNumber , vehicleImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64});
+    navigation.navigate('PanCardUpload', { panNumber , vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64});
   };
 
   const handleUploadFromFiles = () => {
@@ -32,7 +32,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUploadFromFile', { panNumber, vehicleImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 });
+    navigation.navigate('PanCardUploadFromFile', { panNumber, vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 });
   };
 
   return (

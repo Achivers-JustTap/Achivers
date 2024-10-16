@@ -9,7 +9,7 @@ const DrivingLicense = ({ navigation }) => {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false); // State for date picker visibility
   
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('LicenseImageUpload', { licenseNumber, dateOfBirth1, vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the next screen
+    navigation.navigate('LicenseImageUpload', { licenseNumber, dateOfBirth1, vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the next screen
   };
 
   // Handle uploading Driving License from files
@@ -40,7 +40,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('DrivingLicenseUpload', { licenseNumber, dateOfBirth1,vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to file upload screen
+    navigation.navigate('DrivingLicenseUpload', { licenseNumber, dateOfBirth1,vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to file upload screen
   };
 
   // Show date picker

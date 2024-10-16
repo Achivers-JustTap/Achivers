@@ -7,7 +7,7 @@ const Processing = ({navigation}) => {
   const [loading, setLoading] = useState(true); 
 
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
   //function to fetching verification status from backend
   const fetchVerificationStatus = async () => {
@@ -24,7 +24,7 @@ const Processing = ({navigation}) => {
 
   const handleProceed = () => {
     console.log('Proceeding to the homepage...');
-    navigation.navigate('HomeTabs',{vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); 
+    navigation.navigate('HomeTabs',{vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); 
   };
   return (
     <View style={styles.container}>

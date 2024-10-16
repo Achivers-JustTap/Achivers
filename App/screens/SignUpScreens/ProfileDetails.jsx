@@ -11,7 +11,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const { phoneNumber } = route.params;
 
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -38,7 +38,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
       email, 
       gender,
       dateOfBirth,
-      vehicleImage,
+      vehicleAltImage,
       phoneNumber 
     });
   };

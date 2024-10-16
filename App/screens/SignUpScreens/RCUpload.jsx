@@ -9,7 +9,7 @@ const RcUpload = ({ navigation }) => {
   const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
  
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   // Handle the upload of the front image
@@ -91,7 +91,7 @@ const RcUpload = ({ navigation }) => {
             navigation.navigate('Processing', {
               rcFront: rcFrontImage,
               rcBack: rcBackImage,
-              vehicleImage,
+              vehicleAltImage,
               name,email,gender,dateOfBirth,phoneNumber,profileImageBase64
             });
           }}

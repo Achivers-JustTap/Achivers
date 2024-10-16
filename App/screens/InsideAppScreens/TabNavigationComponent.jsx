@@ -9,40 +9,40 @@ import Activity from './Activity';
 const Tab = createBottomTabNavigator();
 
 function TabNavigationComponent({ route }) {
-    const vehicleImage = route.params?.vehicleImage;
+    const vehicleAltImage = route.params?.vehicleAltImage; 
     const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth } = route.params;
-
+  
     return (
-        <Tab.Navigator
-            initialRouteName="Home"
-            tabBar={(props) => <CustomTabBar {...props} vehicleImage={vehicleImage} />}
-        >
-            <Tab.Screen name="Menu" component={Menu} initialParams={{ name, email, gender, dateOfBirth, phoneNumber, profileImageBase64 }} />
-            <Tab.Screen name="Home" component={HomePage} initialParams={{  name, email, gender, dateOfBirth, phoneNumber, profileImageBase64  }} />
-            <Tab.Screen name="Activity" component={Activity} />
-        </Tab.Navigator>
+      <Tab.Navigator
+        initialRouteName="Home"
+        tabBar={(props) => <CustomTabBar {...props} vehicleAltImage={vehicleAltImage} />}
+      >
+        <Tab.Screen name="Menu" component={Menu} initialParams={{ name, email, gender, dateOfBirth, phoneNumber, profileImageBase64 }} />
+        <Tab.Screen name="Home" component={HomePage} initialParams={{ name, email, gender, dateOfBirth, phoneNumber, profileImageBase64 }} />
+        <Tab.Screen name="Activity" component={Activity} />
+      </Tab.Navigator>
     );
-}
-
-function CustomTabBar({ state, descriptors, navigation, vehicleImage }) {
+  }
+  
+  function CustomTabBar({ state, descriptors, navigation, vehicleAltImage }) {
     const [isOnline, setIsOnline] = useState(false);
     const [animation] = useState(new Animated.Value(0));
-
+  
     const handleCenterButtonPress = () => {
-        const newOnlineState = !isOnline;
-        Animated.timing(animation, {
-            toValue: newOnlineState ? 0 : 1,
-            duration: 1000,
-            easing: Easing.out(Easing.exp),
-            useNativeDriver: true,
-        }).start(() => {
-            setIsOnline(newOnlineState);
-        });
+      const newOnlineState = !isOnline;
+      Animated.timing(animation, {
+        toValue: newOnlineState ? 0 : 1,
+        duration: 1000,
+        easing: Easing.out(Easing.exp),
+        useNativeDriver: true,
+      }).start(() => {
+        setIsOnline(newOnlineState);
+      });
     };
-
+  
     const translateY = animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, -1000],
+      inputRange: [0, 1],
+      outputRange: [0, -1000],
     });
 
     return (
@@ -70,7 +70,7 @@ function CustomTabBar({ state, descriptors, navigation, vehicleImage }) {
                     });
                 };
 
-                // Set icons and labels for all tabs
+              
                 let icon, label;
                 if (route.name === 'Menu') {
                     icon = 'bars';
@@ -79,8 +79,8 @@ function CustomTabBar({ state, descriptors, navigation, vehicleImage }) {
                     icon = 'calendar'; 
                     label = 'Activity';
                 } else if (route.name === 'Home') {
-                    icon = 'home';  // Use the home icon for the Home tab
-                    label = 'Home';  // Use the home label for the Home tab
+                    icon = 'home';  
+                    label = 'Home';  
                 }
 
                 return (
@@ -90,7 +90,7 @@ function CustomTabBar({ state, descriptors, navigation, vehicleImage }) {
                         onLongPress={onLongPress}
                         style={[styles.tabButton, isFocused && styles.focusedTab]}
                     >
-                        {!(state.index === 1 && route.name === 'Home') && ( // Exclude Home tab when focused
+                        {!(state.index === 1 && route.name === 'Home') && ( 
                             <>
                                 <Icon name={icon} size={24} color={isFocused ? 'white' : '#ACC3E1'} />
                                 <Text style={{ color: isFocused ? 'white' : '#ACC3E1' }}>{label}</Text>
@@ -101,12 +101,12 @@ function CustomTabBar({ state, descriptors, navigation, vehicleImage }) {
             })}
 
             {/* Conditionally render the circle button only on the "Home" tab */}
-            {state.index === 1 && ( // Ensure it's shown on other tabs
+            {state.index === 1 && ( 
                 <TouchableOpacity style={styles.centerButton} onPress={handleCenterButtonPress}>
                     <View style={styles.placeholder}>
-                        {vehicleImage && (
+                        {vehicleAltImage && (
                             <Animated.Image
-                                source={vehicleImage}
+                                source={vehicleAltImage}
                                 style={[styles.centerImage, { transform: [{ translateY }] }]}
                             />
                         )}
@@ -161,10 +161,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     centerImage: {
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
         resizeMode: 'contain',
         borderRadius: 15,
+        shadowColor: 'grey',         
+        shadowOffset: {              
+            width: 1, 
+            height: 5,
+        },
+        shadowOpacity: 1,         
+        shadowRadius: 3.84,          
+        elevation: 6,                
     },
     statusText: {
         position: 'absolute',

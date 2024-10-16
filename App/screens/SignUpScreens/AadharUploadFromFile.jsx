@@ -7,7 +7,7 @@ const AadharUploadFromFile = ({ navigation,route }) => {
   const [aadharBackFile, setAadharBackFile] = useState(null); 
 
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,  } = route.params;
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
 
   const handleUploadFile = async (type) => {
     try {
@@ -38,7 +38,7 @@ const AadharUploadFromFile = ({ navigation,route }) => {
       return;
     }
 
-    navigation.navigate('PanCard', {name,email,gender,dateOfBirth,phoneNumber, aadharFrontFile, aadharBackFile, vehicleImage,profileImageBase64 });
+    navigation.navigate('PanCard', {name,email,gender,dateOfBirth,phoneNumber, aadharFrontFile, aadharBackFile, vehicleAltImage,profileImageBase64 });
   };
 
   return (

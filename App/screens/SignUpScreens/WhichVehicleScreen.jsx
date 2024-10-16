@@ -10,19 +10,21 @@ const WhichVehicleScreen = ({ navigation, route }) => {
   }, [navigation]);
 
   const vehicles = [
-    { id: 'bike', name: 'Bike', image: require('../../../assets/images/bike.png') },
-    { id: 'auto', name: 'Auto', image: require('../../../assets/images/auto3.png') },
-    { id: 'car', name: 'Car', image: require('../../../assets/images/car.png') },
+    { id: 'bike', name: 'Moto', image: require('../../../assets/images/moto.png'), altImage: require('../../../assets/images/bike top.png') },
+    { id: 'auto', name: 'Auto', image: require('../../../assets/images/auto.png'), altImage: require('../../../assets/images/auto top1.png') },
+    { id: 'car', name: 'Car', image: require('../../../assets/images/car.png'), altImage: require('../../../assets/images/car top.png') },
   ];
-
+  
   const handleConfirm = () => {
     if (selectedVehicle) {
-      const vehicleImage = vehicles.find(v => v.id === selectedVehicle).image;
-      navigation.navigate('MobileOTPScreen', { isRegister, vehicleImage });
+
+      const vehicleAltImage = vehicles.find(v => v.id === selectedVehicle).altImage;
+      navigation.navigate('MobileOTPScreen', { isRegister, vehicleAltImage });
     } else {
       Alert.alert('Please select a vehicle type');
     }
   };
+  
 
   return (
     <SafeAreaView style={styles.container}>

@@ -6,7 +6,7 @@ const RcNumber = ({ navigation }) => {
   const [RC, setRcNumber] = useState('');
 
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUpload', { RC , vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the screen for taking RC image
+    navigation.navigate('RCUpload', { RC , vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the screen for taking RC image
   };
 
   const handleUploadFromFiles = () => {
@@ -33,7 +33,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUploadFromFiles', { RC,vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 }); // Navigate to the screen for uploading from files
+    navigation.navigate('RCUploadFromFiles', { RC,vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 }); // Navigate to the screen for uploading from files
   };
 
   return (

@@ -5,7 +5,7 @@ const AadharUpload = ({ navigation, route }) => {
  
   const [aadharNumber, setAadharNumber] = useState('');
   
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,  } = route.params;
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharImageUpload', { name,email,gender,dateOfBirth, vehicleImage,phoneNumber,profileImageBase64});
+    navigation.navigate('AadharImageUpload', { name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber,profileImageBase64});
   };
 
   const handleUploadFromFiles = () => {
@@ -32,7 +32,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharUploadFromFile', {  name,email,gender,dateOfBirth, vehicleImage,phoneNumber, profileImageBase64});
+    navigation.navigate('AadharUploadFromFile', {  name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber, profileImageBase64});
   };
 
   return (

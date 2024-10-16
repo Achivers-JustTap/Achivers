@@ -63,7 +63,7 @@ const HomePage = ({ navigation, route }) => {
             <View style={styles.mapContainer}>
                 <AppMapView style={styles.map} />
 
-                {/* Search Box with absolute positioning */}
+                
                 <View style={styles.searchBackground}>
                     <TextInput
                         style={styles.searchBox}

@@ -8,7 +8,7 @@ const DrivingLicenseUpload = ({ navigation }) => {
   const [licenseBackFile, setLicenseBackFile] = useState(null);   // State for Driving License back file
 
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   const handleUploadFile = async (type) => {
@@ -42,7 +42,7 @@ const DrivingLicenseUpload = ({ navigation }) => {
     }
 
     // Navigate to the next screen with both files
-    navigation.navigate('RC', { licenseFrontFile, licenseBackFile, vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 }); // Replace with actual next screen
+    navigation.navigate('RC', { licenseFrontFile, licenseBackFile, vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 }); // Replace with actual next screen
   };
 
   return (

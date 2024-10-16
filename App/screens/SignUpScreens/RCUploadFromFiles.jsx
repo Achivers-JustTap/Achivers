@@ -8,7 +8,7 @@ const RCUploadFromFiles = ({ navigation }) => {
   const [rcBackFile, setRcBackFile] = useState(null);    // State for RC back file
   
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
 
   const handleUploadFile = async (type) => {
@@ -40,7 +40,7 @@ const RCUploadFromFiles = ({ navigation }) => {
     }
 
     // Navigate to the next screen with both files
-    navigation.navigate('Processing', { rcFrontFile, rcBackFile,vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Replace 'NextScreen' with the actual next screen name
+    navigation.navigate('Processing', { rcFrontFile, rcBackFile,vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Replace 'NextScreen' with the actual next screen name
   };
 
   return (

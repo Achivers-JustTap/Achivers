@@ -9,7 +9,7 @@ const PanCardUpload = ({ navigation }) => {
   const [isCapturing, setIsCapturing] = useState(null); // Tracks which image (front or back) is being captured
    
   const route = useRoute();
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
   const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
   // Pan Front Image Upload
   const handleFrontUpload = (base64Image) => {
@@ -63,7 +63,7 @@ const PanCardUpload = ({ navigation }) => {
           {panFrontImage && panBackImage && (
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={() => navigation.navigate('DriverLicense',{vehicleImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64})}
+              onPress={() => navigation.navigate('DriverLicense',{vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64})}
             >
               <Text style={styles.submitText}>Next</Text>
             </TouchableOpacity>

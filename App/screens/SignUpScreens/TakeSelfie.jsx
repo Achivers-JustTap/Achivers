@@ -5,7 +5,7 @@ const Takeselfie = ({ navigation, route }) => {
   const { phoneNumber } = route.params;
   const { name,email,gender,dateOfBirth} = route.params;
 
-  const vehicleImage = route.params?.vehicleImage;
+  const vehicleAltImage = route.params?.vehicleAltImage;
 
   useEffect(() => {
     console.log('Takeselfie component mounted');
@@ -13,7 +13,7 @@ const Takeselfie = ({ navigation, route }) => {
   }, [navigation]);
 
   const handleTakeSelfie = () => {
-    navigation.navigate('ProfileImageScreen', { name,email,gender,dateOfBirth,vehicleImage,phoneNumber});
+    navigation.navigate('ProfileImageScreen', { name,email,gender,dateOfBirth,vehicleAltImage,phoneNumber});
   };
 
   return (
