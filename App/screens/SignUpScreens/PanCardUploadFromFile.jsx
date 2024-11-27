@@ -8,7 +8,7 @@ const PanCardUploadFromFile = ({ navigation, route }) => {
   const [panBackFile, setPanBackFile] = useState(null);    // State for PAN back file
  
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const { selectedVehicleType: selectedVehicleName ,panFrontImage,panBackImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   const handleUploadFile = async (type) => {
     try {
@@ -39,7 +39,7 @@ const PanCardUploadFromFile = ({ navigation, route }) => {
     }
 
     // Navigate to the next screen with both files and PAN number
-    navigation.navigate('DriverLicense', { panFrontFile, panBackFile, panNumber, vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64});
+    navigation.navigate('DriverLicense', { selectedVehicleType: selectedVehicleName ,vehicleAltImage,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
   };
 
   return (

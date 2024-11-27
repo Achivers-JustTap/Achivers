@@ -10,15 +10,15 @@ const Tab = createBottomTabNavigator();
 
 function TabNavigationComponent({ route }) {
     const vehicleAltImage = route.params?.vehicleAltImage; 
-    const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth } = route.params;
+    const {RC,rcFrontImage,selectedVehicleType: selectedVehicleName ,rcBackImage,rcFrontFile,rcBackFile, panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
   
     return (
       <Tab.Navigator
         initialRouteName="Home"
         tabBar={(props) => <CustomTabBar {...props} vehicleAltImage={vehicleAltImage} />}
       >
-        <Tab.Screen name="Menu" component={Menu} initialParams={{ name, email, gender, dateOfBirth, phoneNumber, profileImageBase64 }} />
-        <Tab.Screen name="Home" component={HomePage} initialParams={{ name, email, gender, dateOfBirth, phoneNumber, profileImageBase64 }} />
+        <Tab.Screen name="Menu" component={Menu} initialParams={{RC,selectedVehicleType: selectedVehicleName ,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile }} />
+        <Tab.Screen name="Home" component={HomePage} initialParams={{RC,rcFrontImage,selectedVehicleType: selectedVehicleName ,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}} />
         <Tab.Screen name="Activity" component={Activity} />
       </Tab.Navigator>
     );
@@ -100,7 +100,6 @@ function TabNavigationComponent({ route }) {
                 );
             })}
 
-            {/* Conditionally render the circle button only on the "Home" tab */}
             {state.index === 1 && ( 
                 <TouchableOpacity style={styles.centerButton} onPress={handleCenterButtonPress}>
                     <View style={styles.placeholder}>

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';  
 
 const Menu = ({ navigation, route }) => {
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth } = route.params;
+  const vehicleAltImage = route.params?.vehicleAltImage; 
+  const { RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   const [rating, setRating] = useState(0);
 
@@ -12,7 +13,6 @@ const Menu = ({ navigation, route }) => {
     { id: '2', title: 'Refer Friends',route:'ReferFriends' },
     { id: '3', title: 'Oppurtunities',route:'Oppurtunities'},
     { id: '4', title: 'Earnings',route:'Earnings' },
-    { id: '5', title: 'Wallet',route:'Wallet' },
     { id: '6', title: 'Account',route:'ProfiledetailsPage'},
     { id: '7', title: 'Help',route:'Help'},
     { id: '8', title: 'Tips & Info',route:'TipsandInfo' },
@@ -24,7 +24,7 @@ const Menu = ({ navigation, route }) => {
 
   const handleProfileImagePress = () => {
     navigation.navigate('ProfiledetailsPage', {
-      profileImageBase64, name, email, phoneNumber, gender, dateOfBirth
+      RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile
     });
   };
 
@@ -66,7 +66,7 @@ const Menu = ({ navigation, route }) => {
           <TouchableOpacity onPress={handleProfileImagePress}>
             <View style={styles.profileContainer}>
               <Image
-                source={{ uri: `data:image/png;base64,${profileImageBase64}` }}
+                source={{ uri: profileImageBase64 }} 
                 style={styles.profileImage}
                 onError={(error) => console.log('Error loading image: ', error)}
               />
@@ -77,7 +77,6 @@ const Menu = ({ navigation, route }) => {
         )}
       </View>
 
-      {/* FlatList Component */}
       <FlatList
         data={DATA}
         renderItem={renderItem}
@@ -130,8 +129,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImage: {
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
     resizeMode: 'cover',
   },
   itemContainer: {

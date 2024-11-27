@@ -10,7 +10,7 @@ const AadharImageUpload = ({ navigation }) => {
    
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,aadharNumber,selectedVehicleType: selectedVehicleName  } = route.params;
   // Handle the upload of the front image
   const handleFrontUpload = (base64Image) => {
     setAadharFrontImage(base64Image);
@@ -89,7 +89,8 @@ const AadharImageUpload = ({ navigation }) => {
               aadharFront: aadharFrontImage,
               aadharBack: aadharBackImage,
               vehicleAltImage,
-              name,email,gender,dateOfBirth,phoneNumber,profileImageBase64
+              name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharFront: aadharFrontImage,
+              aadharBack: aadharBackImage,aadharNumber,selectedVehicleType: selectedVehicleName 
             });
           }}
         >

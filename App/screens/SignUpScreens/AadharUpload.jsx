@@ -6,7 +6,7 @@ const AadharUpload = ({ navigation, route }) => {
   const [aadharNumber, setAadharNumber] = useState('');
   
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,  } = route.params;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,selectedVehicleType: selectedVehicleName   } = route.params;
 
   useEffect(() => {
     console.log('AadharUpload component mounted');
@@ -23,7 +23,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharImageUpload', { name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber,profileImageBase64});
+    navigation.navigate('AadharImageUpload', { name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber,profileImageBase64,aadharNumber,selectedVehicleType: selectedVehicleName });
   };
 
   const handleUploadFromFiles = () => {
@@ -32,7 +32,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharUploadFromFile', {  name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber, profileImageBase64});
+    navigation.navigate('AadharUploadFromFile', {  name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber, profileImageBase64,aadharNumber,selectedVehicleType: selectedVehicleName });
   };
 
   return (

@@ -9,7 +9,7 @@ const RCUploadFromFiles = ({ navigation }) => {
   
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const {RC,rcFrontImage,rcBackImage , selectedVehicleType: selectedVehicleName ,panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
 
   const handleUploadFile = async (type) => {
     try {
@@ -40,7 +40,7 @@ const RCUploadFromFiles = ({ navigation }) => {
     }
 
     // Navigate to the next screen with both files
-    navigation.navigate('Processing', { rcFrontFile, rcBackFile,vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Replace 'NextScreen' with the actual next screen name
+    navigation.navigate('Processing', { selectedVehicleType: selectedVehicleName ,RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile }); // Replace 'NextScreen' with the actual next screen name
   };
 
   return (

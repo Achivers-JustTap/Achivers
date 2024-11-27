@@ -14,6 +14,7 @@ const Takeselfie = ({ navigation, route }) => {
 
   const handleTakeSelfie = () => {
     navigation.navigate('ProfileImageScreen', { name,email,gender,dateOfBirth,vehicleAltImage,phoneNumber});
+  
   };
 
   return (

@@ -1,16 +1,16 @@
-import { useRoute } from '@react-navigation/native';
+import { useRoute, validatePathConfig } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image, ScrollView } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const DrivingLicense = ({ navigation }) => {
   const [licenseNumber, setLicenseNumber] = useState(''); // State for Driving License number
-  const [dateOfBirth1, setDateOfBirth] = useState(''); // State for Date of Birth
+  const [validTillDate, setValidTillDate] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false); // State for date picker visibility
   
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const {selectedVehicleType: selectedVehicleName ,panNumber,panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   useEffect(() => {
     console.log('DrivingLicense component mounted');
@@ -20,7 +20,7 @@ const DrivingLicense = ({ navigation }) => {
   // Validation for Driving License number
   const validateLicenseNumber = () => {
     if (!licenseNumber.trim()) return 'Please enter your Driving License Number.';
-    if (!dateOfBirth1.trim()) return 'Please select your Date of Birth.';
+    if (!validTillDate.trim()) return 'Please select your Date of Birth.';
   };
 
   // Handle taking a Driving License image
@@ -30,7 +30,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('LicenseImageUpload', { licenseNumber, dateOfBirth1, vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the next screen
+    navigation.navigate('LicenseImageUpload', {selectedVehicleType: selectedVehicleName , licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
   };
 
   // Handle uploading Driving License from files
@@ -40,7 +40,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('DrivingLicenseUpload', { licenseNumber, dateOfBirth1,vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to file upload screen
+    navigation.navigate('DrivingLicenseUpload', { selectedVehicleType: selectedVehicleName ,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
   };
 
   // Show date picker
@@ -55,62 +55,68 @@ const DrivingLicense = ({ navigation }) => {
 
   // Handle date selection
   const handleConfirm = (date) => {
-    setDateOfBirth(date.toLocaleDateString()); // Format date as desired
+    setValidTillDate(date.toLocaleDateString()); // Format date as desired
     hideDatePicker();
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Upload Your Driver License</Text>
+      <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+        <Text style={styles.title}>Upload Your Driver Licence</Text>
 
-      <Image source={require('../../../assets/images/driverlicense.png')} style={styles.image} resizeMode="contain" />
+        {/* Container for side-by-side images */}
+        <View style={styles.imageContainer}>
+          <Image source={require('../../../assets/images/driverlicencefront.png')} style={styles.image1} resizeMode="contain" />
+          <Image source={require('../../../assets/images/driverlicenceback.png')} style={styles.image2} resizeMode="contain" />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.tapText}>
-          <Text style={styles.justTapText}>Just Tap!</Text>
-          {' '}to enter your DL number and upload image
-        </Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.tapText}>
+            <Text style={styles.justTapText}>Just Tap!</Text>
+            {' '}to enter your DL number and upload image
+          </Text>
 
-        <Text style={styles.label}>DL Number</Text>
-        
-        <TextInput
-          style={styles.input}
-          placeholder="DL00000000000"
-          value={licenseNumber}
-          onChangeText={setLicenseNumber}
-          keyboardType="default"
-        />
-
-        <Text style={styles.DOBtext}>Date of Birth</Text>
-
-        <TouchableOpacity onPress={showDatePicker}>
+          <Text style={styles.label}>DL Number</Text>
+          
           <TextInput
-            style={styles.DOB}
-            placeholder="Select Date of Birth"
-            value={dateOfBirth1 || ''}
-            editable={false}
+            style={styles.input}
+            placeholder="TS000000000000000"
+            value={licenseNumber}
+            onChangeText={setLicenseNumber}
+            keyboardType="default"
           />
-        </TouchableOpacity>
 
-        <DateTimePicker
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-        />
-      </View>
+          <Text style={styles.ValidTilltext}>Valid Till</Text>
 
-      <View style={styles.buttonContainer}>
-        {/* Button to Take Driving License Image */}
-        <TouchableOpacity style={styles.button} onPress={handleTakeLicenseImage}>
-          <Text style={styles.buttonText}>Take Driving License Image</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={showDatePicker}>
+            <TextInput
+              style={styles.validTill}
+              placeholder="Select Date"
+              value={validTillDate || ''}
+              editable={false}
+            />
+          </TouchableOpacity>
 
-        {/* Button to Upload Driving License from Files */}
-        <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
-          <Text style={styles.buttonText}>Upload from Files</Text>
-        </TouchableOpacity>
-      </View>
+          <DateTimePicker
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          {/* Button to Take Driving License Image */}
+          <TouchableOpacity style={styles.button} onPress={handleTakeLicenseImage}>
+            <Text style={styles.buttonText}>Take Driving License Image</Text>
+          </TouchableOpacity>
+
+          {/* Button to Upload Driving License from Files */}
+          <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
+            <Text style={styles.buttonText}>Upload from Files</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -118,8 +124,6 @@ const DrivingLicense = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     backgroundColor: '#0F4A97',
   },
   title: {
@@ -132,15 +136,24 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 10,
   },
-  image: {
+  imageContainer: {
+    justifyContent: 'center', 
+    alignItems: 'center',
+    marginTop: -20,
+  },
+  image1: {
     width: 300,
-    height: 270,
+    height: 240, 
+  },
+  image2: {
+    width: 300,
+    height: 240,
+    marginTop: -50,
   },
   tapText: {
     color: 'white',
     paddingVertical: 5,
-    paddingRight:10,
-    paddingLeft:10,
+    paddingHorizontal: 10,
     textAlign: 'center',
   },
   justTapText: {
@@ -154,7 +167,7 @@ const styles = StyleSheet.create({
     textAlign: 'left', 
     width: '80%',
   },
-  DOBtext:{
+  ValidTilltext: {
     color: 'white',
     fontSize: 16,
     marginBottom: 5,
@@ -175,14 +188,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     color: 'black',
   },
-  DOB: {
+  validTill: {
     width: '80%',
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 20, 
     backgroundColor: 'white',
     color: 'black',
   },
@@ -190,14 +202,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '80%',
-    marginBottom: 20,
+    marginTop: 30, 
   },
   button: {
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 8,
     flex: 1,
-    marginTop: 80,
     marginBottom: 30,
     marginHorizontal: 5,
   },

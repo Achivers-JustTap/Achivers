@@ -8,7 +8,7 @@ const LicenseImage = ({ navigation,route }) => {
   const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
   
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const {  licenseNumber, validTillDate, panNumber ,selectedVehicleType: selectedVehicleName , panFrontImage,panBackImage,panFrontFile,panBackFile,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   // Handle the upload of the front image
   const handleFrontUpload = (base64Image) => {
@@ -87,8 +87,9 @@ const LicenseImage = ({ navigation,route }) => {
             navigation.navigate('RC', {
               licenseFront: licenseFrontImage,
               licenseBack: licenseBackImage,
-              vehicleAltImage,
-              name,email,gender,dateOfBirth,phoneNumber,profileImageBase64
+              selectedVehicleType: selectedVehicleName ,
+              licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,
+              aadharBackFile
             });
           }}
         >

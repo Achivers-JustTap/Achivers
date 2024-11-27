@@ -7,7 +7,7 @@ const RcNumber = ({ navigation }) => {
 
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const { licenseFrontFile,selectedVehicleType: selectedVehicleName ,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -24,7 +24,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUpload', { RC , vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); // Navigate to the screen for taking RC image
+    navigation.navigate('RCUpload', { selectedVehicleType: selectedVehicleName ,RC,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}); 
   };
 
   const handleUploadFromFiles = () => {
@@ -33,7 +33,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUploadFromFiles', { RC,vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 }); // Navigate to the screen for uploading from files
+    navigation.navigate('RCUploadFromFiles', {selectedVehicleType: selectedVehicleName ,RC,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}); // Navigate to the screen for uploading from files
   };
 
   return (

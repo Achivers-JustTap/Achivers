@@ -4,12 +4,14 @@ import * as DocumentPicker from 'expo-document-picker';
 import { useRoute } from '@react-navigation/native';
 
 const DrivingLicenseUpload = ({ navigation }) => {
-  const [licenseFrontFile, setLicenseFrontFile] = useState(null); // State for Driving License front file
-  const [licenseBackFile, setLicenseBackFile] = useState(null);   // State for Driving License back file
+  const [licenseFrontFile, setLicenseFrontFile] = useState(null); 
+  const [licenseBackFile, setLicenseBackFile] = useState(null);   
 
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const {licenseFront: licenseFrontImage,
+    licenseBack: licenseBackImage,selectedVehicleType: selectedVehicleName ,
+    licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   const handleUploadFile = async (type) => {
     try {
@@ -42,8 +44,9 @@ const DrivingLicenseUpload = ({ navigation }) => {
     }
 
     // Navigate to the next screen with both files
-    navigation.navigate('RC', { licenseFrontFile, licenseBackFile, vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 }); // Replace with actual next screen
-  };
+    navigation.navigate('RC', {licenseFrontFile,licenseBackFile,licenseFront: licenseFrontImage,
+                               licenseBack: licenseBackImage,selectedVehicleType: selectedVehicleName ,
+                               licenseNumber, validTillDate,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});  };
 
   return (
     <View style={styles.container}>

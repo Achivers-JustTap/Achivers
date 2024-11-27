@@ -10,7 +10,7 @@ const PanCardUpload = ({ navigation }) => {
    
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const {panNumber,selectedVehicleType: selectedVehicleName  ,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
   // Pan Front Image Upload
   const handleFrontUpload = (base64Image) => {
     setPanFrontImage(base64Image);
@@ -63,7 +63,7 @@ const PanCardUpload = ({ navigation }) => {
           {panFrontImage && panBackImage && (
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={() => navigation.navigate('DriverLicense',{vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64})}
+              onPress={() => navigation.navigate('DriverLicense',{panNumber,selectedVehicleType: selectedVehicleName  , panFrontImage,panBackImage,panFrontFile,panBackFile,vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile})}
             >
               <Text style={styles.submitText}>Next</Text>
             </TouchableOpacity>

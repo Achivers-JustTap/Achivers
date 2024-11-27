@@ -10,7 +10,7 @@ const RcUpload = ({ navigation }) => {
  
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const {RC,rcFrontFile,selectedVehicleType: selectedVehicleName ,rcBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber ,panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   // Handle the upload of the front image
   const handleFrontUpload = (base64Image) => {
@@ -91,8 +91,7 @@ const RcUpload = ({ navigation }) => {
             navigation.navigate('Processing', {
               rcFront: rcFrontImage,
               rcBack: rcBackImage,
-              vehicleAltImage,
-              name,email,gender,dateOfBirth,phoneNumber,profileImageBase64
+              vehicleAltImage,selectedVehicleType: selectedVehicleName , RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile
             });
           }}
         >

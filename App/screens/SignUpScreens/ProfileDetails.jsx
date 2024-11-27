@@ -9,7 +9,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
   const [gender, setGender] = useState(''); 
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const { phoneNumber } = route.params;
+  const { phoneNumber,selectedVehicleType: selectedVehicleName  } = route.params;
 
   const vehicleAltImage = route.params?.vehicleAltImage;
 
@@ -32,7 +32,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
       return;
     }
 
-    console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber });
+    console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber,selectedVehicleType: selectedVehicleName  });
     navigation.navigate('TakeSelfie', { 
       name, 
       email, 
@@ -61,7 +61,7 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
       {/* Name Input */}
       <TextInput 
         style={styles.input}
-        placeholder="Enter Name"
+        placeholder="Enter Full Name"
         value={name}
         onChangeText={(text) => setName(text)}
       />
@@ -79,10 +79,10 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
       <View style={styles.input}>
         <Picker
           selectedValue={gender}
-          style={styles.picker} // Adjust the picker style
+          style={styles.picker} 
           onValueChange={(itemValue) => setGender(itemValue)}
         >
-          <Picker.Item label="Select Gender" value="" />
+          <Picker.Item label="Select Your Gender" value="" />
           <Picker.Item label="Male" value="Male" />
           <Picker.Item label="Female" value="Female" />
           <Picker.Item label="Other" value="Other" />

@@ -31,16 +31,27 @@ import Inbox from './App/screens/InsideAppScreens/MenuScreens/Inbox';
 import ReferFriends from './App/screens/InsideAppScreens/MenuScreens/ReferFriends';
 import Oppurtunities from './App/screens/InsideAppScreens/MenuScreens/Oppurtunities';
 import Earnings from './App/screens/InsideAppScreens/MenuScreens/Earnings';
-import Wallet from './App/screens/InsideAppScreens/MenuScreens/Wallet';
 import Help from './App/screens/InsideAppScreens/MenuScreens/Help';
 import TipsandInfo from './App/screens/InsideAppScreens/MenuScreens/Tips&Info';
+import BestPerformance from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/BestPerformance';
+import IDCard from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/IDCard';
+import Documents from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents';
+import LanguageSetting from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/LanguageSetting';
+import AadharCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharCard_List';
+import PanCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanCard_List';
+import DriverLicence_list from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/DriverLicence_list';
+import RC_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RC_List';
+import Wallet from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Wallet';
+import History from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/History';
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [location, setLocation] = useState(null); // Initialize location state
-
+  
   return (
+   
     <UserLocationProvider>
       <NavigationContainer>
         <Stack.Navigator>
@@ -74,16 +85,32 @@ export default function App() {
           options={{ headerShown: false }} 
         />
         <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
+        <Stack.Screen name="BestPerformance" component={BestPerformance} />
+        <Stack.Screen name="IDCard" component={IDCard} />
+        <Stack.Screen name="Documents" component={Documents} />
+        <Stack.Screen name="LanguageSettings" component={LanguageSetting} />
         <Stack.Screen name="Inbox" component={Inbox} />
         <Stack.Screen name="ReferFriends" component={ReferFriends} />
         <Stack.Screen name="Oppurtunities" component={Oppurtunities} />
-        <Stack.Screen name="Earnings" component={Earnings} />
-        <Stack.Screen name="Wallet" component={Wallet} />
+        <Stack.Screen 
+          name="Earnings" 
+          component={Earnings} 
+          options={{ headerShown: false }} 
+        />
+ 
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
+        
+        <Stack.Screen name="AadharCard_List" component={AadharCard_List} />
+        <Stack.Screen name="PanCard_List" component={PanCard_List} />
+        <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} />
+        <Stack.Screen name="RC_List" component={RC_List} />
+        <Stack.Screen name="Wallet" component={Wallet}  options={{ headerShown: false }} />
+        <Stack.Screen name="History" component={History}  options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>
+  
   );
 }
 

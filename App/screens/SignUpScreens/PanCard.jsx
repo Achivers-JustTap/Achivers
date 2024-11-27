@@ -7,7 +7,8 @@ const PanCard = ({ navigation }) => {
   
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,aadharFrontFile, aadharBackFile,aadharNumber,aadharFront,
+    aadharBack,selectedVehicleType: selectedVehicleName   } = route.params;
   useEffect(() => {
     console.log('PanCard component mounted');
     navigation.setOptions({ headerShown: false });
@@ -23,7 +24,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUpload', { panNumber , vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64});
+    navigation.navigate('PanCardUpload', { selectedVehicleType: selectedVehicleName ,panNumber , vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
   };
 
   const handleUploadFromFiles = () => {
@@ -32,7 +33,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUploadFromFile', { panNumber, vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64 });
+    navigation.navigate('PanCardUploadFromFile', { selectedVehicleType: selectedVehicleName ,panNumber , vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
   };
 
   return (

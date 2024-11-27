@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Wallet = () => {
+const LanguageSetting = () => {
   return (
     <View>
-      <Text>Wallet</Text>
+      <Text>LanguageSetting</Text>
     </View>
   )
 }
 
-export default Wallet
+export default LanguageSetting

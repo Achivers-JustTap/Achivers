@@ -6,9 +6,13 @@ const Processing = ({navigation}) => {
   const [verificationStatus, setVerificationStatus] = useState('processing'); 
   const [loading, setLoading] = useState(true); 
 
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
+
   const route = useRoute();
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth  } = route.params;
+  const {RC,selectedVehicleType: selectedVehicleName ,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile, panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
   //function to fetching verification status from backend
   const fetchVerificationStatus = async () => {
     
@@ -24,7 +28,7 @@ const Processing = ({navigation}) => {
 
   const handleProceed = () => {
     console.log('Proceeding to the homepage...');
-    navigation.navigate('HomeTabs',{vehicleAltImage,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64}); 
+    navigation.navigate('HomeTabs',{RC,selectedVehicleType: selectedVehicleName ,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}); 
   };
   return (
     <View style={styles.container}>
