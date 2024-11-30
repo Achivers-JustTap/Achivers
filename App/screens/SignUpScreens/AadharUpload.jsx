@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAadharDetails } from '../store_management/actions/documentActions';
 
-const AadharUpload = ({ navigation, route }) => {
-  const { name } = route.params;
+const AadharUpload = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const name = useSelector((state) => state.documents.aadhar.number);
+  const documents = useSelector((state) => state.documents);
   const [aadharNumber, setAadharNumber] = useState('');
 
   useEffect(() => {
@@ -20,7 +24,9 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
+    dispatch(setAadharDetails({ number: aadharNumber }));
     navigation.navigate('AadharImageUpload', { name });
+    console.log(" documents ", name)
   };
 
   const handleUploadFromFiles = () => {
@@ -29,6 +35,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
+    dispatch(setAadharDetails({ number: aadharNumber }));
     navigation.navigate('AadharUploadFromFile', { name });
   };
 

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import { useDispatch } from 'react-redux';
+import { setAadharDetails } from '../store_management/actions/documentActions';
 
 const AadharUploadFromFile = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [aadharFrontFile, setAadharFrontFile] = useState(null);  // State for Aadhar front file
   const [aadharBackFile, setAadharBackFile] = useState(null);   // State for Aadhar back file
 
@@ -14,7 +17,6 @@ const AadharUploadFromFile = ({ navigation }) => {
       });
       console.log(" Result ", result)
       if (!result.canceled) {
-        console.log(" Result inside if ", result)
         const file = result.assets[0];  // Get the selected file
         if (type === 'front') {
           setAadharFrontFile(file);
@@ -35,8 +37,14 @@ const AadharUploadFromFile = ({ navigation }) => {
       return;
     }
 
-    // Navigate to the next screen with both files
-    navigation.navigate('PanCard', { aadharFrontFile, aadharBackFile });
+    // Dispatch the action to update the Aadhar details in the store
+    dispatch(setAadharDetails({
+      frontImage: aadharFrontFile,
+      backImage: aadharBackFile,
+    }));
+
+    // Navigate to the next screen
+    navigation.navigate('PanCard');
   };
 
   return (

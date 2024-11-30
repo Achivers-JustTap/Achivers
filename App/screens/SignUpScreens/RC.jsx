@@ -1,7 +1,10 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setRcDetails } from '../store_management/actions/documentActions';
 
 const RcNumber = ({ navigation }) => {
+  const  dispatch = useDispatch();
   const [RC, setRcNumber] = useState('');
 
   useEffect(() => {
@@ -19,7 +22,8 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUpload', { RC }); // Navigate to the screen for taking RC image
+    dispatch(setRcDetails({ number: RC }));
+    navigation.navigate('RCUpload'); // Navigate to the screen for taking RC image
   };
 
   const handleUploadFromFiles = () => {
@@ -28,6 +32,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
+    dispatch(setRcDetails({ number: RC }));
     navigation.navigate('RCUploadFromFiles', { RC }); // Navigate to the screen for uploading from files
   };
 

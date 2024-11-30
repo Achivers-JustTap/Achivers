@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
+import {useDispatch } from 'react-redux';
+import { setAadharDetails } from '../store_management/actions/documentActions';
 
 const AadharImageUpload = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [aadharFrontImage, setAadharFrontImage] = useState(null);  // State for front image
   const [aadharBackImage, setAadharBackImage] = useState(null);   // State for back image
   const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
@@ -41,6 +44,22 @@ const AadharImageUpload = ({ navigation }) => {
     );
   }
 
+  const proceedToNext = () => {
+    if (!aadharFrontImage || !aadharBackImage) {
+      Alert.alert('Error', 'Please capture both Aadhar front and back images.');
+      return;
+    }
+
+    // Dispatch the action to update the Aadhar details in the store
+    dispatch(setAadharDetails({
+      frontImage: aadharFrontImage,
+      backImage: aadharBackImage,
+    }));
+
+    // Navigate to the next screen
+    navigation.navigate('PanCard');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Upload Aadhar Card</Text>
@@ -77,16 +96,7 @@ const AadharImageUpload = ({ navigation }) => {
 
       {/* Proceed button once both images are captured */}
       {aadharFrontImage && aadharBackImage && (
-        <TouchableOpacity
-          style={styles.proceedButton}
-          onPress={() => {
-            // Navigate to the next screen with both images
-            navigation.navigate('PanCard', {
-              aadharFront: aadharFrontImage,
-              aadharBack: aadharBackImage,
-            });
-          }}
-        >
+        <TouchableOpacity style={styles.proceedButton} onPress={proceedToNext}>
           <Text style={styles.buttonText}>Proceed</Text>
         </TouchableOpacity>
       )}

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
+import {useDispatch } from 'react-redux';
+import { setPanDetails } from '../store_management/actions/documentActions';
 
 const PanCardUpload = ({ navigation }) => {
   const [panFrontImage, setPanFrontImage] = useState(null);
   const [panBackImage, setPanBackImage] = useState(null);
   const [isCapturing, setIsCapturing] = useState(null); // Tracks which image (front or back) is being captured
+  const dispatch = useDispatch();
 
   // Pan Front Image Upload
   const handleFrontUpload = (base64Image) => {
@@ -22,6 +25,22 @@ const PanCardUpload = ({ navigation }) => {
   const handleRetake = () => {
     console.log('Retake button pressed');
     setIsCapturing(null);
+  };
+  
+  const proceedToNext = () => {
+    if (!panFrontImage || !panBackImage) {
+      Alert.alert('Error', 'Please capture both Pan front and back images.');
+      return;
+    }
+
+    // Dispatch the action to update the Aadhar details in the store
+    dispatch(setPanDetails({
+      frontImage: panFrontImage,
+      backImage: panFrontImage,
+    }));
+
+    // Navigate to the next screen
+    navigation.navigate('DriverLicense')
   };
 
   return (
@@ -59,7 +78,7 @@ const PanCardUpload = ({ navigation }) => {
           {panFrontImage && panBackImage && (
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={() => navigation.navigate('DriverLicense')}
+              onPress={proceedToNext}
             >
               <Text style={styles.submitText}>Next</Text>
             </TouchableOpacity>

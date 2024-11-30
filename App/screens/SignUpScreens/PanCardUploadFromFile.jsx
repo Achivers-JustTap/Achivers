@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import { useDispatch } from 'react-redux';
+import { setPanDetails } from '../store_management/actions/documentActions';
 
 const PanCardUploadFromFile = ({ navigation, route }) => {
+  const dispatch = useDispatch();
   const { panNumber } = route.params;  // Get the PAN number from the route params
   const [panFrontFile, setPanFrontFile] = useState(null);  // State for PAN front file
   const [panBackFile, setPanBackFile] = useState(null);    // State for PAN back file
@@ -35,9 +38,16 @@ const PanCardUploadFromFile = ({ navigation, route }) => {
       return;
     }
 
+    // Dispatch the action to update the Aadhar details in the store
+    dispatch(setAadharDetails({
+      frontImage: panFrontFile,
+      backImage: panBackFile,
+    }));
+
     // Navigate to the next screen with both files and PAN number
     navigation.navigate('DriverLicense', { panFrontFile, panBackFile, panNumber });
   };
+  
 
   return (
     <View style={styles.container}>

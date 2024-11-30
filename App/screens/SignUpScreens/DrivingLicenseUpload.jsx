@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import { useSelector,useDispatch } from 'react-redux';
+import { setDrivingLicenseDetails } from '../store_management/actions/documentActions';
 
 const DrivingLicenseUpload = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [licenseFrontFile, setLicenseFrontFile] = useState(null); // State for Driving License front file
   const [licenseBackFile, setLicenseBackFile] = useState(null);   // State for Driving License back file
 
@@ -36,10 +39,16 @@ const DrivingLicenseUpload = ({ navigation }) => {
       return;
     }
 
+    // Dispatch the action to update the Aadhar details in the store
+    dispatch(setAadharDetails({
+      frontImage: licenseFrontFile,
+      backImage: licenseBackFile,
+    }));
+
     // Navigate to the next screen with both files
     navigation.navigate('RC', { licenseFrontFile, licenseBackFile }); // Replace with actual next screen
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Upload Driving License</Text>

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
+import {useDispatch } from 'react-redux';
+import { setDrivingLicenseDetails } from '../store_management/actions/documentActions';
 
 const LicenseImage = ({ navigation,route }) => {
+  const dispatch = useDispatch();
   const [licenseFrontImage, setLicenseFrontImage] = useState(null);  // State for front image
   const [licenseBackImage, setLicenseBackImage] = useState(null);   // State for back image
   const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
@@ -85,6 +88,12 @@ const LicenseImage = ({ navigation,route }) => {
               licenseFront: licenseFrontImage,
               licenseBack: licenseBackImage,
             });
+             // Dispatch the action to update the Aadhar details in the store
+    dispatch(setDrivingLicenseDetails({
+      frontImage: licenseFrontImage,
+      backImage: licenseBackImage,
+    }));
+
           }}
         >
           <Text style={styles.buttonText}>Proceed</Text>

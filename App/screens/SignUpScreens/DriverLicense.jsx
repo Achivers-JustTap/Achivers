@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { useSelector, useDispatch } from 'react-redux';
+import { setDrivingLicenseDetails } from '../store_management/actions/documentActions';
 
 const DrivingLicense = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [licenseNumber, setLicenseNumber] = useState(''); // State for Driving License number
   const [dateOfBirth, setDateOfBirth] = useState(''); // State for Date of Birth
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false); // State for date picker visibility
@@ -25,6 +28,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
+    dispatch(setDrivingLicenseDetails({ number: licenseNumber, dateOfBirth:dateOfBirth }));
     navigation.navigate('LicenseImageUpload', { licenseNumber, dateOfBirth }); // Navigate to the next screen
   };
 
@@ -35,6 +39,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
+    dispatch(setDrivingLicenseDetails({ number: licenseNumber, dateOfBirth:dateOfBirth }));
     navigation.navigate('DrivingLicenseUpload', { licenseNumber, dateOfBirth }); // Navigate to file upload screen
   };
 

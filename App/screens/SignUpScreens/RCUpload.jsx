@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
+import {useSelector,useDispatch } from 'react-redux';
+import { setRcDetails } from '../store_management/actions/documentActions';
 
 const RcUpload = ({ navigation }) => {
+  const user = useSelector((state) => state.user);
+  const documents = useSelector((state) => state.documents);
+  const dispatch = useDispatch();
   const [rcFrontImage, setRcFrontImage] = useState(null);  // State for front image
   const [rcBackImage, setRcBackImage] = useState(null);   // State for back image
   const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
@@ -83,10 +88,12 @@ const RcUpload = ({ navigation }) => {
             // Navigate to the next screen or handle data submission with both images
             console.log('Proceeding with front and back RC images...');
             // Optionally navigate or pass the images to another screen or handler
-            navigation.navigate('Processing', {
-              rcFront: rcFrontImage,
-              rcBack: rcBackImage,
-            });
+            navigation.navigate('BankDetailsScreen');
+             // Dispatch the action to update the Aadhar details in the store
+    dispatch(setRcDetails({
+      frontImage: rcFrontImage,
+      backImage: rcBackImage,
+    }));
           }}
         >
           <Text style={styles.buttonText}>Proceed</Text>

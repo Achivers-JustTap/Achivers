@@ -1,8 +1,0 @@
-// redux/actionTypes.js
-export const SET_PHONE_NUMBER = 'SET_PHONE_NUMBER';
-export const SET_OTP = 'SET_OTP';
-export const SET_PROFILE_DETAILS = 'SET_PROFILE_DETAILS';
-export const SET_PROFILE_IMAGE = 'SET_PROFILE_IMAGE';
-export const SET_AADHAR_IMAGE = 'SET_AADHAR_IMAGE';
-export const SET_DRIVER_LICENSE_IMAGE = 'SET_DRIVER_LICENSE_IMAGE';
-export const SET_PAN_IMAGE = 'SET_PAN_IMAGE';

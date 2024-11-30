@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
 
-const MobileOTPVerifyScreen = ({ route, navigation }) => {
+const MobileOTPVerifyScreen = ({ navigation }) => {
   const [otp, setOtp] = useState('');
-  const { phoneNumber } = route.params; // Extract phone number from params
-  
+  const phoneNumber = useSelector((state) => state.user.mobileNumber);
+
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-    const handleVerifyOTP = async () => {
+  const handleVerifyOTP = async () => {
     try {
-      const response = await fetch('https://d6c0-2406-7400-35-63be-f448-a1a8-5680-2115.ngrok-free.app/signup/verify', {
+      const response = await fetch('https://fb2e-2406-7400-35-c0dd-c991-3725-f684-db25.ngrok-free.app/signup/verify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // Set content type for JSON data
@@ -25,9 +26,10 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
 
       const data = await response.json();
       console.log('OTP verified successfully:', data);
+      alert('OTP verified successfully'); 
 
       // Handle successful verification (navigate to Profile Details)
-      navigation.navigate('ProfileDetailsScreen', { phoneNumber }); // Pass phone number
+      navigation.navigate('ProfileDetailsScreen'); // No need to pass phone number as prop
 
     } catch (error) {
       console.error('Error verifying OTP:', error);

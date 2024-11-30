@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import { useSelector,useDispatch } from 'react-redux';
+import { setRcDetails } from '../store_management/actions/documentActions';
 
 const RCUploadFromFiles = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [rcFrontFile, setRcFrontFile] = useState(null);  // State for RC front file
   const [rcBackFile, setRcBackFile] = useState(null);    // State for RC back file
 
@@ -33,9 +36,12 @@ const RCUploadFromFiles = ({ navigation }) => {
       Alert.alert('Error', 'Please upload both RC front and back files.');
       return;
     }
-
+    dispatch(setRcDetails({
+      frontImage: rcFrontFile,
+      backImage: rcBackFile,
+    }));
     // Navigate to the next screen with both files
-    navigation.navigate('Processing', { rcFrontFile, rcBackFile }); // Replace 'NextScreen' with the actual next screen name
+    navigation.navigate('BankDetailsScreen'); // Replace 'NextScreen' with the actual next screen name
   };
 
   return (

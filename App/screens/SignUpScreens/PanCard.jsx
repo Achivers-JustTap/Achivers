@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
-
+import { useDispatch } from 'react-redux';
+import { setPanDetails } from '../store_management/actions/documentActions';
 const PanCard = ({ navigation }) => {
+  const dispatch = useDispatch();
+   
   const [panNumber, setPanNumber] = useState('');
-
   useEffect(() => {
     console.log('PanCard component mounted');
     navigation.setOptions({ headerShown: false });
@@ -11,7 +13,7 @@ const PanCard = ({ navigation }) => {
 
   const validatePanNumber = () => {
     if (!panNumber.trim()) return 'Please enter your PAN Number.';
-  };
+   };
 
   const handleTakePanImage = () => {
     const validationError = validatePanNumber();
@@ -19,6 +21,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
+    dispatch(setPanDetails({ number: panNumber }));
     navigation.navigate('PanCardUpload', { panNumber });
   };
 
@@ -28,7 +31,9 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
+    dispatch(setPanDetails({ number: panNumber }));
     navigation.navigate('PanCardUploadFromFile', { panNumber });
+
   };
 
   return (
@@ -102,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 8,
-    flex: 1,
+    flex: 1, 
     marginHorizontal: 5,
   },
   buttonText: {
