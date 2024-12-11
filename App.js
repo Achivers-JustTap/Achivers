@@ -25,7 +25,6 @@ import Processing from './App/screens/SignUpScreens/Processing';
 import FileDetailsScreen from './App/screens/SignUpScreens/FileDetailsScreen';
 import TabNavigationComponent from './App/screens/InsideAppScreens/TabNavigationComponent';
 import { UserLocationProvider } from './App/Context/UserLocationContext';
-import React, { useState } from 'react';
 import ProfiledetailsPage from './App/screens/InsideAppScreens/ProfiledetailsPage';
 import Inbox from './App/screens/InsideAppScreens/MenuScreens/Inbox';
 import ReferFriends from './App/screens/InsideAppScreens/MenuScreens/ReferFriends';
@@ -43,15 +42,16 @@ import DriverLicence_list from './App/screens/InsideAppScreens/MenuScreens/Profi
 import RC_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RC_List';
 import Wallet from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Wallet';
 import History from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/History';
-
+import Today from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today';
+import All from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/All';
+import ParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/ParcelDelivery';
+import Gorceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Gorceries';
+import BikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/BikeTaxi';
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [location, setLocation] = useState(null); // Initialize location state
-  
   return (
-   
     <UserLocationProvider>
       <NavigationContainer>
         <Stack.Navigator>
@@ -77,40 +77,32 @@ export default function App() {
           <Stack.Screen name="RCUpload" component={RCUpload} />
           <Stack.Screen name="Processing" component={Processing} />
           <Stack.Screen name="FileDetailsScreen" component={FileDetailsScreen} />
-          
+
           {/* Home Tab Navigation */}
-          <Stack.Screen
-          name="HomeTabs"
-          component={TabNavigationComponent}
-          options={{ headerShown: false }} 
-        />
-        <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
-        <Stack.Screen name="BestPerformance" component={BestPerformance} />
-        <Stack.Screen name="IDCard" component={IDCard} />
-        <Stack.Screen name="Documents" component={Documents} />
-        <Stack.Screen name="LanguageSettings" component={LanguageSetting} />
-        <Stack.Screen name="Inbox" component={Inbox} />
-        <Stack.Screen name="ReferFriends" component={ReferFriends} />
-        <Stack.Screen name="Oppurtunities" component={Oppurtunities} />
-        <Stack.Screen 
-          name="Earnings" 
-          component={Earnings} 
-          options={{ headerShown: false }} 
-        />
- 
-        <Stack.Screen name="Help" component={Help} />
-        <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
-        
-        <Stack.Screen name="AadharCard_List" component={AadharCard_List} />
-        <Stack.Screen name="PanCard_List" component={PanCard_List} />
-        <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} />
-        <Stack.Screen name="RC_List" component={RC_List} />
-        <Stack.Screen name="Wallet" component={Wallet}  options={{ headerShown: false }} />
-        <Stack.Screen name="History" component={History}  options={{ headerShown: false }} />
+          <Stack.Screen name="HomeTabs" component={TabNavigationComponent} options={{ headerShown: false }} />
+          <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
+          <Stack.Screen name="BestPerformance" component={BestPerformance} />
+          <Stack.Screen name="IDCard" component={IDCard} />
+          <Stack.Screen name="Documents" component={Documents} />
+          <Stack.Screen name="LanguageSettings" component={LanguageSetting} />
+          <Stack.Screen name="Inbox" component={Inbox} />
+          <Stack.Screen name="ReferFriends" component={ReferFriends} />
+          <Stack.Screen name="Oppurtunities" component={Oppurtunities} />
+          <Stack.Screen name="Earnings" component={Earnings} options={{ headerShown: false }} />
+          <Stack.Screen name="Help" component={Help} />
+          <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
+
+          {/* Earnings Screens */}
+          <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
+          <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
+          <Stack.Screen name="History" component={History} options={{ headerShown: false }} />
+          <Stack.Screen name="All" component={All} />
+          <Stack.Screen name="BikeTaxi" component={BikeTaxi} options={{ headerShown: false }} />
+          <Stack.Screen name="ParcelDelivery" component={ParcelDelivery} options={{ headerShown: false }} />
+          <Stack.Screen name="Groceries" component={Gorceries} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>
-  
   );
 }
 
