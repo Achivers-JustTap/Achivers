@@ -1,4 +1,4 @@
-import { View, Text, Image,StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image,StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useEffect, useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
@@ -27,7 +27,7 @@ const Today = ({route,navigation}) => {
     };
   
   return(
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
             <View style={styles.boxWithShadow}>
               <View style={styles.headerBox}>
                 <Text style={styles.headerText}>₹ 0.0</Text>
@@ -42,13 +42,13 @@ const Today = ({route,navigation}) => {
               </View>
             </View>
 
-            <TouchableOpacity onPress={() => console.log('Rate Card mouted')} style={styles.box2WithShadow}>
+            <TouchableOpacity onPress={() => navigation.navigate('RateCard')} style={styles.box2WithShadow}>
               <Image source={require('../../../../../assets/images/rupee.png')} style={styles.image} />
               <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 16 }}>Rate Card</Text>
               <Text style={{ fontWeight: 'bold', fontSize: 20, right: 10, top: 'auto', position: 'absolute' }}>{'>'}</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => console.log('know more')} style={styles.box3WithShadow}>
+            <TouchableOpacity onPress={() => navigation.navigate('Guidelines')} style={styles.box3WithShadow}>
               <Image source={require('../../../../../assets/images/silver-star.png')} style={styles.image2} />
               <Text
                 style={{
@@ -82,8 +82,8 @@ const Today = ({route,navigation}) => {
                           marginBottom:5,
                           marginVertical:20,}} />
             <Text style={{fontWeight:'bold', textAlign:'center',fontSize: 20,color:'#0F4A97',marginBottom:5}}>Earning Details</Text>
-            <Tab.Navigator
-        initialRouteName="All"
+            
+        <Tab.Navigator initialRouteName="All"
         screenOptions={{
             tabBarActiveTintColor: '#fff',
             tabBarInactiveTintColor: '#888',
@@ -93,12 +93,12 @@ const Today = ({route,navigation}) => {
             tabBarScrollEnabled: true,
         }}
       >
-        <Tab.Screen name="All" component={All} initialParams={{RC, rcFrontImage, vehicleAltImage,rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}}/>
-        <Tab.Screen name="Bike Taxi" component={BikeTaxi} initialParams={{RC, rcFrontImage,vehicleAltImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
-        <Tab.Screen name="Parcels Delivery" component={ParcelDelivery} initialParams={{RC, rcFrontImage, vehicleAltImage,rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}}/>
-        <Tab.Screen name="Gorceries Delivery" component={Gorceries} initialParams={{RC, rcFrontImage, vehicleAltImage,rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
+        <Tab.Screen name="All" component={All}/>
+        <Tab.Screen name="Bike Taxi" component={BikeTaxi} />
+        <Tab.Screen name="Parcels Delivery" component={ParcelDelivery}/>
+        <Tab.Screen name="Gorceries Delivery" component={Gorceries} />
       </Tab.Navigator>
-          </ScrollView>
+          </SafeAreaView>
 
   )
       
@@ -108,14 +108,14 @@ const styles = StyleSheet.create({
   
     container: {
       flex: 1,
-      padding:10
+      padding:10,
     },
   
     boxWithShadow: {
       backgroundColor: '#fff',
       padding: 10,
       borderRadius: 10,
-      marginBottom: 20,
+      marginBottom: 10,
       shadowColor: '#0F4A97',
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.25,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     line: {
       height: 1,
       backgroundColor: '#ddd',
-      marginVertical: 8,
+      marginVertical: 5,
     },
     footerText: {
       fontSize: 13,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       padding: 15,
       borderRadius: 10,
-      marginBottom: 20,
+      marginBottom: 10,
       shadowColor: '#0F4A97',
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.25,

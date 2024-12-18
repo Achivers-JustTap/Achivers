@@ -75,9 +75,7 @@ const BestPerformance = ({ route, navigation }) => {
           </View>
           <Text style={styles.footerText}>Earn more by becoming the best rider</Text>
 
-          <TouchableOpacity style={styles.knowMoreButton}>
-            <Text style={styles.knowMoreButtonText}>Know More</Text>
-          </TouchableOpacity>
+
         </View>
       </ScrollView>
   );

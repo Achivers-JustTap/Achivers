@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from './App/screens/SignUpScreens/WelcomeScreen';
@@ -36,10 +36,7 @@ import BestPerformance from './App/screens/InsideAppScreens/MenuScreens/ProfileD
 import IDCard from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/IDCard';
 import Documents from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents';
 import LanguageSetting from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/LanguageSetting';
-import AadharCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharCard_List';
-import PanCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanCard_List';
-import DriverLicence_list from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/DriverLicence_list';
-import RC_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RC_List';
+
 import Wallet from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Wallet';
 import History from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/History';
 import Today from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today';
@@ -48,10 +45,29 @@ import ParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningSc
 import Gorceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Gorceries';
 import BikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/BikeTaxi';
 
+import Guidelines from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Guidelines';
+import RateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCard';
+import DriverLicence_list from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/DriverLicence_list';
+import AadharCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharCard_List';
+import PanCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanCard_List';
+import RC_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RC_List';
+
+import Link from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/Link';
+import BikeLite from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeLite';
+import C2C from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/C2C';
+import BikeMetro from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeMetro';
+import SwiggyGinie from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/SwiggyGinie';
+import KPN from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/KPN';
+
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
     <UserLocationProvider>
       <NavigationContainer>
         <Stack.Navigator>
@@ -92,6 +108,11 @@ export default function App() {
           <Stack.Screen name="Help" component={Help} />
           <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
 
+          <Stack.Screen name="AadharCard_List" component={AadharCard_List} />
+          <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} />
+          <Stack.Screen name="PanCard_List" component={PanCard_List} />
+          <Stack.Screen name="RC_List" component={RC_List} />
+
           {/* Earnings Screens */}
           <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
@@ -100,9 +121,19 @@ export default function App() {
           <Stack.Screen name="BikeTaxi" component={BikeTaxi} options={{ headerShown: false }} />
           <Stack.Screen name="ParcelDelivery" component={ParcelDelivery} options={{ headerShown: false }} />
           <Stack.Screen name="Groceries" component={Gorceries} options={{ headerShown: false }} />
+          <Stack.Screen name="RateCard" component={RateCard} />
+          <Stack.Screen name="Link" component={Link} />
+          <Stack.Screen name="BikeLite" component={BikeLite} />
+          <Stack.Screen name="C2C" component={C2C} />
+          <Stack.Screen name="BikeMetro" component={BikeMetro} />
+          <Stack.Screen name="SwiggyGinie" component={SwiggyGinie} />
+          <Stack.Screen name="KPN" component={KPN} />
+          <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>
+    </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 

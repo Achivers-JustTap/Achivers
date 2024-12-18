@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View,TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity, ScrollView} from 'react-native'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import React from 'react'
 
 const All = () => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
           <View>
            <TouchableOpacity onPress={() => console.log('bounus mounted')} style={styles.box2WithShadow}>
               <Text style={{ fontWeight: 'bold', textAlign: 'center', fontSize: 16 }}>Incentives and Bounuses</Text>
@@ -62,7 +62,7 @@ const All = () => {
         </View>
        </TouchableOpacity>
       
-        </View>
+        </ScrollView>
       );
 
 }
@@ -71,8 +71,7 @@ const styles = StyleSheet.create({
   
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        margin: 10,
       },
   
     boxWithShadow: {
