@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { KeyboardAvoidingView, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from './App/screens/SignUpScreens/WelcomeScreen';
@@ -58,16 +58,16 @@ import C2C from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today
 import BikeMetro from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeMetro';
 import SwiggyGinie from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/SwiggyGinie';
 import KPN from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/KPN';
+import RechargePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/RechargePage';
+import BuddyRecharge from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/BuddyRecharge';
+import ReferencePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferencePage';
+import AllTransactionPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/AllTransactionPage';
+import PendingPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/PendingPage';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
     <UserLocationProvider>
       <NavigationContainer>
         <Stack.Navigator>
@@ -117,6 +117,7 @@ export default function App() {
           <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
           <Stack.Screen name="History" component={History} options={{ headerShown: false }} />
+
           <Stack.Screen name="All" component={All} />
           <Stack.Screen name="BikeTaxi" component={BikeTaxi} options={{ headerShown: false }} />
           <Stack.Screen name="ParcelDelivery" component={ParcelDelivery} options={{ headerShown: false }} />
@@ -129,11 +130,15 @@ export default function App() {
           <Stack.Screen name="SwiggyGinie" component={SwiggyGinie} />
           <Stack.Screen name="KPN" component={KPN} />
           <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
+
+          <Stack.Screen name="RechargePage" component={RechargePage} options={{ headerShown: false }} />
+          <Stack.Screen name="BuddyRecharge" component={BuddyRecharge} options={{ headerShown: false }} />
+          <Stack.Screen name="ReferencePage" component={ReferencePage} options={{ headerShown: false }} />
+          <Stack.Screen name="AllTransactionPage" component={AllTransactionPage} options={{ headerShown: false }} />
+          <Stack.Screen name="PendingPage" component={PendingPage} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>
-    </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
   );
 }
 

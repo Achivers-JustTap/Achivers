@@ -162,13 +162,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     searchBox: {
-        height: 35,
+        height: 37,
         width: 290,
         borderColor: '#0F4A97',
         borderWidth: 1,
         borderRadius: 20,
         backgroundColor: '#0F4A97',
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         color: 'white',
     },
     statsContainer: {

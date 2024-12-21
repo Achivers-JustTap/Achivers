@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Today from './EarningScreens/Today';
 import Wallet from './EarningScreens/Wallet';
@@ -14,6 +14,7 @@ export default function Earnings({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={{ flexGrow:3 }}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <FontAwesomeIcon name="arrow-left" size={20} color="black" />
@@ -39,6 +40,7 @@ export default function Earnings({ route, navigation }) {
         <Tab.Screen name="Wallet" component={Wallet} initialParams={{RC, rcFrontImage,vehicleAltImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
         <Tab.Screen name="History" component={History} initialParams={{RC, rcFrontImage, vehicleAltImage,rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
       </Tab.Navigator>
+      </ScrollView>
     </SafeAreaView>
   );
 }

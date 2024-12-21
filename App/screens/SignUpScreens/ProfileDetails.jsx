@@ -130,18 +130,18 @@ const styles = StyleSheet.create({
   input: {
     color: 'black',
     width: '80%',
-    height: 40, 
+    height: 45, 
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    paddingHorizontal: 10, 
+    paddingHorizontal: 15, 
     marginBottom: 15,
     backgroundColor: 'white',
     justifyContent: 'center',  
   },
   picker: {
     width: '100%',  
-    height: 40,     
+    height: 60,     
     color: 'black',
   },
   button: {

@@ -1,4 +1,4 @@
-import { View, Text, Image,StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, Image,StyleSheet, ScrollView, TouchableOpacity, SafeAreaView, ScrollViewBase } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useEffect, useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
@@ -98,6 +98,7 @@ const Today = ({route,navigation}) => {
         <Tab.Screen name="Parcels Delivery" component={ParcelDelivery}/>
         <Tab.Screen name="Gorceries Delivery" component={Gorceries} />
       </Tab.Navigator>
+
           </SafeAreaView>
 
   )
