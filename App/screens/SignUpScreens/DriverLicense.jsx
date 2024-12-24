@@ -1,4 +1,3 @@
-import { useRoute, validatePathConfig } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image, ScrollView } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -7,13 +6,8 @@ const DrivingLicense = ({ navigation }) => {
   const [licenseNumber, setLicenseNumber] = useState(''); // State for Driving License number
   const [validTillDate, setValidTillDate] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false); // State for date picker visibility
-  
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {selectedVehicleType: selectedVehicleName ,panNumber,panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   useEffect(() => {
-    console.log('DrivingLicense component mounted');
     navigation.setOptions({ headerShown: false }); // Hiding the header
   }, [navigation]);
 
@@ -30,7 +24,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('LicenseImageUpload', {selectedVehicleType: selectedVehicleName , licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
+    navigation.navigate('LicenseImageUpload',{ licenseNumber, validTillDate });
   };
 
   // Handle uploading Driving License from files
@@ -40,7 +34,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('DrivingLicenseUpload', { selectedVehicleType: selectedVehicleName ,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
+    navigation.navigate('DrivingLicenseUpload',{licenseNumber,validTillDate});
   };
 
   // Show date picker

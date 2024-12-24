@@ -8,9 +8,7 @@ const HomePage = ({ navigation, route }) => {
     const { location, setLocation } = useContext(UserLocationContext);
     const [errorMsg, setErrorMsg] = useState(null);
     const [searchText, setSearchText] = useState('');
-    const vehicleAltImage = route.params?.vehicleAltImage; 
-    const {RC,rcFrontImage,selectedVehicleType: selectedVehicleName ,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
-    const[base64Image,setBase64Image]= useState(profileImageBase64);
+    // const[base64Image,setBase64Image]= useState(profileImageBase64);
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -21,7 +19,6 @@ const HomePage = ({ navigation, route }) => {
 
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location.coords);
-            console.log(location);
         })();
     }, []);
 
@@ -37,34 +34,29 @@ const HomePage = ({ navigation, route }) => {
     }, [navigation]);
 
     const handleProfileImagePress = () => {
-        navigation.navigate('ProfiledetailsPage', {selectedVehicleType: selectedVehicleName ,
-            RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile
-        });
+        navigation.navigate('ProfiledetailsPage');
     };
     
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route,{selectedVehicleType: selectedVehicleName ,
-            RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile
-      })}>
+        <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route,)}>
           <Text style={styles.itemText}>{item.title}</Text>
         </TouchableOpacity>
       );
 
-      const image1={profileImageBase64}
+      const image1={}
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>JUST TAP!</Text>
 
-                {console.log("profileImgebase",image1)}
-                {profileImageBase64 ? (
+                {false ? (
                     <TouchableOpacity onPress={handleProfileImagePress}>
                         <View style={styles.profileContainer}>
-                            <Image
+                            {/* <Image
                                 style={styles.profileImage}
                                 source={{ uri: profileImageBase64 }} 
                                 onError={(error) => console.log('Error loading image: ', error)}
-                            />
+                            /> */}
                         </View>
                     </TouchableOpacity>
                 ) : (

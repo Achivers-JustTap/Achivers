@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
-import { useRoute } from '@react-navigation/native';
+import { useDispatch} from 'react-redux'
+import { setPanDetails } from './store_management/actions/documentActions';
 
-const PanCardUpload = ({ navigation }) => {
+const PanCardUpload = ({ navigation,route }) => {
+  const panNum = route.params.panNumber;
   const [panFrontImage, setPanFrontImage] = useState(null);
   const [panBackImage, setPanBackImage] = useState(null);
-  const [isCapturing, setIsCapturing] = useState(null); // Tracks which image (front or back) is being captured
+  const [isCapturing, setIsCapturing] = useState(null);
+  const [panFrontUrl,setPanFrontUrl]=useState(null)
+  const [panBackUrl,setPanBackUrl]=useState(null)
+  const dispatch=useDispatch()
+  const panNumber='ABCDE1234F'
+
    
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {panNumber,selectedVehicleType: selectedVehicleName  ,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
   // Pan Front Image Upload
   const handleFrontUpload = (base64Image) => {
     setPanFrontImage(base64Image);
@@ -33,6 +37,7 @@ const PanCardUpload = ({ navigation }) => {
       {isCapturing ? (
         <MyCamera
           onUpload={isCapturing === 'front' ? handleFrontUpload : handleBackUpload}
+          setImageURL ={isCapturing === 'front' ? setPanFrontUrl : setPanBackUrl}
           onRetake={handleRetake}
           initialCameraView="back"
         />
@@ -63,7 +68,11 @@ const PanCardUpload = ({ navigation }) => {
           {panFrontImage && panBackImage && (
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={() => navigation.navigate('DriverLicense',{panNumber,selectedVehicleType: selectedVehicleName  , panFrontImage,panBackImage,panFrontFile,panBackFile,vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile})}
+              onPress={() =>{ navigation.navigate('DriverLicense')
+                dispatch(setPanDetails({ number: panNum, frontImage: panFrontUrl, backImage: panBackUrl }));
+                console.log("Pan Details: ", panNum, panFrontUrl, panBackUrl);
+                }
+              }
             >
               <Text style={styles.submitText}>Next</Text>
             </TouchableOpacity>

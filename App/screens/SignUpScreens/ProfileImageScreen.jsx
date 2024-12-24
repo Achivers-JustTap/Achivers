@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
+import { setProfilePicture } from './store_management/actions/userActions';
+import { useDispatch } from 'react-redux';
 
-const ProfilePicture = ({ navigation, route }) => {
-  const { phoneNumber, name, email, gender, dateOfBirth,selectedVehicleType: selectedVehicleName  } = route.params;
-  const vehicleAltImage = route.params?.vehicleAltImage;
-
+const ProfilePicture = ({ navigation }) => {
   const [profileImageBase64, setProfileImageBase64] = useState(null);
-  const [isCameraVisible, setIsCameraVisible] = useState(true); // Toggle between camera and image preview
+  const [isCameraVisible, setIsCameraVisible] = useState(true);
+   const [imageURL, setImageURL] = useState(null);
+    const dispatch = useDispatch(); // Toggle between camera and image preview
 
   const handleUpload = (base64Image) => {
-    console.log('Base64 Image:', base64Image);
     setProfileImageBase64(base64Image);
     setIsCameraVisible(false); // Hide the camera and show the image preview
+    dispatch(setProfilePicture(imageURL));
   };
 
   const handleRetake = () => {
@@ -23,15 +24,9 @@ const ProfilePicture = ({ navigation, route }) => {
 
   const handleProceed = () => {
     console.log('Proceed button pressed');
-    navigation.navigate('AadharUpload', {
-      name,
-      email,
-      gender,
-      dateOfBirth,
-      profileImageBase64,
-      vehicleAltImage,
-      phoneNumber,selectedVehicleType: selectedVehicleName 
-    });
+    navigation.navigate('AadharUpload');
+    console.log("Image Url in Take Selfie ", imageURL)
+    dispatch(setProfilePicture(imageURL));
   };
 
   return (
@@ -41,6 +36,7 @@ const ProfilePicture = ({ navigation, route }) => {
           onUpload={handleUpload}
           onRetake={handleRetake}
           initialCameraView="front"
+          setImageURL={setImageURL}
         />
       ) : (
         <View style={styles.previewContainer}>

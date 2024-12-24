@@ -5,26 +5,29 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Menu from './Menu';
 import HomePage from './HomePage';
 import Activity from './Activity';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
-function TabNavigationComponent({ route }) {
-    const vehicleAltImage = route.params?.vehicleAltImage; 
-    const {RC,rcFrontImage,selectedVehicleType: selectedVehicleName ,rcBackImage,rcFrontFile,rcBackFile, panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
-  
+function TabNavigationComponent({  }) {
+    // const vehicleAltImage = route.params?.vehicleAltImage; 
+    // const {RC,rcFrontImage,selectedVehicleType: selectedVehicleName ,rcBackImage,rcFrontFile,rcBackFile, panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
+    const RC = useSelector(state=>state.RC);
+    const vehicleType = useSelector(state=>state.vehicleType);
     return (
       <Tab.Navigator
         initialRouteName="Home"
-        tabBar={(props) => <CustomTabBar {...props} vehicleAltImage={vehicleAltImage} />}
+        tabBar={(props) => <CustomTabBar {...props} vehicleAltImage={'car'} />}
       >
-        <Tab.Screen name="Menu" component={Menu} initialParams={{RC,selectedVehicleType: selectedVehicleName ,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile }} />
-        <Tab.Screen name="Home" component={HomePage} initialParams={{RC,rcFrontImage,selectedVehicleType: selectedVehicleName ,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}} />
+        <Tab.Screen name="Menu" component={Menu} />
+        <Tab.Screen name="Home" component={HomePage}  />
         <Tab.Screen name="Activity" component={Activity} />
       </Tab.Navigator>
     );
   }
   
   function CustomTabBar({ state, descriptors, navigation, vehicleAltImage }) {
+    console.log(" vehicleAltImage ",vehicleAltImage);
     const [isOnline, setIsOnline] = useState(false);
     const [animation] = useState(new Animated.Value(0));
   
@@ -110,8 +113,8 @@ function TabNavigationComponent({ route }) {
                             />
                         )}
                     </View>
-                    <Text style={[styles.statusText, { color: isOnline ? 'red' : 'green' }]}>
-                        {isOnline ? 'You are Offline' : 'You are Online'}
+                    <Text style={[styles.statusText, { color: isOnline ? 'green' : 'red' }]}>
+                        {isOnline ? 'You are  Online ' : 'You are Offline '}
                     </Text>
                 </TouchableOpacity>
             )}

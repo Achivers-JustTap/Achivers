@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
-const PanCardUploadFromFile = ({ navigation, route }) => {
-  const { panNumber } = route.params;  // Get the PAN number from the route params
+const PanCardUploadFromFile = ({ navigation }) => {
   const [panFrontFile, setPanFrontFile] = useState(null);  // State for PAN front file
   const [panBackFile, setPanBackFile] = useState(null);    // State for PAN back file
  
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const { selectedVehicleType: selectedVehicleName ,panFrontImage,panBackImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   const handleUploadFile = async (type) => {
     try {
@@ -39,7 +36,7 @@ const PanCardUploadFromFile = ({ navigation, route }) => {
     }
 
     // Navigate to the next screen with both files and PAN number
-    navigation.navigate('DriverLicense', { selectedVehicleType: selectedVehicleName ,vehicleAltImage,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
+    navigation.navigate('DriverLicense');
   };
 
   return (

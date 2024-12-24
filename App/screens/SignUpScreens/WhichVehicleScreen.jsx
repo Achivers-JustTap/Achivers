@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, View, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { setVehicleType } from './store_management/actions/documentActions';
 
 const WhichVehicleScreen = ({ navigation, route }) => {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
-  const { isRegister } = route.params;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -19,7 +21,8 @@ const WhichVehicleScreen = ({ navigation, route }) => {
     if (selectedVehicle) {
       const selectedVehicleName = vehicles.find(v => v.id === selectedVehicle).name;
       const vehicleAltImage = vehicles.find(v => v.id === selectedVehicle).altImage;
-      navigation.navigate('MobileOTPScreen', { isRegister, vehicleAltImage ,selectedVehicleType: selectedVehicleName});
+      navigation.navigate('MobileOTPScreen', {vehicleAltImage ,selectedVehicleType: selectedVehicleName});
+      dispatch(setVehicleType(selectedVehicle));
     } else {
       Alert.alert('Please select a vehicle type');
     }

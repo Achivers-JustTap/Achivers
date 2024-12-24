@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5'; 
 import Ionicon from 'react-native-vector-icons/Ionicons';  
 
-const ProfiledetailsPage = ({ route, navigation }) => {
-  const {RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
+const ProfiledetailsPage = ({ navigation }) => {
+  // const {RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
 
   useEffect(() => {
     navigation.setOptions({ title: "My Profile" });

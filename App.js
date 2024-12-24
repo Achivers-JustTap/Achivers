@@ -1,4 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux'; 
+import store from './App/screens/SignUpScreens/store_management/store';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -43,7 +45,7 @@ import DriverLicence_list from './App/screens/InsideAppScreens/MenuScreens/Profi
 import RC_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RC_List';
 import Wallet from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Wallet';
 import History from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/History';
-
+import BankDetailsScreen from './App/screens/SignUpScreens/BankDetailsScreen';
 
 const Stack = createStackNavigator();
 
@@ -51,7 +53,7 @@ export default function App() {
   const [location, setLocation] = useState(null); // Initialize location state
   
   return (
-   
+    <Provider store={store}> 
     <UserLocationProvider>
       <NavigationContainer>
         <Stack.Navigator>
@@ -75,6 +77,7 @@ export default function App() {
           <Stack.Screen name="RC" component={RC} />
           <Stack.Screen name="RCUploadFromFiles" component={RCUploadFromFiles} />
           <Stack.Screen name="RCUpload" component={RCUpload} />
+          <Stack.Screen name="BankDetailsScreen" component={BankDetailsScreen} />
           <Stack.Screen name="Processing" component={Processing} />
           <Stack.Screen name="FileDetailsScreen" component={FileDetailsScreen} />
           
@@ -110,6 +113,7 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>
+    </Provider>
   
   );
 }

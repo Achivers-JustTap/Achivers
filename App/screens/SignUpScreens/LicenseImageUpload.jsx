@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
-
+import { useDispatch } from 'react-redux';
+import { setDrivingLicenseDetails } from './store_management/actions/documentActions';
 const LicenseImage = ({ navigation,route }) => {
-  const [licenseFrontImage, setLicenseFrontImage] = useState(null);  // State for front image
-  const [licenseBackImage, setLicenseBackImage] = useState(null);   // State for back image
-  const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
+  const { licenseNumber, validTillDate }=route.params
+
+  const [licenseFrontImage, setLicenseFrontImage] = useState(null);  
+  const [licenseBackImage, setLicenseBackImage] = useState(null);  
+  const [isCapturing, setIsCapturing] = useState(null); 
+  const [licenseFrontUrl,setLicenseFrontUrl]     = useState()
+  const[licenseBackUrl,setLicenseBackUrl] = useState()
   
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {  licenseNumber, validTillDate, panNumber ,selectedVehicleType: selectedVehicleName , panFrontImage,panBackImage,panFrontFile,panBackFile,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
+const dispatch=useDispatch() 
 
   // Handle the upload of the front image
   const handleFrontUpload = (base64Image) => {
@@ -40,6 +44,8 @@ const LicenseImage = ({ navigation,route }) => {
       <MyCamera
         onUpload={isCapturing === 'front' ? handleFrontUpload : handleBackUpload}
         onRetake={isCapturing === 'front' ? retakeFrontImage : retakeBackImage}
+        setImageURL={isCapturing === 'front' ? setLicenseFrontUrl : setLicenseBackUrl 
+}
       />
     );
   }
@@ -83,14 +89,18 @@ const LicenseImage = ({ navigation,route }) => {
         <TouchableOpacity
           style={styles.proceedButton}
           onPress={() => {
+            // Proceed with uploading both images
+            console.log(licenseFrontUrl)
+            console.log(licenseBackUrl)
+
+            dispatch(setDrivingLicenseDetails({
+              number: licenseNumber,
+              validDate: validTillDate,
+              frontImage: licenseFrontUrl,
+              backImage: licenseBackUrl,
+            }))
             // Navigate to the next screen with both images
-            navigation.navigate('RC', {
-              licenseFront: licenseFrontImage,
-              licenseBack: licenseBackImage,
-              selectedVehicleType: selectedVehicleName ,
-              licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,
-              aadharBackFile
-            });
+            navigation.navigate('RC');
           }}
         >
           <Text style={styles.buttonText}>Proceed</Text>

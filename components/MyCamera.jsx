@@ -4,11 +4,15 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import { manipulateAsync } from 'expo-image-manipulator';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const MyCamera = ({ onUpload, onRetake, initialCameraView = 'front' }) => {
+const MyCamera = ({ onUpload, onRetake, initialCameraView = 'front',setImageURL }) => {
   const [permission, requestPermission] = useCameraPermissions();
   const [base64Image, setBase64Image] = useState(null);  // State for storing base64 image
   const [showImage, setShowImage] = useState(false);
   const [cameraView, setCameraView] = useState(initialCameraView);
+
+
+  const actions = [
+    { resize: { width: 300 } },]
   const cameraRef = useRef(null);
 
   if (!permission) {
@@ -32,6 +36,7 @@ const MyCamera = ({ onUpload, onRetake, initialCameraView = 'front' }) => {
         const photo = await cameraRef.current.takePictureAsync();
         if (photo && photo.uri) {
           const { base64 } = await manipulateAsync(photo.uri, [], { base64: true });
+          setImageURL(photo.uri);
           const base64Str = `data:image/jpeg;base64,${base64}`;
           setBase64Image(base64Str);  // Store the base64 image in state
           setShowImage(true);  // Show image preview

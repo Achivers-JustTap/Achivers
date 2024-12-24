@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
-import { useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setAadharDetails } from './store_management/actions/documentActions';
 
-const AadharImageUpload = ({ navigation }) => {
-  const [aadharFrontImage, setAadharFrontImage] = useState(null);  // State for front image
-  const [aadharBackImage, setAadharBackImage] = useState(null);   // State for back image
-  const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
-   
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,aadharNumber,selectedVehicleType: selectedVehicleName  } = route.params;
+const AadharImageUpload = ({ navigation,route }) => {
+  const {aadharNumber}=route.params
+
+  const [aadharFrontImage, setAadharFrontImage] = useState(null);  
+  const [aadharBackImage, setAadharBackImage] = useState(null);   
+  const [isCapturing, setIsCapturing] = useState(null);  
+  const [frontImageUrl,setFrontImageUrl]=useState('')
+  const [backImageUrl,setBackImageUrl] = useState('')
+  const dispatch=useDispatch()
   // Handle the upload of the front image
   const handleFrontUpload = (base64Image) => {
     setAadharFrontImage(base64Image);
-    setIsCapturing(null);  // Close the camera view after capturing
+    setIsCapturing(null); 
   };
 
   // Handle the upload of the back image
   const handleBackUpload = (base64Image) => {
     setAadharBackImage(base64Image);
-    setIsCapturing(null);  // Close the camera view after capturing
+    setIsCapturing(null); 
   };
 
   // Reset the front image and retake it
@@ -41,6 +43,7 @@ const AadharImageUpload = ({ navigation }) => {
       <MyCamera
         onUpload={isCapturing === 'front' ? handleFrontUpload : handleBackUpload}
         onRetake={isCapturing === 'front' ? retakeFrontImage : retakeBackImage}
+        setImageURL={isCapturing === 'front' ? setFrontImageUrl : setBackImageUrl }
       />
     );
   }
@@ -57,7 +60,9 @@ const AadharImageUpload = ({ navigation }) => {
         ) : (
           <TouchableOpacity
             style={styles.button}
-            onPress={() => setIsCapturing('front')}  // Open camera for front image
+            onPress={() => setIsCapturing('front')
+              
+            }  // Open camera for front image
           >
             <Text style={styles.buttonText}>Capture Aadhar Front</Text>
           </TouchableOpacity>
@@ -84,14 +89,10 @@ const AadharImageUpload = ({ navigation }) => {
         <TouchableOpacity
           style={styles.proceedButton}
           onPress={() => {
-            // Navigate to the next screen with both images
-            navigation.navigate('PanCard', {
-              aadharFront: aadharFrontImage,
-              aadharBack: aadharBackImage,
-              vehicleAltImage,
-              name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharFront: aadharFrontImage,
-              aadharBack: aadharBackImage,aadharNumber,selectedVehicleType: selectedVehicleName 
-            });
+            console.log(" Front ",frontImageUrl );
+            console.log(" Back ",backImageUrl );
+           dispatch(setAadharDetails(aadharNumber,frontImageUrl,backImageUrl))
+            navigation.navigate('PanCard');
           }}
         >
           <Text style={styles.buttonText}>Proceed</Text>

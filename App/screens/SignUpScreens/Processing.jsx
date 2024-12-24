@@ -1,18 +1,24 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const Processing = ({navigation}) => {
   const [verificationStatus, setVerificationStatus] = useState('processing'); 
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(false); 
+  const  user = useSelector((state) => state.user);
+  const document  = useSelector((state) => state.documents);
+
+  console.log("user",user)
+  console.log("document",document)
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {RC,selectedVehicleType: selectedVehicleName ,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile, panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
+  useEffect(() => {
+    navigation.setOptions({ headerShown: false });
+  }, [navigation]);
   //function to fetching verification status from backend
   const fetchVerificationStatus = async () => {
     
@@ -28,10 +34,11 @@ const Processing = ({navigation}) => {
 
   const handleProceed = () => {
     console.log('Proceeding to the homepage...');
-    navigation.navigate('HomeTabs',{RC,selectedVehicleType: selectedVehicleName ,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}); 
+    navigation.navigate('HomeTabs'); 
   };
   return (
     <View style={styles.container}>
+      <Text style={styles.text}>Verification Status: {verificationStatus}</Text>
       {loading ? (
         <Text style={styles.header}>Loading...</Text>
       ) : (

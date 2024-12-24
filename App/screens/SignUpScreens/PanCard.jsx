@@ -1,14 +1,9 @@
-import { useRoute } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
 
+
 const PanCard = ({ navigation }) => {
   const [panNumber, setPanNumber] = useState('');
-  
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,aadharFrontFile, aadharBackFile,aadharNumber,aadharFront,
-    aadharBack,selectedVehicleType: selectedVehicleName   } = route.params;
   useEffect(() => {
     console.log('PanCard component mounted');
     navigation.setOptions({ headerShown: false });
@@ -24,7 +19,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUpload', { selectedVehicleType: selectedVehicleName ,panNumber , vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
+    navigation.navigate('PanCardUpload',{panNumber});
   };
 
   const handleUploadFromFiles = () => {
@@ -33,7 +28,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('PanCardUploadFromFile', { selectedVehicleType: selectedVehicleName ,panNumber , vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});
+    navigation.navigate('PanCardUploadFromFile');
   };
 
   return (

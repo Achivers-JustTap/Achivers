@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-import { useRoute } from '@react-navigation/native';
 
-const RCUploadFromFiles = ({ navigation }) => {
-  const [rcFrontFile, setRcFrontFile] = useState(null);  // State for RC front file
-  const [rcBackFile, setRcBackFile] = useState(null);    // State for RC back file
+const RCUploadFromFiles = ({ navigation,route }) => {
+  const [rcFrontFile, setRcFrontFile] = useState(null);  
+  const [rcBackFile, setRcBackFile] = useState(null);   
   
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {RC,rcFrontImage,rcBackImage , selectedVehicleType: selectedVehicleName ,panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
 
   const handleUploadFile = async (type) => {
     try {
@@ -40,7 +36,7 @@ const RCUploadFromFiles = ({ navigation }) => {
     }
 
     // Navigate to the next screen with both files
-    navigation.navigate('Processing', { selectedVehicleType: selectedVehicleName ,RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, vehicleAltImage,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile }); // Replace 'NextScreen' with the actual next screen name
+    navigation.navigate('BankDetailsScreen'); 
   };
 
   return (

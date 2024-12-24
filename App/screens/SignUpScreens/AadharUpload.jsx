@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
-
-const AadharUpload = ({ navigation, route }) => {
- 
+import { useSelector } from 'react-redux';
+import { setAadharDetails } from './store_management/actions/documentActions';
+const AadharUpload = ({ navigation }) => {
   const [aadharNumber, setAadharNumber] = useState('');
+  const name = useSelector(state => state.user.name);
+  const number = useSelector(state => state.documents.aadhar);
   
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const { profileImageBase64, name, email, phoneNumber, gender, dateOfBirth,selectedVehicleType: selectedVehicleName   } = route.params;
-
   useEffect(() => {
-    console.log('AadharUpload component mounted');
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
   const validateAadharNumber = () => {
-    if (!aadharNumber.trim()) return 'Please enter your Aadhar Number.';
+    if (!/^\d{12}$/.test(aadharNumber)) return 'Aadhaar number must be exactly 12 digits.';
+    return null;
   };
 
   const handleTakeAadharImage = () => {
@@ -23,7 +22,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharImageUpload', { name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber,profileImageBase64,aadharNumber,selectedVehicleType: selectedVehicleName });
+    navigation.navigate('AadharImageUpload',{aadharNumber});
   };
 
   const handleUploadFromFiles = () => {
@@ -32,7 +31,7 @@ const AadharUpload = ({ navigation, route }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharUploadFromFile', {  name,email,gender,dateOfBirth, vehicleAltImage,phoneNumber, profileImageBase64,aadharNumber,selectedVehicleType: selectedVehicleName });
+    navigation.navigate('AadharUploadFromFile',{aadharNumber});
   };
 
   return (

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { Picker } from '@react-native-picker/picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserDetails } from './store_management/actions/userActions';
 
-const ProfileDetailsScreen = ({ route, navigation }) => {
+const ProfileDetailsScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState(''); 
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const { phoneNumber,selectedVehicleType: selectedVehicleName  } = route.params;
-
-  const vehicleAltImage = route.params?.vehicleAltImage;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -31,16 +31,9 @@ const ProfileDetailsScreen = ({ route, navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-
-    console.log('Profile details:', { name, email, gender, dateOfBirth, phoneNumber,selectedVehicleType: selectedVehicleName  });
-    navigation.navigate('TakeSelfie', { 
-      name, 
-      email, 
-      gender,
-      dateOfBirth,
-      vehicleAltImage,
-      phoneNumber 
-    });
+    
+    dispatch(setUserDetails(name, email, gender,dateOfBirth));
+    navigation.navigate('TakeSelfie');
   };
 
   const showDatePicker = () => {

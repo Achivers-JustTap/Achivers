@@ -1,13 +1,8 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
 
 const RcNumber = ({ navigation }) => {
   const [RC, setRcNumber] = useState('');
-
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const { licenseFrontFile,selectedVehicleType: selectedVehicleName ,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -24,7 +19,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUpload', { selectedVehicleType: selectedVehicleName ,RC,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}); 
+    navigation.navigate('RCUpload',{RC}); 
   };
 
   const handleUploadFromFiles = () => {
@@ -33,7 +28,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('RCUploadFromFiles', {selectedVehicleType: selectedVehicleName ,RC,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}); // Navigate to the screen for uploading from files
+    navigation.navigate('RCUploadFromFiles',{RC}); // Navigate to the screen for uploading from files
   };
 
   return (

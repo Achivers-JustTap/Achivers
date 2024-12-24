@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
-import { useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setRcDetails } from './store_management/actions/documentActions';
 
-const RcUpload = ({ navigation }) => {
+const RcUpload = ({ navigation,route }) => {
+  const { RC } = route.params;
   const [rcFrontImage, setRcFrontImage] = useState(null);  // State for front image
   const [rcBackImage, setRcBackImage] = useState(null);   // State for back image
-  const [isCapturing, setIsCapturing] = useState(null);      // State to control camera view (null, 'front', or 'back')
- 
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {RC,rcFrontFile,selectedVehicleType: selectedVehicleName ,rcBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber ,panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
+  const [isCapturing, setIsCapturing] = useState(null);  
+  const[rcFrontUrl,setRcFrontUrl] = useState();  
+  const [rcBackUrl,setRcBackUrl] = useState();
+
+ const dispatch = useDispatch();
 
   // Handle the upload of the front image
   const handleFrontUpload = (base64Image) => {
@@ -42,6 +44,7 @@ const RcUpload = ({ navigation }) => {
       <MyCamera
         onUpload={isCapturing === 'front' ? handleFrontUpload : handleBackUpload}
         onRetake={isCapturing === 'front' ? retakeFrontImage : retakeBackImage}
+        setImageURL = {isCapturing === 'front' ? setRcFrontUrl : setRcBackUrl}
       />
     );
   }
@@ -88,11 +91,11 @@ const RcUpload = ({ navigation }) => {
             // Navigate to the next screen or handle data submission with both images
             console.log('Proceeding with front and back RC images...');
             // Optionally navigate or pass the images to another screen or handler
-            navigation.navigate('Processing', {
-              rcFront: rcFrontImage,
-              rcBack: rcBackImage,
-              vehicleAltImage,selectedVehicleType: selectedVehicleName , RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile
-            });
+            navigation.navigate('BankDetailsScreen');
+    dispatch(setRcDetails({ number: RC,
+      frontImage: rcFrontUrl,
+      backImage: rcBackUrl}))
+
           }}
         >
           <Text style={styles.buttonText}>Proceed</Text>

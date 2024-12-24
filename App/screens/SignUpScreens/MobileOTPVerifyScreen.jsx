@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const MobileOTPVerifyScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
-  const { phoneNumber, isRegister ,selectedVehicleType: selectedVehicleName } = route.params; 
-  
-  const vehicleAltImage = route.params?.vehicleAltImage;
+  const { isRegister} = route.params; 
+  const phoneNumber = useSelector((state)=> state.user.mobileNumber)
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -28,9 +28,9 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
       console.log('OTP verified successfully:', data);*/
 
       
-      if (isRegister) {
+      if (true) {
         
-        navigation.navigate('ProfileDetailsScreen', { phoneNumber,vehicleAltImage });
+        navigation.navigate('ProfileDetailsScreen');
       } else {
        
         navigation.navigate('HomeTabs',);

@@ -1,17 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-import { useRoute } from '@react-navigation/native';
 
 const DrivingLicenseUpload = ({ navigation }) => {
   const [licenseFrontFile, setLicenseFrontFile] = useState(null); 
   const [licenseBackFile, setLicenseBackFile] = useState(null);   
-
-  const route = useRoute();
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {licenseFront: licenseFrontImage,
-    licenseBack: licenseBackImage,selectedVehicleType: selectedVehicleName ,
-    licenseNumber, validTillDate, panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
 
   const handleUploadFile = async (type) => {
     try {
@@ -44,9 +37,7 @@ const DrivingLicenseUpload = ({ navigation }) => {
     }
 
     // Navigate to the next screen with both files
-    navigation.navigate('RC', {licenseFrontFile,licenseBackFile,licenseFront: licenseFrontImage,
-                               licenseBack: licenseBackImage,selectedVehicleType: selectedVehicleName ,
-                               licenseNumber, validTillDate,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,vehicleAltImage, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile});  };
+    navigation.navigate('RC')};
 
   return (
     <View style={styles.container}>

@@ -2,13 +2,14 @@ import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch,useSelector } from 'react-redux';
+import { setMobileNumber } from './store_management/actions/userActions';
 
 const MobileOTPScreen = ({ navigation, route }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSendingOTP, setIsSendingOTP] = useState(false); 
-  
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  const {selectedVehicleType: selectedVehicleName } = route.params;
+  const dispatch = useDispatch();
+
 
 
   useEffect(() => {
@@ -16,14 +17,19 @@ const MobileOTPScreen = ({ navigation, route }) => {
   }, [navigation]);
 
   const validatePhoneNumber = () => {
-    return phoneNumber.trim() !== '';
+    return /^\d{10}$/.test(phoneNumber);
   };
 
   const handleSendOTP = async () => {
     if (!validatePhoneNumber()) {
-      Alert.alert('Error', 'Mobile number is required.');
+      Alert.alert('Error', 'Mobile number is required and it must be 10 digits long.');
       return;
     }
+    //TODO
+    // write a logic if that number already exist in database then show an alert message "This mobile number is already registered"
+    // else proceed with the otp verification process
+    dispatch(setMobileNumber(phoneNumber));
+    
 
     setIsSendingOTP(true);
    /* try {
@@ -42,7 +48,7 @@ const MobileOTPScreen = ({ navigation, route }) => {
       const data = await response.json(); 
       console.log('OTP sent successfully:', data);*/
 
-      navigation.navigate('MobileOTPVerifyScreen', { phoneNumber, isRegister: route.params.isRegister,vehicleAltImage,selectedVehicleType: selectedVehicleName });
+      navigation.navigate('MobileOTPVerifyScreen', { isRegister: route.params.isRegister});
 
   /* } catch (error) {
       console.error('Error sending OTP:', error);

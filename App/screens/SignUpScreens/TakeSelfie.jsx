@@ -1,19 +1,17 @@
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-const Takeselfie = ({ navigation, route }) => {
-  const { phoneNumber } = route.params;
-  const { name,email,gender,dateOfBirth} = route.params;
 
-  const vehicleAltImage = route.params?.vehicleAltImage;
 
+const Takeselfie = ({ navigation }) => {
+  const name = useSelector((state) => state.user.name);
   useEffect(() => {
-    console.log('Takeselfie component mounted');
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
   const handleTakeSelfie = () => {
-    navigation.navigate('ProfileImageScreen', { name,email,gender,dateOfBirth,vehicleAltImage,phoneNumber});
+    navigation.navigate('ProfileImageScreen');
   
   };
 
