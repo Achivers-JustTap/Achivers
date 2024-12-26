@@ -9,13 +9,13 @@ const Menu = ({ navigation, route }) => {
   const [rating, setRating] = useState(0);
 
   const DATA = [
-    { id: '1', title: 'Inbox' ,route:'Inbox'},
-    { id: '2', title: 'Refer Friends',route:'ReferFriends' },
-    { id: '3', title: 'Oppurtunities',route:'Oppurtunities'},
-    { id: '4', title: 'Earnings',route:'Earnings' },
-    { id: '6', title: 'Account',route:'ProfiledetailsPage'},
-    { id: '7', title: 'Help',route:'Help'},
-    { id: '8', title: 'Tips & Info',route:'TipsandInfo' },
+    { id: '1', title: 'Inbox', route: 'Inbox', icon: 'envelope' },
+    { id: '2', title: 'Refer Friends', route: 'ReferFriends', icon: 'users' },
+    { id: '3', title: 'Opportunities', route: 'Opportunities', icon: 'lightbulb-o' },
+    { id: '4', title: 'Earnings', route: 'Earnings', icon: 'money' },
+    { id: '6', title: 'Account', route: 'ProfiledetailsPage', icon: 'cogs' },
+    { id: '7', title: 'Help', route: 'Help', icon: 'question-circle' },
+    { id: '8', title: 'Tips & Info', route: 'TipsandInfo', icon: 'info-circle' },
   ];
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Menu = ({ navigation, route }) => {
 
   const handleProfileImagePress = () => {
     navigation.navigate('ProfiledetailsPage', {
-      RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile
+      RC, rcFrontImage, rcBackImage, rcFrontFile, rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile
     });
   };
 
@@ -44,10 +44,13 @@ const Menu = ({ navigation, route }) => {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route,{
+    <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route, {
       profileImageBase64, name, email, phoneNumber, gender, dateOfBirth
-  })}>
-      <Text style={styles.itemText}>{item.title}</Text>
+    })}>
+      <View style={styles.itemContent}>
+        <Icon name={item.icon} size={20} color="#0F4A97" style={styles.itemIcon} />
+        <Text style={styles.itemText}>{item.title}</Text>
+      </View>
     </TouchableOpacity>
   );
 
@@ -120,7 +123,7 @@ const styles = StyleSheet.create({
   profileContainer: {
     width: 75,
     height: 75,
-    marginTop:43,
+    marginTop: 43,
     borderRadius: 50,
     overflow: 'hidden',
     borderWidth: 2,
@@ -137,6 +140,13 @@ const styles = StyleSheet.create({
     padding: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+  },
+  itemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  itemIcon: {
+    marginRight: 10,
   },
   itemText: {
     fontSize: 18,

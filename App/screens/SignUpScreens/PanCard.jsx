@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image, Keyboard } from 'react-native';
 
 
 const PanCard = ({ navigation }) => {
@@ -9,23 +9,36 @@ const PanCard = ({ navigation }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const validatePanNumber = () => {
-    if (!panNumber.trim()) return 'Please enter your PAN Number.';
+  const validatePanNumber = (pan) => {
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    return panRegex.test(pan);
+  };
+
+  const handlePanChange = (text) => {
+    setPanNumber(text.toUpperCase());
+    setIsPanValid(validatePanNumber(text.toUpperCase()));
+  };
+
+  const handleGoPress = () => {
+    if (!isPanValid) {
+      Alert.alert('Invalid PAN', 'Please enter a valid PAN number in the format AAAAA9999A.');
+      return;
+    }
+    Keyboard.dismiss();
+        Alert.alert('Success', 'PAN Number is valid!');
   };
 
   const handleTakePanImage = () => {
-    const validationError = validatePanNumber();
-    if (validationError) {
-      Alert.alert('Error', validationError);
+    if (!isPanValid) {
+      Alert.alert('Error', 'Please enter a valid PAN Number.');
       return;
     }
     navigation.navigate('PanCardUpload',{panNumber});
   };
 
   const handleUploadFromFiles = () => {
-    const validationError = validatePanNumber();
-    if (validationError) {
-      Alert.alert('Error', validationError);
+    if (!isPanValid) {
+      Alert.alert('Error', 'Please enter a valid PAN Number.');
       return;
     }
     navigation.navigate('PanCardUploadFromFile');
@@ -34,34 +47,34 @@ const PanCard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Upload PAN Card</Text>
-      <Text style={styles.text}>Enter your PAN card number and we'll get the required information from the NSDL.</Text>
-      
-      <Image source={require('../../../assets/images/pancard.png')} style={styles.image} resizeMode="contain"/>
-     
+      <Text style={styles.text}>
+        Enter your PAN card number and we'll get the required information from the NSDL.
+      </Text>
 
+      <Image source={require('../../../assets/images/pancard.png')} style={styles.image} resizeMode="contain" />
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'white', padding: 20, justifyContent: 'center', alignItems: 'center',marginBottom: 3 }}>
-          <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
-          {' '}to enter your PAN number and upload files
-        </Text>
-
+      <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Enter PAN Number"
           value={panNumber}
-          onChangeText={setPanNumber}
+          onChangeText={handlePanChange}
           keyboardType="default"
+          maxLength={10}
         />
+        <TouchableOpacity
+          style={[styles.goButton, isPanValid && styles.goButtonActive]}
+          onPress={handleGoPress}
+        >
+          <Text style={styles.goButtonText}>Go</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.buttonContainer}>
-        {/* Button to Take PAN Image */}
         <TouchableOpacity style={styles.button} onPress={handleTakePanImage}>
           <Text style={styles.buttonText}>Take PAN Image</Text>
         </TouchableOpacity>
 
-        {/* Button to Upload PAN from Files */}
         <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
           <Text style={styles.buttonText}>Upload from Files</Text>
         </TouchableOpacity>
@@ -96,15 +109,36 @@ const styles = StyleSheet.create({
     width: 400,
     height: 270,
   },
-  input: {
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '80%',
+    marginBottom: 20,
+  },
+  input: {
+    flex: 1,
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginBottom: 200,
     backgroundColor: 'white',
+    color: 'black',
+  },
+  goButton: {
+    backgroundColor: 'grey',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  goButtonActive: {
+    backgroundColor: 'yellow',
+  },
+  goButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
     color: 'black',
   },
   buttonContainer: {
