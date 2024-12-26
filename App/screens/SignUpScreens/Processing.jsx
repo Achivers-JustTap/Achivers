@@ -1,41 +1,127 @@
-import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
-const Processing = ({navigation}) => {
-  const [verificationStatus, setVerificationStatus] = useState('processing'); 
-  const [loading, setLoading] = useState(false); 
-  const  user = useSelector((state) => state.user);
-  const document  = useSelector((state) => state.documents);
-
-  console.log("user",user)
-  console.log("document",document)
+const Processing = ({ navigation }) => {
+  const [verificationStatus, setVerificationStatus] = useState('processing');
+  const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user);
+  const document = useSelector((state) => state.documents);
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
-  //function to fetching verification status from backend
   const fetchVerificationStatus = async () => {
-    
+    console.log("Fetching verification status...");
     setTimeout(() => {
-      setVerificationStatus('valid'); // put 'valid', 'invalid' or 'processing' to see changes.
+      setVerificationStatus('valid'); // Change this to 'valid', 'invalid', or 'processing' to see different cases.
       setLoading(false);
     }, 2000);
   };
 
+  // Move sendToBackend outside of the useEffect for better control
+  const sendToBackend = async () => {
+    setLoading(true);
+    console.log('Sending data to the backend...');
+
+    // Create a FormData object
+    const formData = new FormData();
+    console.log("Image Files ", document);
+    // Append image files
+    formData.append('profilePicture', {
+      uri: document.profilePicture.uri,
+      name: document.profilePicture.name,
+      type: document.profilePicture.type,
+    });
+    console.log("Image 2 ", document);
+    formData.append('aadharFront', {
+      uri: document.aadhar.frontImage.uri,
+      name: document.aadhar.frontImage.name,
+      type: document.aadhar.frontImage.type,
+    });
+    formData.append('aadharBack', {
+      uri: document.aadhar.backImage.uri,
+      name: document.aadhar.backImage.name,
+      type: document.aadhar.backImage.type,
+    });
+    formData.append('drivingLicenseFront', {
+      uri: document.drivingLicense.frontImage.uri,
+      name: document.drivingLicense.frontImage.name,
+      type: document.drivingLicense.frontImage.type,
+    });
+    formData.append('drivingLicenseBack', {
+      uri: document.drivingLicense.backImage.uri,
+      name: document.drivingLicense.backImage.name,
+      type: document.drivingLicense.backImage.type,
+    });
+    formData.append('panFront', {
+      uri: document.pan.frontImage.uri,
+      name: document.pan.frontImage.name,
+      type: document.pan.frontImage.type,
+    });
+    formData.append('panBack', {
+      uri: document.pan.backImage.uri,
+      name: document.pan.backImage.name,
+      type: document.pan.backImage.type,
+    });
+    formData.append('rcFront', {
+      uri: document.rc.frontImage.uri,
+      name: document.rc.frontImage.name,
+      type: document.rc.frontImage.type,
+    });
+    formData.append('rcBack', {
+      uri: document.rc.backImage.uri,
+      name: document.rc.backImage.name,
+      type: document.rc.backImage.type,
+    });
+
+    // Append text fields
+    formData.append('name', user.name);
+    formData.append('gender', user.gender);
+    formData.append('email', user.email);
+    formData.append('dateOfBirth', user.dateOfBirth);
+    formData.append('mobileNumber', user.mobileNumber);
+    formData.append('accountNumber', document.bankAccountDetails.accountNumber);
+    formData.append('bankName', document.bankAccountDetails.bankName);
+    formData.append('ifscCode', document.bankAccountDetails.ifscCode);
+    formData.append('upi', document.bankAccountDetails.upi);
+    formData.append('aadharNumber', document.aadhar.number);
+    formData.append('panNumber', document.pan.number);
+    formData.append('drivingLicenseNumber', document.drivingLicense.number);
+    formData.append('drivingLicenseValidDate', document.drivingLicense.validDate);
+    formData.append('rcNumber', document.rc.number);
+    formData.append('vehicleType', document.vehicleType);
+    console.log("formData ", formData);
+
+    try {
+      const response = await axios.post('http://192.168.0.101:5000/api/captains/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Response from server:', response.data);
+    } catch (error) {
+      console.error('Error sending data to the backend:', error);
+    } finally {
+      setLoading(false);
+    }
+    console.log('Data sent to the backend.');
+  };
+
   useEffect(() => {
+    console.log("verificationStatus before fetch:", verificationStatus);
     fetchVerificationStatus();
   }, []);
 
+
   const handleProceed = () => {
     console.log('Proceeding to the homepage...');
-    navigation.navigate('HomeTabs'); 
+    sendToBackend();
+    navigation.navigate('HomeTabs');
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Verification Status: {verificationStatus}</Text>
@@ -49,16 +135,21 @@ const Processing = ({navigation}) => {
               <Text style={styles.subHeader}>
                 Your documents have been verified successfully.
               </Text>
-              <Text>Now you are member of{' '}<Text style={styles.brandName}>JUST TAP!</Text></Text>
+              <Text>
+                Now you are a member of{' '}
+                <Text style={styles.brandName}>JUST TAP!</Text>
+              </Text>
               <TouchableOpacity style={styles.button} onPress={handleProceed}>
-               <Text style={styles.buttonText}>Proceed</Text>
+                <Text style={styles.buttonText}>Proceed</Text>
               </TouchableOpacity>
             </>
           )}
           {verificationStatus === 'invalid' && (
             <>
-            <Text style={styles.header}>Sorry,your documents are invalid.</Text>
-            <Text style={styles.subHeader}>We are facing isuues while validating your Documents.Please try again after 24hours. </Text>
+              <Text style={styles.header}>Sorry, your documents are invalid.</Text>
+              <Text style={styles.subHeader}>
+                We are facing issues while validating your Documents. Please try again after 24 hours.
+              </Text>
             </>
           )}
           {verificationStatus === 'processing' && (
@@ -105,14 +196,14 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
   },
-  button:{
-    backgroundColor: '#0F4A97', 
+  button: {
+    backgroundColor: '#0F4A97',
     padding: 10,
     borderRadius: 5,
     marginTop: 20,
   },
-  buttonText:{
-    color: 'white', 
+  buttonText: {
+    color: 'white',
     fontSize: 16,
   },
   brandName: {

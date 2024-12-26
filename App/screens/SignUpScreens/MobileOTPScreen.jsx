@@ -29,7 +29,29 @@ const MobileOTPScreen = ({ navigation, route }) => {
     //TODO
     // write a logic if that number already exist in database then show an alert message "This mobile number is already registered"
     // else proceed with the otp verification process
-    dispatch(setMobileNumber(phoneNumber));
+    try {
+      const response = await fetch('http://192.168.0.101:5000/api/captainNumber/searchMobileNumber', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mobileNumber: phoneNumber }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error checking mobile number');
+      }
+  
+      const data = await response.json();
+  
+      if (data.exists) {
+        // Mobile number already exists
+        Alert.alert('Error', 'This mobile number is already registered.');
+        return;
+      }
+  
+      // Proceed with OTP verification process
+      dispatch(setMobileNumber(phoneNumber));
     
 
     setIsSendingOTP(true);
@@ -51,12 +73,12 @@ const MobileOTPScreen = ({ navigation, route }) => {
 
       navigation.navigate('MobileOTPVerifyScreen', { isRegister: route.params.isRegister,vehicleAltImage, selectedVehicleType});
 
-  /* } catch (error) {
+   } catch (error) {
       console.error('Error sending OTP:', error);
       alert('Failed to send OTP. Please try again.');
     } finally {
       setIsSendingOTP(false);
-    } */
+    } 
   };
 
   return (

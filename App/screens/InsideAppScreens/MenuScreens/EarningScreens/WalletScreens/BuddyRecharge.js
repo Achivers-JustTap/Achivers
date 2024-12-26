@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Clipboard, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as Sharing from 'expo-sharing';
+// import * as Sharing from 'expo-sharing';
 
 const BuddyRecharge = () => {
   const [linkCopied, setLinkCopied] = useState(false);
@@ -13,17 +13,17 @@ const BuddyRecharge = () => {
     Alert.alert('Link copied', 'The recharge link has been copied to your clipboard.');
   };
 
-  const handleShareLink = async () => {
-    if (await Sharing.isAvailableAsync()) {
-      try {
-        await Sharing.shareAsync(link);
-      } catch (error) {
-        Alert.alert('Error', 'There was an issue while trying to share the link.');
-      }
-    } else {
-      Alert.alert('Sharing not available', 'Sharing options are not available on this device.');
-    }
-  };
+  // const handleShareLink = async () => {
+  //   if (await Sharing.isAvailableAsync()) {
+  //     try {
+  //       await Sharing.shareAsync(link);
+  //     } catch (error) {
+  //       Alert.alert('Error', 'There was an issue while trying to share the link.');
+  //     }
+  //   } else {
+  //     Alert.alert('Sharing not available', 'Sharing options are not available on this device.');
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
