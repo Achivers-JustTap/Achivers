@@ -40,6 +40,7 @@ export default function Earnings({ route, navigation }) {
         <Tab.Screen name="Wallet" component={Wallet} initialParams={{RC, rcFrontImage,vehicleAltImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
         <Tab.Screen name="History" component={History} initialParams={{RC, rcFrontImage, vehicleAltImage,rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
       </Tab.Navigator>
+      
       </ScrollView>
     </SafeAreaView>
   );

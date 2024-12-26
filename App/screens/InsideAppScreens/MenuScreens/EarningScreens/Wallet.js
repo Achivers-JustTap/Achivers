@@ -181,10 +181,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
   },
-  contentText: {
-    fontSize: 16,
-    color: '#0F4A97',
-  },
+  
 });
 
 export default Wallet;

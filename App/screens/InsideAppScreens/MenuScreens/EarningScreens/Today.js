@@ -12,10 +12,8 @@ const Tab = createMaterialTopTabNavigator();
 const Today = ({route,navigation}) => {
     const [selectedCategory, setSelectedCategory] = useState('All'); 
     const [selectedVehicleType, setSelectedVehicleType] = useState(route.params?.selectedVehicleName || 'Moto'); 
-  
-    const vehicleAltImage = route.params?.vehicleAltImage;
-    const { RC, rcFrontImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile } = route.params;
-
+    const [activeTab, setActiveTab] = useState('All Transactions');
+    
     useEffect(() => {
       if (route.params?.vehicleType) {
         setSelectedVehicleType(route.params.vehicleType); 
@@ -83,21 +81,41 @@ const Today = ({route,navigation}) => {
                           marginVertical:20,}} />
             <Text style={{fontWeight:'bold', textAlign:'center',fontSize: 20,color:'#0F4A97',marginBottom:5}}>Earning Details</Text>
             
-        <Tab.Navigator initialRouteName="All"
-        screenOptions={{
-            tabBarActiveTintColor: '#fff',
-            tabBarInactiveTintColor: '#888',
-            tabBarStyle: { backgroundColor: '#0F4A97' },
-            tabBarLabelStyle: { fontSize: 13, fontWeight: 'bold' },
-            tabBarIndicatorStyle: { backgroundColor: '#fff' },
-            tabBarScrollEnabled: true,
-        }}
-      >
-        <Tab.Screen name="All" component={All}/>
-        <Tab.Screen name="Bike Taxi" component={BikeTaxi} />
-        <Tab.Screen name="Parcels Delivery" component={ParcelDelivery}/>
-        <Tab.Screen name="Gorceries Delivery" component={Gorceries} />
-      </Tab.Navigator>
+     
+      <View style={styles.tabNav}>
+        <TouchableOpacity
+          style={[styles.tabButton, activeTab === 'All' && styles.tabButtonActive]}
+          onPress={() => setActiveTab('All')}
+        >
+          <Text style={styles.tabText}>All</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, activeTab === 'Bike Taxi' && styles.tabButtonActive]}
+          onPress={() => setActiveTab('Bike Taxi')}
+        >
+          <Text style={styles.tabText}>Bike Taxi</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, activeTab === 'Parcels Delivery' && styles.tabButtonActive]}
+          onPress={() => setActiveTab('Parcels Delivery')}
+        >
+          <Text style={styles.tabText}>Parcels Delivery</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tabButton, activeTab === 'Gorceries Delivery' && styles.tabButtonActive]}
+          onPress={() => setActiveTab('Gorceries Delivery')}
+        >
+          <Text style={styles.tabText}>Gorceries Delivery</Text>
+        </TouchableOpacity>
+      </View>
+
+     
+      <View style={styles.tabContent}>
+        {activeTab === 'All' && <All />}
+        {activeTab === 'Bike Taxi' && <BikeTaxi />}
+        {activeTab === 'Parcels Delivery' && <ParcelDelivery />}
+        {activeTab === 'Gorceries Delivery' && <Gorceries />}
+      </View>
 
           </SafeAreaView>
 
@@ -188,6 +206,51 @@ const styles = StyleSheet.create({
     image2: {
       width: '100%',
       height: 50,
+    },
+    tabNav: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      backgroundColor: '#0F4A97',
+      borderRadius: 10,
+      padding: 10,
+      marginTop: 5,
+    },
+    tabButton: {
+      backgroundColor: '#B0BEC5',
+      paddingVertical: 12,
+      paddingHorizontal: 25,
+      borderRadius: 10,
+      alignItems: 'center',
+      shadowColor: '#B0BEC5',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.2,
+      shadowRadius: 5,
+    },
+    tabButtonActive: {
+      backgroundColor: '#FFEB3B',
+      paddingVertical: 12,
+      paddingHorizontal: 25,
+      borderRadius: 10,
+      alignItems: 'center',
+      shadowColor: '#FFEB3B',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.3,
+      shadowRadius: 10,
+    },
+    tabText: {
+      fontSize: 16,
+      color: '#0F4A97',
+      fontWeight: 'bold',
+    },
+    tabContent: {
+      marginTop: 20,
+      padding: 15,
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      shadowColor: '#0F4A97',
+      shadowOffset: { width: 0, height: 5 },
+      shadowOpacity: 0.1,
+      shadowRadius: 10,
     },
    
   }); 
