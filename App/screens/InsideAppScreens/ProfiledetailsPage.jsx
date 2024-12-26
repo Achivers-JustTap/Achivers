@@ -11,7 +11,7 @@ const ProfiledetailsPage = ({ navigation }) => {
   }, [navigation]);
 
   const handleHelpPress = () => {
-    navigation.navigate('Help');
+    navigation.navigate('ProfileHelp');
   };
 
   const handleLogout = () => {

@@ -38,6 +38,8 @@ import BestPerformance from './App/screens/InsideAppScreens/MenuScreens/ProfileD
 import IDCard from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/IDCard';
 import Documents from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents';
 import LanguageSetting from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/LanguageSetting';
+import ProfileHelp from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/ProfileHelp';
+
 
 import Wallet from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Wallet';
 import History from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/History';
@@ -64,6 +66,10 @@ import BuddyRecharge from './App/screens/InsideAppScreens/MenuScreens/EarningScr
 import ReferencePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferencePage';
 import AllTransactionPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/AllTransactionPage';
 import PendingPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/PendingPage';
+import LicenseImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/LicenseImageChange';
+import LicenseFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/LicenseFileChange';
+import RcImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RcImageChange';
+import RcFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RcFileChange';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -103,6 +109,7 @@ export default function App() {
           <Stack.Screen name="IDCard" component={IDCard} />
           <Stack.Screen name="Documents" component={Documents} />
           <Stack.Screen name="LanguageSettings" component={LanguageSetting} />
+          <Stack.Screen name="ProfileHelp" component={ProfileHelp} />
           <Stack.Screen name="Inbox" component={Inbox} />
           <Stack.Screen name="ReferFriends" component={ReferFriends} />
           <Stack.Screen name="Oppurtunities" component={Oppurtunities} />
@@ -110,10 +117,14 @@ export default function App() {
           <Stack.Screen name="Help" component={Help} />
           <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
 
-          <Stack.Screen name="AadharCard_List" component={AadharCard_List} />
-          <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} />
-          <Stack.Screen name="PanCard_List" component={PanCard_List} />
-          <Stack.Screen name="RC_List" component={RC_List} />
+          <Stack.Screen name="AadharCard_List" component={AadharCard_List} options={{ headerShown: false }}/>
+          <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} options={{ headerShown: false }}/>
+          <Stack.Screen name="LicenseImageChange" component={LicenseImageChange} />
+          <Stack.Screen name="LicenseFileChange" component={LicenseFileChange} />
+          <Stack.Screen name="PanCard_List" component={PanCard_List} options={{ headerShown: false }}/>
+          <Stack.Screen name="RC_List" component={RC_List} options={{ headerShown: false }}/>
+          <Stack.Screen name="RcImageChange" component={RcImageChange} />
+          <Stack.Screen name="RcFileChange" component={RcFileChange} />
 
           {/* Earnings Screens */}
           <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
