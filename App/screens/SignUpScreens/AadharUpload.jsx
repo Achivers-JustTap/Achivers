@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { useSelector } from 'react-redux';
 import { setAadharDetails } from './store_management/actions/documentActions';
+import { ScrollView } from 'react-native-gesture-handler';
+
 const AadharUpload = ({ navigation }) => {
   const [aadharNumber, setAadharNumber] = useState('');
   const name = useSelector(state => state.user.name);
   const number = useSelector(state => state.documents.aadhar);
-  
+
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
@@ -16,13 +18,29 @@ const AadharUpload = ({ navigation }) => {
     return null;
   };
 
+  const handleGoPress = () => {
+    const validationError = validateAadharNumber();
+    if (validationError) {
+      Alert.alert('Error', validationError);
+      return;
+    }
+
+    // Hide the keyboard
+    Keyboard.dismiss();
+
+    // Show an alert confirming the Aadhaar number is valid
+    Alert.alert('Success', 'Aadhaar number entered is valid');
+    // You can proceed with the next navigation or logic here
+    navigation.navigate('NextScreen'); // Replace with the correct screen if needed
+  };
+
   const handleTakeAadharImage = () => {
     const validationError = validateAadharNumber();
     if (validationError) {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharImageUpload',{aadharNumber});
+    navigation.navigate('AadharImageUpload', { aadharNumber });
   };
 
   const handleUploadFromFiles = () => {
@@ -31,7 +49,7 @@ const AadharUpload = ({ navigation }) => {
       Alert.alert('Error', validationError);
       return;
     }
-    navigation.navigate('AadharUploadFromFile',{aadharNumber});
+    navigation.navigate('AadharUploadFromFile', { aadharNumber });
   };
 
   return (
@@ -162,18 +180,18 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center', 
-    alignItems: 'center',     
-    width: '100%',          
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
     marginBottom: 20,
-    gap: 10,                  
+    gap: 10,
   },
   button: {
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 8,
-    flex: 0.45,             
-    alignItems: 'center',     
+    flex: 0.45,
+    alignItems: 'center',
   },
   buttonText: {
     color: 'black',

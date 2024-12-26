@@ -6,6 +6,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setMobileNumber } from './store_management/actions/userActions';
 
 const MobileOTPScreen = ({ navigation, route }) => {
+  const { vehicleAltImage, selectedVehicleType } = route.params;
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isSendingOTP, setIsSendingOTP] = useState(false); 
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const MobileOTPScreen = ({ navigation, route }) => {
       const data = await response.json(); 
       console.log('OTP sent successfully:', data);*/
 
-      navigation.navigate('MobileOTPVerifyScreen', { isRegister: route.params.isRegister});
+      navigation.navigate('MobileOTPVerifyScreen', { isRegister: route.params.isRegister,vehicleAltImage, selectedVehicleType});
 
   /* } catch (error) {
       console.error('Error sending OTP:', error);

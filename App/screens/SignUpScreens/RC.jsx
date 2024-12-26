@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Keyboard } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 const RcNumber = ({ navigation }) => {

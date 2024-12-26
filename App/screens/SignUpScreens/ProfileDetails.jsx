@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import { Picker } from '@react-native-picker/picker';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserDetails } from './store_management/actions/userActions';
 
-const ProfileDetailsScreen = ({ navigation }) => {
+const ProfileDetailsScreen = ({ navigation,route }) => {
+  const { vehicleAltImage, selectedVehicleType } = route.params;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState(''); 
@@ -32,8 +32,8 @@ const ProfileDetailsScreen = ({ navigation }) => {
       return;
     }
     
-    dispatch(setUserDetails(name, email, gender,dateOfBirth));
-    navigation.navigate('TakeSelfie');
+    dispatch(setUserDetails(name, email, gender, dateOfBirth));
+    navigation.navigate('TakeSelfie', { vehicleAltImage, selectedVehicleType });
   };
 
   const showDatePicker = () => {
@@ -68,18 +68,23 @@ const ProfileDetailsScreen = ({ navigation }) => {
         onChangeText={(text) => setEmail(text)}
       />
 
-      {/* Gender Dropdown */}
-      <View style={styles.input}>
-        <Picker
-          selectedValue={gender}
-          style={styles.picker} 
-          onValueChange={(itemValue) => setGender(itemValue)}
-        >
-          <Picker.Item label="Select Your Gender" value="" />
-          <Picker.Item label="Male" value="Male" />
-          <Picker.Item label="Female" value="Female" />
-          <Picker.Item label="Other" value="Other" />
-        </Picker>
+      {/* Gender Radio Buttons */}
+      <View style={styles.radioGroup}>
+        <Text style={styles.radioLabel}>Select Your Gender</Text>
+        <View style={styles.radioButtonsRow}>
+          {['Male', 'Female', 'Other'].map((item) => (
+            <TouchableOpacity
+              key={item}
+              style={styles.radioButton}
+              onPress={() => setGender(item)}
+            >
+              <View style={[styles.radioCircle, gender === item && styles.selectedCircle]}>
+                {gender === item && <View style={styles.selectedDot} />}
+              </View>
+              <Text style={[styles.radioButtonText, gender === item && styles.selectedText]}>{item}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
       {/* Date of Birth Picker */}
@@ -132,10 +137,50 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',  
   },
-  picker: {
-    width: '100%',  
-    height: 60,     
-    color: 'black',
+  radioGroup: {
+    width: '80%',
+    marginBottom: 15,
+  },
+  radioLabel: {
+    color: 'white',
+    marginBottom: 10,
+  },
+  radioButtonsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', // Space the buttons evenly in the row
+  },
+  radioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioCircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#ccc',
+    marginRight: 10,
+  },
+  selectedCircle: {
+    borderColor: 'white',
+    backgroundColor: 'white', // Selected circle becomes white
+  },
+  selectedDot: {
+    width: 18,
+    height: 18,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderColor:'#0F4A97', 
+    marginLeft: -1,
+    marginTop: -0.6
+  },
+  radioButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  selectedText: {
+    color: 'white', 
   },
   button: {
     backgroundColor: 'white',

@@ -3,18 +3,20 @@ import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Aler
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const DrivingLicense = ({ navigation }) => {
+  
   const [licenseNumber, setLicenseNumber] = useState(''); // State for Driving License number
   const [validTillDate, setValidTillDate] = useState('');
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false); // State for date picker visibility
+  const [isGoButtonEnabled, setIsGoButtonEnabled] = useState(false); // State to enable/disable the Go button
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false }); // Hiding the header
   }, [navigation]);
 
-  // Validation for Driving License number
+  // Validation for Driving License number and valid till date
   const validateLicenseNumber = () => {
     if (!licenseNumber.trim()) return 'Please enter your Driving License Number.';
-    if (!validTillDate.trim()) return 'Please select your Date of Birth.';
+    if (!validTillDate.trim()) return 'Please select the valid till date.';
   };
 
   // Handle taking a Driving License image
@@ -24,7 +26,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('LicenseImageUpload',{ licenseNumber, validTillDate });
+    navigation.navigate('LicenseImageUpload', { licenseNumber, validTillDate });
   };
 
   // Handle uploading Driving License from files
@@ -34,7 +36,7 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-    navigation.navigate('DrivingLicenseUpload',{licenseNumber,validTillDate});
+    navigation.navigate('DrivingLicenseUpload', { licenseNumber, validTillDate });
   };
 
   // Show date picker
@@ -60,7 +62,8 @@ const DrivingLicense = ({ navigation }) => {
 
     // Validate DL Number format (2 letters, 1 digit, 13 remaining digits)
     const regex = /^[A-Z]{2}[0-9]{1}[0-9]{13}$/;
-    setIsGoButtonEnabled(regex.test(uppercasedText)); // Enable Go button if format is valid
+    const isValid = regex.test(uppercasedText);
+    setIsGoButtonEnabled(isValid); // Enable Go button if format is valid
   };
 
   // Handle Go button press to dismiss the keyboard
@@ -70,8 +73,8 @@ const DrivingLicense = ({ navigation }) => {
       Alert.alert('Error', validationError); // Show error if validation fails
       return;
     }
-   Keyboard.dismiss();
-       Alert.alert('Success', 'DL Number is valid!');
+    Keyboard.dismiss();
+    Alert.alert('Success', 'DL Number is valid!');
   };
 
   return (

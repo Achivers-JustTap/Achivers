@@ -42,7 +42,28 @@ import LanguageSetting from './App/screens/InsideAppScreens/MenuScreens/ProfileD
 import Wallet from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Wallet';
 import History from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/History';
 import BankDetailsScreen from './App/screens/SignUpScreens/BankDetailsScreen';
-
+import AadharCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharCard_List';
+import DriverLicence_list from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/DriverLicence_list';
+import PanCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanCard_List';
+import RC_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RC_List';
+import Today from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today';
+import All from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/All';
+import BikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/BikeTaxi';
+import ParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/ParcelDelivery';
+import Gorceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Gorceries';
+import RateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCard';
+import Link from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/Link';
+import BikeLite from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeLite';
+import C2C from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/C2C';
+import BikeMetro from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeMetro';
+import SwiggyGinie from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/SwiggyGinie';
+import KPN from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/KPN';
+import Guidelines from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Guidelines';
+import RechargePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/RechargePage';
+import BuddyRecharge from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/BuddyRecharge';
+import ReferencePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferencePage';
+import AllTransactionPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/AllTransactionPage';
+import PendingPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/PendingPage';
 const Stack = createStackNavigator();
 
 export default function App() {

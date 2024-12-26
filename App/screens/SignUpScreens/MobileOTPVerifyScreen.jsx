@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 const MobileOTPVerifyScreen = ({ route, navigation }) => {
   const [otp, setOtp] = useState('');
-  const { isRegister} = route.params; 
+  const { isRegister,vehicleAltImage, selectedVehicleType} = route.params; 
   const phoneNumber = useSelector((state)=> state.user.mobileNumber)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const MobileOTPVerifyScreen = ({ route, navigation }) => {
       
       if (true) {
         
-        navigation.navigate('ProfileDetailsScreen');
+        navigation.navigate('ProfileDetailsScreen',vehicleAltImage, selectedVehicleType);
       } else {
        
         navigation.navigate('HomeTabs',);

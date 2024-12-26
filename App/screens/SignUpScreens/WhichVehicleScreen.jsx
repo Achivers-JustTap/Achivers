@@ -12,16 +12,31 @@ const WhichVehicleScreen = ({ navigation, route }) => {
   }, [navigation]);
 
   const vehicles = [
-    { id: 'bike', name: 'Moto', image: require('../../../assets/images/moto.png') },
-    { id: 'auto', name: 'Auto', image: require('../../../assets/images/auto.png') },
-    { id: 'car', name: 'Car', image: require('../../../assets/images/car.png') },
+    { 
+      id: 'bike', 
+      name: 'Moto', 
+      image: require('../../../assets/images/moto.png'),
+      altImage: require('../../../assets/images/moto.png') // Alt image for Moto
+    },
+    { 
+      id: 'auto', 
+      name: 'Auto', 
+      image: require('../../../assets/images/auto.png'),
+      altImage: require('../../../assets/images/auto.png') // Alt image for Auto
+    },
+    { 
+      id: 'car', 
+      name: 'Car', 
+      image: require('../../../assets/images/car.png'),
+      altImage: require('../../../assets/images/car.png') // Alt image for Car
+    },
   ];
 
   const handleConfirm = () => {
     if (selectedVehicle) {
-      const selectedVehicleName = vehicles.find(v => v.id === selectedVehicle).name;
-      const vehicleAltImage = vehicles.find(v => v.id === selectedVehicle).altImage;
-      navigation.navigate('MobileOTPScreen', {vehicleAltImage ,selectedVehicleType: selectedVehicleName});
+      const selectedVehicleInfo = vehicles.find(v => v.id === selectedVehicle);
+      const { name: selectedVehicleName, altImage } = selectedVehicleInfo;
+      navigation.navigate('MobileOTPScreen', { vehicleAltImage: altImage, selectedVehicleType: selectedVehicleName });
       dispatch(setVehicleType(selectedVehicle));
     } else {
       Alert.alert('Please select a vehicle type');
@@ -118,6 +133,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
 
 export default WhichVehicleScreen;

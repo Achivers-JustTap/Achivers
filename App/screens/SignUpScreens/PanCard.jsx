@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image, Keyboard } from 'react-native';
 
-
 const PanCard = ({ navigation }) => {
   const [panNumber, setPanNumber] = useState('');
+  const [isPanValid, setIsPanValid] = useState(false);
+
   useEffect(() => {
     console.log('PanCard component mounted');
     navigation.setOptions({ headerShown: false });
@@ -15,8 +16,9 @@ const PanCard = ({ navigation }) => {
   };
 
   const handlePanChange = (text) => {
-    setPanNumber(text.toUpperCase());
-    setIsPanValid(validatePanNumber(text.toUpperCase()));
+    const upperCaseText = text.toUpperCase();
+    setPanNumber(upperCaseText);
+    setIsPanValid(validatePanNumber(upperCaseText));
   };
 
   const handleGoPress = () => {
@@ -24,8 +26,8 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Invalid PAN', 'Please enter a valid PAN number in the format AAAAA9999A.');
       return;
     }
-    Keyboard.dismiss();
-        Alert.alert('Success', 'PAN Number is valid!');
+    Keyboard.dismiss(); // Dismiss the keyboard
+    Alert.alert('Success', 'PAN Number is valid!'); // Show success message
   };
 
   const handleTakePanImage = () => {
@@ -33,7 +35,7 @@ const PanCard = ({ navigation }) => {
       Alert.alert('Error', 'Please enter a valid PAN Number.');
       return;
     }
-    navigation.navigate('PanCardUpload',{panNumber});
+    navigation.navigate('PanCardUpload', { panNumber });
   };
 
   const handleUploadFromFiles = () => {
@@ -65,6 +67,7 @@ const PanCard = ({ navigation }) => {
         <TouchableOpacity
           style={[styles.goButton, isPanValid && styles.goButtonActive]}
           onPress={handleGoPress}
+          disabled={!isPanValid}
         >
           <Text style={styles.goButtonText}>Go</Text>
         </TouchableOpacity>

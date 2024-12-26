@@ -4,7 +4,8 @@ import MyCamera from '../../../components/MyCamera';
 import { setProfilePicture } from './store_management/actions/userActions';
 import { useDispatch } from 'react-redux';
 
-const ProfilePicture = ({ navigation }) => {
+const ProfilePicture = ({ navigation,route }) => {
+  const { vehicleAltImage, selectedVehicleType } = route.params;
   const [profileImageBase64, setProfileImageBase64] = useState(null);
   const [isCameraVisible, setIsCameraVisible] = useState(true);
    const [imageURL, setImageURL] = useState(null);
@@ -24,7 +25,7 @@ const ProfilePicture = ({ navigation }) => {
 
   const handleProceed = () => {
     console.log('Proceed button pressed');
-    navigation.navigate('AadharUpload');
+    navigation.navigate('AadharUpload', {vehicleAltImage, selectedVehicleType,profileImageBase64});
     console.log("Image Url in Take Selfie ", imageURL)
     dispatch(setProfilePicture(imageURL));
   };
