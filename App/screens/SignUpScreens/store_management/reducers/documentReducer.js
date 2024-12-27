@@ -1,33 +1,34 @@
 const initialState = {
-    aadhar: {
-      number: '',
-      frontImage: null,
-      backImage: null,
-    },
-    pan: {
-      number: '',
-      frontImage: null,
-      backImage: null,
-    },
-    drivingLicense: {
-      number: '',
-      validDate: '',
-      frontImage: null,
-      backImage: null,
-    },
-    rc: {
-      number: '',
-      frontImage: null,
-      backImage: null,
-    },
-    bankAccountDetails: {
-      accountNumber: '',
-      ifscCode: '',
-      bankName: '',
-      upi: '',
-    },
-     vehicleType: ''
-  };
+  aadhar: {
+    number: '',
+    frontImage: { uri: null, name: '', type: '' },
+    backImage: { uri: null, name: '', type: '' },
+  },
+  pan: {
+    number: '',
+    frontImage: { uri: null, name: '', type: '' },
+    backImage: { uri: null, name: '', type: '' },
+  },
+  drivingLicense: {
+    number: '',
+    validDate: '',
+    frontImage: { uri: null, name: '', type: '' },
+    backImage: { uri: null, name: '', type: '' },
+  },
+  rc: {
+    number: '',
+    frontImage: { uri: null, name: '', type: '' },
+    backImage: { uri: null, name: '', type: '' },
+  },
+  bankAccountDetails: {
+    accountNumber: '',
+    ifscCode: '',
+    bankName: '',
+    upi: '',
+  },
+  vehicleType: '',
+};
+
   
   const documentReducer = (state = initialState, action) => {
     switch (action.type) {

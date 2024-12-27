@@ -2,16 +2,14 @@ import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setMobileNumber } from './store_management/actions/userActions';
 
 const MobileOTPScreen = ({ navigation, route }) => {
   const { vehicleAltImage, selectedVehicleType } = route.params;
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [isSendingOTP, setIsSendingOTP] = useState(false); 
+  const [isSendingOTP, setIsSendingOTP] = useState(false);
   const dispatch = useDispatch();
-
-
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -26,59 +24,45 @@ const MobileOTPScreen = ({ navigation, route }) => {
       Alert.alert('Error', 'Mobile number is required and it must be 10 digits long.');
       return;
     }
-    //TODO
-    // write a logic if that number already exist in database then show an alert message "This mobile number is already registered"
-    // else proceed with the otp verification process
+
+    setIsSendingOTP(true);
+
     try {
-      const response = await fetch('http://192.168.0.101:5000/api/captainNumber/searchMobileNumber', {
+      const response = await fetch('http://192.168.0.105:5000/api/captains/searchMobileNumber', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ mobileNumber: phoneNumber }),
       });
-  
+      console.log("response",response);
+
       if (!response.ok) {
         throw new Error('Error checking mobile number');
       }
-  
+
       const data = await response.json();
-  
+      console.log("data",data);
       if (data.exists) {
-        // Mobile number already exists
         Alert.alert('Error', 'This mobile number is already registered.');
+        setIsSendingOTP(false);
         return;
       }
-  
-      // Proceed with OTP verification process
+
+      // Mobile number doesn't exist, proceed with OTP verification
       dispatch(setMobileNumber(phoneNumber));
-    
 
-    setIsSendingOTP(true);
-   /* try {
-      const response = await fetch('https://6ab8-2405-201-c425-3854-a936-1e27-553c-27bf.ngrok-free.app/signup/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phoneNumber }),
+      navigation.navigate('MobileOTPVerifyScreen', {
+        isRegister: route.params.isRegister,
+        vehicleAltImage,
+        selectedVehicleType,
       });
-
-      if (!response.ok) {
-        throw new Error('Error sending OTP');
-      } 
-
-      const data = await response.json(); 
-      console.log('OTP sent successfully:', data);*/
-
-      navigation.navigate('MobileOTPVerifyScreen', { isRegister: route.params.isRegister,vehicleAltImage, selectedVehicleType});
-
-   } catch (error) {
+    } catch (error) {
       console.error('Error sending OTP:', error);
-      alert('Failed to send OTP. Please try again.');
+      Alert.alert('Error', 'Failed to send OTP. Please try again.');
     } finally {
       setIsSendingOTP(false);
-    } 
+    }
   };
 
   return (

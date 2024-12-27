@@ -11,115 +11,85 @@ const Processing = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
+    fetchVerificationStatus();
   }, [navigation]);
 
-  const fetchVerificationStatus = async () => {
-    console.log("Fetching verification status...");
+  const fetchVerificationStatus = () => {
+    console.log('Fetching verification status...');
     setTimeout(() => {
-      setVerificationStatus('valid'); // Change this to 'valid', 'invalid', or 'processing' to see different cases.
+      setVerificationStatus('valid'); // Change as needed ('valid', 'invalid', 'processing').
       setLoading(false);
     }, 2000);
   };
 
-  // Move sendToBackend outside of the useEffect for better control
   const sendToBackend = async () => {
     setLoading(true);
-    console.log('Sending data to the backend...');
+    console.log('Preparing to send data to the backend...');
+    console.log('User Data:', user);
+    console.log('Document Data:', document);
 
-    // Create a FormData object
     const formData = new FormData();
-    console.log("Image Files ", document);
-    // Append image files
-    formData.append('profilePicture', {
-      uri: document.profilePicture.uri,
-      name: document.profilePicture.name,
-      type: document.profilePicture.type,
-    });
-    console.log("Image 2 ", document);
-    formData.append('aadharFront', {
-      uri: document.aadhar.frontImage.uri,
-      name: document.aadhar.frontImage.name,
-      type: document.aadhar.frontImage.type,
-    });
-    formData.append('aadharBack', {
-      uri: document.aadhar.backImage.uri,
-      name: document.aadhar.backImage.name,
-      type: document.aadhar.backImage.type,
-    });
-    formData.append('drivingLicenseFront', {
-      uri: document.drivingLicense.frontImage.uri,
-      name: document.drivingLicense.frontImage.name,
-      type: document.drivingLicense.frontImage.type,
-    });
-    formData.append('drivingLicenseBack', {
-      uri: document.drivingLicense.backImage.uri,
-      name: document.drivingLicense.backImage.name,
-      type: document.drivingLicense.backImage.type,
-    });
-    formData.append('panFront', {
-      uri: document.pan.frontImage.uri,
-      name: document.pan.frontImage.name,
-      type: document.pan.frontImage.type,
-    });
-    formData.append('panBack', {
-      uri: document.pan.backImage.uri,
-      name: document.pan.backImage.name,
-      type: document.pan.backImage.type,
-    });
-    formData.append('rcFront', {
-      uri: document.rc.frontImage.uri,
-      name: document.rc.frontImage.name,
-      type: document.rc.frontImage.type,
-    });
-    formData.append('rcBack', {
-      uri: document.rc.backImage.uri,
-      name: document.rc.backImage.name,
-      type: document.rc.backImage.type,
-    });
-
-    // Append text fields
-    formData.append('name', user.name);
-    formData.append('gender', user.gender);
-    formData.append('email', user.email);
-    formData.append('dateOfBirth', user.dateOfBirth);
-    formData.append('mobileNumber', user.mobileNumber);
-    formData.append('accountNumber', document.bankAccountDetails.accountNumber);
-    formData.append('bankName', document.bankAccountDetails.bankName);
-    formData.append('ifscCode', document.bankAccountDetails.ifscCode);
-    formData.append('upi', document.bankAccountDetails.upi);
-    formData.append('aadharNumber', document.aadhar.number);
-    formData.append('panNumber', document.pan.number);
-    formData.append('drivingLicenseNumber', document.drivingLicense.number);
-    formData.append('drivingLicenseValidDate', document.drivingLicense.validDate);
-    formData.append('rcNumber', document.rc.number);
-    formData.append('vehicleType', document.vehicleType);
-    console.log("formData ", formData);
 
     try {
-      const response = await axios.post('http://192.168.0.101:5000/api/captains/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      // Append images with validation
+      const appendImage = (key, image) => {
+        if (image) {
+          formData.append(key, {
+            uri: image,
+            name: `${key}.jpg`,
+            type: 'image/jpeg',
+          });
+        }
+      };
+
+      appendImage('profilePicture', user.profilePicture);
+      appendImage('aadharFront', document.aadhar.frontImage);
+      appendImage('aadharBack', document.aadhar.backImage);
+      appendImage('panFront', document.pan.frontImage);
+      appendImage('panBack', document.pan.backImage);
+      appendImage('drivingLicenseFront', document.drivingLicense.frontImage);
+      appendImage('drivingLicenseBack', document.drivingLicense.backImage);
+      appendImage('rcFront', document.rc.frontImage);
+      appendImage('rcBack', document.rc.backImage);
+
+      // Append text fields
+      formData.append('name', user.name);
+      formData.append('gender', user.gender);
+      formData.append('email', user.email);
+      formData.append('dateOfBirth', user.dateOfBirth);
+      formData.append('mobileNumber', user.mobileNumber);
+      formData.append('accountNumber', document.bankAccountDetails.accountNumber);
+      formData.append('bankName', document.bankAccountDetails.bankName);
+      formData.append('ifscCode', document.bankAccountDetails.ifscCode);
+      formData.append('upi', document.bankAccountDetails.upi);
+      formData.append('aadharNumber', document.aadhar.number);
+      formData.append('panNumber', document.pan.number);
+      formData.append('drivingLicenseNumber', document.drivingLicense.number);
+      formData.append('drivingLicenseValidDate', document.drivingLicense.validDate);
+      formData.append('rcNumber', document.rc.number);
+      formData.append('vehicleType', document.vehicleType);
+
+      console.log('FormData prepared:', formData);
+
+      // API call
+      const response = await axios.post(
+        'http://192.168.0.105:5000/api/captains/upload',
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+
       console.log('Response from server:', response.data);
     } catch (error) {
       console.error('Error sending data to the backend:', error);
     } finally {
       setLoading(false);
     }
-    console.log('Data sent to the backend.');
   };
-
-  useEffect(() => {
-    console.log("verificationStatus before fetch:", verificationStatus);
-    fetchVerificationStatus();
-  }, []);
-
 
   const handleProceed = () => {
     console.log('Proceeding to the homepage...');
     sendToBackend();
-    navigation.navigate('HomeTabs');
+    // navigation.navigate('HomeTabs');
   };
 
   return (
