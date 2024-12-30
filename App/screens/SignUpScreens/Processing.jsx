@@ -73,7 +73,7 @@ const Processing = ({ navigation }) => {
 
       // API call
       const response = await axios.post(
-        'http://192.168.0.105:5000/api/captains/upload',
+        'http://13.203.102.172:5000/api/captains/upload',
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
@@ -89,7 +89,7 @@ const Processing = ({ navigation }) => {
   const handleProceed = () => {
     console.log('Proceeding to the homepage...');
     sendToBackend();
-    // navigation.navigate('HomeTabs');
+    navigation.navigate('HomeTabs');
   };
 
   return (

@@ -28,7 +28,7 @@ const MobileOTPScreen = ({ navigation, route }) => {
     setIsSendingOTP(true);
 
     try {
-      const response = await fetch('http://192.168.0.105:5000/api/captains/searchMobileNumber', {
+      const response = await fetch('http://13.203.102.172:5000/api/captains/searchMobileNumber', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
