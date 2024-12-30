@@ -1,12 +1,13 @@
 import { StyleSheet, SafeAreaView, View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';  
+import { useSelector } from 'react-redux';
 
-const Menu = ({ navigation, route }) => {
-  const vehicleAltImage = route.params?.vehicleAltImage; 
-  const { RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
+const Menu = ({ navigation }) => {
 
   const [rating, setRating] = useState(0);
+  const {name,email,mobileNumber,gender,dateOfBirth,profilePicture} = useSelector((state)=>{
+    return state.user;})
 
   const DATA = [
     { id: '1', title: 'Inbox', route: 'Inbox', icon: 'envelope' },
@@ -23,9 +24,7 @@ const Menu = ({ navigation, route }) => {
   }, [navigation]);
 
   const handleProfileImagePress = () => {
-    navigation.navigate('ProfiledetailsPage', {
-      RC, rcFrontImage, rcBackImage, rcFrontFile, rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile
-    });
+    navigation.navigate('ProfiledetailsPage');
   };
 
   const renderStars = () => {
@@ -44,8 +43,9 @@ const Menu = ({ navigation, route }) => {
   };
 
   const renderItem = ({ item }) => (
+
     <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route, {
-      profileImageBase64, name, email, phoneNumber, gender, dateOfBirth
+      profilePicture, name, email, mobileNumber ,gender, dateOfBirth
     })}>
       <View style={styles.itemContent}>
         <Icon name={item.icon} size={20} color="#0F4A97" style={styles.itemIcon} />
@@ -65,11 +65,11 @@ const Menu = ({ navigation, route }) => {
       </View>
 
       <View style={styles.headerContainer}>
-        {profileImageBase64 ? (
+        {profilePicture ? (
           <TouchableOpacity onPress={handleProfileImagePress}>
             <View style={styles.profileContainer}>
               <Image
-                source={{ uri: profileImageBase64 }} 
+                source={{ uri: profilePicture }} 
                 style={styles.profileImage}
                 onError={(error) => console.log('Error loading image: ', error)}
               />
