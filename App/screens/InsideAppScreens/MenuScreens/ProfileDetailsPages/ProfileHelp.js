@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 
-const Help = () => {
+const ProfileHelp = () => {
   const [selectedConcern, setSelectedConcern] = useState(null)
   const [driverConcern, setDriverConcern] = useState('')
   const [driverName, setDriverName] = useState('')
@@ -100,7 +100,6 @@ const Help = () => {
   )
 }
 
-export default Help
 
 const styles = StyleSheet.create({
   container: {
@@ -193,6 +192,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 5,
     marginHorizontal: 8,
+    marginBottom: 30,
   },
   submitButton: {
     marginTop: 14,
@@ -212,3 +212,4 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 })
+export default ProfileHelp;

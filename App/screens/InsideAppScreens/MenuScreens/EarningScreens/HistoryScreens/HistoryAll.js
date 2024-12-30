@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-nati
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 
-const BikeTaxi = () => {
+const HistoryAll = () => {
   // State to manage the visibility of the incentives and bonuses dropdown
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
@@ -59,26 +59,6 @@ const BikeTaxi = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => console.log('missed orders page mounted')} style={styles.box5WithShadow}>
-        <View style={styles.row}>
-          <Text style={styles.boldText}>0</Text>
-          <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Missed Orders</Text>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.text}>₹ 0.0</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.item}>
-            <Text style={styles.heading}>Adjustments</Text>
-            <Text style={styles.value}>₹ 0.0</Text>
-          </View>
-          <View style={styles.item}>
-            <Text style={styles.heading}>Penalty</Text>
-            <Text style={styles.value}>₹ 0.0</Text>
-          </View>
-          <FontAwesomeIcon name="angle-right" size={18} color="#000" />
-        </View>
-      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -172,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BikeTaxi;
+export default HistoryAll;
