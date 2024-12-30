@@ -3,11 +3,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import AppMapView from '../../../components/AppMapView';
 import * as Location from 'expo-location';
 import { UserLocationContext } from '../../Context/UserLocationContext';
+import { useSelector } from 'react-redux';
 
-const HomePage = ({ navigation, route }) => {
+const HomePage = ({ navigation }) => {
     const { location, setLocation } = useContext(UserLocationContext);
     const [errorMsg, setErrorMsg] = useState(null);
     const [searchText, setSearchText] = useState('');
+    const userImaageUrl = useSelector((state) => state.user.profilePicture);
+    console.log(userImaageUrl);
     // const[base64Image,setBase64Image]= useState(profileImageBase64);
     useEffect(() => {
         (async () => {
@@ -49,14 +52,14 @@ const HomePage = ({ navigation, route }) => {
             <View style={styles.headerContainer}>
                 <Text style={styles.header}>JUST TAP!</Text>
 
-                {false ? (
+                {userImaageUrl ? (
                     <TouchableOpacity onPress={handleProfileImagePress}>
                         <View style={styles.profileContainer}>
-                            {/* <Image
+                            <Image
                                 style={styles.profileImage}
-                                source={{ uri: profileImageBase64 }} 
+                                source={{ uri: userImaageUrl }} 
                                 onError={(error) => console.log('Error loading image: ', error)}
-                            /> */}
+                            />
                         </View>
                     </TouchableOpacity>
                 ) : (

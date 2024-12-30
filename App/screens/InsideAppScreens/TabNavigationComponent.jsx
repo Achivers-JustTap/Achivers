@@ -9,43 +9,61 @@ import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
-function TabNavigationComponent({  }) {
-    // const vehicleAltImage = route.params?.vehicleAltImage; 
-    // const {RC,rcFrontImage,selectedVehicleType: selectedVehicleName ,rcBackImage,rcFrontFile,rcBackFile, panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, panNumber , name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} = route.params;
-    const RC = useSelector(state=>state.RC);
-    const vehicleType = useSelector(state=>state.vehicleType);
+function TabNavigationComponent() {
+    const RC = useSelector(state => state.RC);
+
     return (
-      <Tab.Navigator
-        initialRouteName="Home"
-        tabBar={(props) => <CustomTabBar {...props} vehicleAltImage={'car'} />}
-      >
-        <Tab.Screen name="Menu" component={Menu} />
-        <Tab.Screen name="Home" component={HomePage}  />
-        <Tab.Screen name="Activity" component={Activity} />
-      </Tab.Navigator>
+        <Tab.Navigator
+            initialRouteName="Home"
+            tabBar={(props) => <CustomTabBar {...props} />}
+        >
+            <Tab.Screen name="Menu" component={Menu} />
+            <Tab.Screen name="Home" component={HomePage} />
+            <Tab.Screen name="Activity" component={Activity} />
+        </Tab.Navigator>
     );
-  }
-  
-  function CustomTabBar({ state, descriptors, navigation, vehicleAltImage }) {
-    console.log(" vehicleAltImage ",vehicleAltImage);
+}
+
+function CustomTabBar({ state, descriptors, navigation }) {
     const [isOnline, setIsOnline] = useState(false);
     const [animation] = useState(new Animated.Value(0));
-  
+    const vehicle = useSelector(state => state.documents.vehicleType);
+
+    const vehicles = [
+        {
+            id: 'bike',
+            name: 'Moto',
+            image: require('../../../assets/images/moto.png'),
+        },
+        {
+            id: 'auto',
+            name: 'Auto',
+            image: require('../../../assets/images/auto.png'),
+        },
+        {
+            id: 'car',
+            name: 'Car',
+            image: require('../../../assets/images/car.png'),
+        },
+    ];
+
+    const selectedVehicleInfo = vehicles.find(v => v.id === vehicle);
+
     const handleCenterButtonPress = () => {
-      const newOnlineState = !isOnline;
-      Animated.timing(animation, {
-        toValue: newOnlineState ? 0 : 1,
-        duration: 1000,
-        easing: Easing.out(Easing.exp),
-        useNativeDriver: true,
-      }).start(() => {
-        setIsOnline(newOnlineState);
-      });
+        const newOnlineState = !isOnline;
+        Animated.timing(animation, {
+            toValue: newOnlineState ? 0 : 1,
+            duration: 1000,
+            easing: Easing.out(Easing.exp),
+            useNativeDriver: true,
+        }).start(() => {
+            setIsOnline(newOnlineState);
+        });
     };
-  
+
     const translateY = animation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, -1000],
+        inputRange: [0, 1],
+        outputRange: [0, -1000],
     });
 
     return (
@@ -73,17 +91,16 @@ function TabNavigationComponent({  }) {
                     });
                 };
 
-              
                 let icon, label;
                 if (route.name === 'Menu') {
                     icon = 'bars';
-                    label = 'Menu'; 
+                    label = 'Menu';
                 } else if (route.name === 'Activity') {
-                    icon = 'calendar'; 
+                    icon = 'calendar';
                     label = 'Activity';
                 } else if (route.name === 'Home') {
-                    icon = 'home';  
-                    label = 'Home';  
+                    icon = 'home';
+                    label = 'Home';
                 }
 
                 return (
@@ -93,7 +110,7 @@ function TabNavigationComponent({  }) {
                         onLongPress={onLongPress}
                         style={[styles.tabButton, isFocused && styles.focusedTab]}
                     >
-                        {!(state.index === 1 && route.name === 'Home') && ( 
+                        {!(state.index === 1 && route.name === 'Home') && (
                             <>
                                 <Icon name={icon} size={24} color={isFocused ? 'white' : '#ACC3E1'} />
                                 <Text style={{ color: isFocused ? 'white' : '#ACC3E1' }}>{label}</Text>
@@ -103,18 +120,18 @@ function TabNavigationComponent({  }) {
                 );
             })}
 
-            {state.index === 1 && ( 
+            {state.index === 1 && (
                 <TouchableOpacity style={styles.centerButton} onPress={handleCenterButtonPress}>
                     <View style={styles.placeholder}>
-                        {vehicleAltImage && (
+                        {selectedVehicleInfo && (
                             <Animated.Image
-                                source={vehicleAltImage}
+                                source={selectedVehicleInfo.image} // Dynamically set the image
                                 style={[styles.centerImage, { transform: [{ translateY }] }]}
                             />
                         )}
                     </View>
                     <Text style={[styles.statusText, { color: isOnline ? 'green' : 'red' }]}>
-                        {isOnline ? 'You are  Online ' : 'You are Offline '}
+                        {isOnline ? 'You are Online' : 'You are Offline'}
                     </Text>
                 </TouchableOpacity>
             )}
@@ -167,14 +184,14 @@ const styles = StyleSheet.create({
         height: 60,
         resizeMode: 'contain',
         borderRadius: 15,
-        shadowColor: 'grey',         
-        shadowOffset: {              
-            width: 1, 
+        shadowColor: 'grey',
+        shadowOffset: {
+            width: 1,
             height: 5,
         },
-        shadowOpacity: 1,         
-        shadowRadius: 3.84,          
-        elevation: 6,                
+        shadowOpacity: 1,
+        shadowRadius: 3.84,
+        elevation: 6,
     },
     statusText: {
         position: 'absolute',
