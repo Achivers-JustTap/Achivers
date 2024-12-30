@@ -33,17 +33,17 @@ function CustomTabBar({ state, descriptors, navigation }) {
         {
             id: 'bike',
             name: 'Moto',
-            image: require('../../../assets/images/moto.png'),
+            image: require('../../../assets/images/bike top.png'),
         },
         {
             id: 'auto',
             name: 'Auto',
-            image: require('../../../assets/images/auto.png'),
+            image: require('../../../assets/images/auto_top.png'),
         },
         {
             id: 'car',
             name: 'Car',
-            image: require('../../../assets/images/car.png'),
+            image: require('../../../assets/images/car top.png'),
         },
     ];
 

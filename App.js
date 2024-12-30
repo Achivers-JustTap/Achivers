@@ -76,6 +76,7 @@ import HistoryAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreen
 import HistoryBikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryBikeTaxi';
 import HistoryParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryParcelDelivery';
 import HistoryGroceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryGroceries';
+import EarningsHelp from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/EarningsHelp';
 const Stack = createStackNavigator();
 
 export default function App() {
