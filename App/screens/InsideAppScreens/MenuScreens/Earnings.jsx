@@ -10,7 +10,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function Earnings({ route, navigation }) {
   const vehicleAltImage = route.params?.vehicleAltImage;
-  const { RC, rcFrontImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile } = route.params;
+  //const { RC, rcFrontImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile } = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -22,7 +22,7 @@ export default function Earnings({ route, navigation }) {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate('Help')}>
+      <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate('EarningsHelp')}>
         <FontAwesomeIcon name="hands-helping" size={15} color="#fff" />
         <Text style={styles.helpText}>Help</Text>
       </TouchableOpacity>
@@ -36,9 +36,9 @@ export default function Earnings({ route, navigation }) {
           tabBarIndicatorStyle: { backgroundColor: '#fff' }, 
         }}
       >
-        <Tab.Screen name="Today" component={Today} initialParams={{RC, rcFrontImage, vehicleAltImage,rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}}/>
-        <Tab.Screen name="Wallet" component={Wallet} initialParams={{RC, rcFrontImage,vehicleAltImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
-        <Tab.Screen name="History" component={History} initialParams={{RC, rcFrontImage, vehicleAltImage,rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile}} />
+        <Tab.Screen name="Today" component={Today} />
+        <Tab.Screen name="Wallet" component={Wallet} />
+        <Tab.Screen name="History" component={History}/>
       </Tab.Navigator>
       
       </ScrollView>

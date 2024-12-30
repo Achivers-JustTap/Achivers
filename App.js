@@ -52,7 +52,6 @@ import Today from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Tod
 import All from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/All';
 import BikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/BikeTaxi';
 import ParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/ParcelDelivery';
-import Gorceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Gorceries';
 import RateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCard';
 import Link from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/Link';
 import BikeLite from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeLite';
@@ -63,13 +62,20 @@ import KPN from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today
 import Guidelines from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Guidelines';
 import RechargePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/RechargePage';
 import BuddyRecharge from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/BuddyRecharge';
-import ReferencePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferencePage';
 import AllTransactionPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/AllTransactionPage';
 import PendingPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/PendingPage';
 import LicenseImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/LicenseImageChange';
 import LicenseFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/LicenseFileChange';
 import RcImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RcImageChange';
 import RcFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RcFileChange';
+import Groceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Groceries';
+import BikeReference from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferenceDetails/BikeReference';
+import CarReference from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferenceDetails/CarReference';
+import AutoReference from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferenceDetails/AutoReference';
+import HistoryAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryAll';
+import HistoryBikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryBikeTaxi';
+import HistoryParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryParcelDelivery';
+import HistoryGroceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryGroceries';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -127,14 +133,16 @@ export default function App() {
           <Stack.Screen name="RcFileChange" component={RcFileChange} />
 
           {/* Earnings Screens */}
+
+          <Stack.Screen name="EarningsHelp" component={EarningsHelp} />
           <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
           <Stack.Screen name="History" component={History} options={{ headerShown: false }} />
-
+           
           <Stack.Screen name="All" component={All} />
           <Stack.Screen name="BikeTaxi" component={BikeTaxi} options={{ headerShown: false }} />
           <Stack.Screen name="ParcelDelivery" component={ParcelDelivery} options={{ headerShown: false }} />
-          <Stack.Screen name="Groceries" component={Gorceries} options={{ headerShown: false }} />
+          <Stack.Screen name="Groceries" component={Groceries} options={{ headerShown: false }} />
           <Stack.Screen name="RateCard" component={RateCard} />
           <Stack.Screen name="Link" component={Link} />
           <Stack.Screen name="BikeLite" component={BikeLite} />
@@ -145,15 +153,22 @@ export default function App() {
           <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
 
           <Stack.Screen name="RechargePage" component={RechargePage} options={{ headerShown: false }} />
-          <Stack.Screen name="BuddyRecharge" component={BuddyRecharge} options={{ headerShown: false }} />
-          <Stack.Screen name="ReferencePage" component={ReferencePage} options={{ headerShown: false }} />
+          <Stack.Screen name="BuddyRecharge" component={BuddyRecharge}/>
           <Stack.Screen name="AllTransactionPage" component={AllTransactionPage} options={{ headerShown: false }} />
           <Stack.Screen name="PendingPage" component={PendingPage} options={{ headerShown: false }} />
+
+          <Stack.Screen name="BikeReference" component={BikeReference} />
+          <Stack.Screen name="CarReference" component={CarReference} />
+          <Stack.Screen name="AutoReference" component={AutoReference}/>
+
+          <Stack.Screen name="HistoryAll" component={HistoryAll} />
+          <Stack.Screen name="HistoryBikeTaxi" component={HistoryBikeTaxi} options={{ headerShown: false }} />
+          <Stack.Screen name="HistoryParcelDelivery" component={HistoryParcelDelivery} options={{ headerShown: false }} />
+          <Stack.Screen name="HistoryGroceries" component={HistoryGroceries} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserLocationProvider>
     </Provider>
-  
   );
 }
 

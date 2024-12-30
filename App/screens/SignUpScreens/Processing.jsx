@@ -79,7 +79,7 @@ const Processing = ({ navigation }) => {
       );
 
       console.log('Response from server:', response.data);
-    } catch (error) {
+    }catch (error) {
       console.error('Error sending data to the backend:', error);
     } finally {
       setLoading(false);

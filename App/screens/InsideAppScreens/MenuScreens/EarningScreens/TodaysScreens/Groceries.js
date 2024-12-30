@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-nati
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 
-const BikeTaxi = () => {
+const Groceries = () => {
   // State to manage the visibility of the incentives and bonuses dropdown
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
@@ -172,4 +172,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BikeTaxi;
+export default Groceries;
