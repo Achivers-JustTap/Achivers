@@ -8,14 +8,11 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 
-const Documents = ({ route, navigation }) => {
-  const {
-    RC, rcFrontImage, rcBackImage, rcFrontFile, rcBackFile, panNumber, panFrontImage,
-    panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront,
-    licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber,
-    profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile
-  } = route.params || {};
+
+const Documents = ({ navigation }) => {
+  const { name,email,gender,dateOfBirth,mobileNumber } = useSelector(state => state.user);
 
   useEffect(() => {
     navigation.setOptions({ title: 'My Documents' });
@@ -23,7 +20,7 @@ const Documents = ({ route, navigation }) => {
 
   const [formData, setFormData] = useState({
     name: name || '',
-    mobileNumber: phoneNumber || '',
+    mobileNumber: mobileNumber || '',
     email: email || '',
     dob: dateOfBirth || '',
     gender: gender || '',
@@ -58,36 +55,22 @@ const Documents = ({ route, navigation }) => {
     {
       id: '1',
       Title: 'Driver Licence',
-      route: 'DriverLicence_list',
-      params: {
-        licenseNumber,
-        validTillDate,
-        licenseBack, licenseFront, licenseFrontFile, licenseBackFile
-      },
+      route: 'DriverLicence_list'
     },
     {
       id: '2',
       Title: 'RC',
       route: 'RC_List',
-      params: { RC, rcFrontImage, rcBackImage, rcFrontFile, rcBackFile },
     },
     {
       id: '3',
       Title: 'Aadhar Card',
       route: 'AadharCard_List',
-      params: {
-        aadharNumber,
-        aadharFront,
-        aadharBack,
-        aadharFrontFile,
-        aadharBackFile,
-      },
     },
     {
       id: '4',
       Title: 'PAN Card',
       route: 'PanCard_List',
-      params: { panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile },
     },
   ];
 

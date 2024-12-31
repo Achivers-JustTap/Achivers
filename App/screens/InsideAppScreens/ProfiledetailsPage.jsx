@@ -2,10 +2,13 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView }
 import React, { useEffect } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5'; 
 import Ionicon from 'react-native-vector-icons/Ionicons';  
+import { useSelector } from 'react-redux';
+import { State } from 'react-native-gesture-handler';
+import ProfilePicture from '../SignUpScreens/ProfileImageScreen';
 
 const ProfiledetailsPage = ({ navigation }) => {
-  // const {RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile } = route.params;
-
+  const{name,profilePicture} = useSelector(state=>state.user);
+  console.log("profilePicture",profilePicture);
   useEffect(() => {
     navigation.setOptions({ title: "My Profile" });
   }, [navigation]);
@@ -25,10 +28,10 @@ const ProfiledetailsPage = ({ navigation }) => {
   };
 
   const Items = [
-    { id: '1', title: 'Best Performance', route: 'BestPerformance', icon: 'tachometer-alt', iconLibrary: 'FontAwesome5',params:{RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile} },
-    { id: '2', title: 'Id Card', route: 'IDCard', icon: 'id-card', iconLibrary: 'FontAwesome5',params:{RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile }  },
-    { id: '3', title: 'Documents', route: 'Documents', icon: 'document', iconLibrary: 'Ionicons',params:{RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}  },
-    { id: '4', title: 'Language Settings', route: 'LanguageSettings', icon: 'language', iconLibrary: 'Ionicons',params:{RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile,panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile,licenseFrontFile,licenseBackFile,licenseFront,licenseBack,licenseNumber, validTillDate, name,email,gender,dateOfBirth,phoneNumber,profileImageBase64,aadharNumber,aadharFront,aadharBack,aadharFrontFile,aadharBackFile}  },
+    { id: '1', title: 'Best Performance', route: 'BestPerformance', icon: 'tachometer-alt', iconLibrary: 'FontAwesome5'},
+    { id: '2', title: 'Id Card', route: 'IDCard', icon: 'id-card', iconLibrary: 'FontAwesome5'},
+    { id: '3', title: 'Documents', route: 'Documents', icon: 'document', iconLibrary: 'Ionicons'},
+    { id: '4', title: 'Language Settings', route: 'LanguageSettings', icon: 'language', iconLibrary: 'Ionicons'}
   ];
 
   return (
@@ -45,10 +48,10 @@ const ProfiledetailsPage = ({ navigation }) => {
             <Text style={styles.help}>Help</Text>
           </TouchableOpacity>
 
-          {profileImageBase64 ? (
+          {profilePicture ? (
             <View style={styles.profileContainer}>
               <Image
-                source={{ uri: profileImageBase64 }} 
+                source={{ uri: profilePicture }} 
                 style={styles.profileImage}
                 onError={(error) => console.log('Error loading image: ', error)}
               />

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, TextInput, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const DriverLicence_list = ({ route, navigation }) => {
+  const {drivingLicense} = useSelector(state=>state.documents);
+
   useEffect(() => {
     navigation.setOptions({ title: 'My Driver Licence' });
   }, [navigation]);
 
-  const { licenseNumber,validTillDate,licenseBack,licenseFront,licenseFrontFile,licenseBackFile } = route.params;
 
-  const displayLicenceFront = licenseFront || (licenseFrontFile && licenseFrontFile.uri);
-  const displayLicenceBack = licenseBack || (licenseBackFile  && licenseBackFile.uri);
 
   return (
     <View style={styles.container}>
@@ -17,37 +17,37 @@ const DriverLicence_list = ({ route, navigation }) => {
       <Text style={styles.boxHeading}>DL Number</Text>
       <TextInput
         style={styles.licenceNumber}
-        value={licenseNumber || 'Not Available'}
+        value={drivingLicense.number || 'Not Available'}
         editable={false}
         selectTextOnFocus={false} 
       />
        <Text style={styles.boxHeading}>Valid Till</Text>
       <TextInput
         style={styles.licenceNumber}
-        value={validTillDate || 'Not Available'}
+        value={drivingLicense.validDate || 'Not Available'}
         editable={false}
         selectTextOnFocus={false} 
       />
 
       <View style={styles.imageContainer}>
-        {displayLicenceFront ? (
+        {drivingLicense.frontImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>Driver Licence Front</Text>
             <Image
-              source={{ uri: displayLicenceFront }}
+              source={{ uri: drivingLicense.frontImage }}
               style={styles.image}
               resizeMode="contain"
             />
           </View>
         ) : (
-          <Text>No Aadhar Front image available</Text>
+          <Text>No Driving license Front image available</Text>
         )}
 
-        {displayLicenceBack ? (
+        {drivingLicense.backImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>Driver Licence Back</Text>
             <Image
-              source={{ uri: displayLicenceBack }}
+              source={{ uri: drivingLicense.backImage }}
               style={styles.image}
               resizeMode="contain"
             />

@@ -3,10 +3,11 @@ import React, { useEffect } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5'; 
 import Ionicon from 'react-native-vector-icons/Ionicons';  
 import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
 
-const IDCard = ({ route, navigation }) => {
-  const { licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64 } = route.params;
-
+const IDCard = ({navigation }) => {
+  const {name,profilePicture,mobileNumber} = useSelector(state=>state.user)
+  const {drivingLicense,} = useSelector(state => state.documents)
   useEffect(() => {
     navigation.setOptions({ title: "My ID" });
   }, [navigation]);
@@ -34,10 +35,10 @@ const IDCard = ({ route, navigation }) => {
             </Text>
           </View>
 
-          {profileImageBase64 ? (
+          {profilePicture ? (
             <View style={styles.profileContainer}>
               <Image
-                source={{ uri: profileImageBase64 }} 
+                source={{ uri: profilePicture }} 
                 style={styles.profileImage}
                 onError={(error) => console.log('Error loading image: ', error)}
               />
@@ -51,7 +52,7 @@ const IDCard = ({ route, navigation }) => {
           <View style={styles.detailsRow}>
             <View style={styles.detailColumn}>
               <Text style={styles.detailstext}>MOBILE NUMBER</Text>
-              <Text style={styles.detailstextsub}>{phoneNumber}</Text>
+              <Text style={styles.detailstextsub}>{mobileNumber}</Text>
             </View>
             <View style={styles.detailColumn}>
               <Text style={styles.detailstext}>ID</Text>
@@ -64,7 +65,7 @@ const IDCard = ({ route, navigation }) => {
               <Text style={styles.detailstext}>LICENSE NUMBER</Text>
               <TextInput
                   style={styles.detailstextsub}
-                  value={licenseNumber || 'Not Available'}
+                  value={drivingLicense.number || 'Not Available'}
                   editable={false}
                   selectTextOnFocus={false} 
               /> 
@@ -73,7 +74,7 @@ const IDCard = ({ route, navigation }) => {
               <Text style={styles.detailstext}>LICENSE VALIDITY</Text>
               <TextInput
                   style={styles.detailstextsub}
-                  value={validTillDate || 'Not Available'}
+                  value={drivingLicense.validDate || 'Not Available'}
                   editable={false}
                   selectTextOnFocus={false} 
               /> 

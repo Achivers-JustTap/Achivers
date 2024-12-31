@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const BestPerformance = ({ route, navigation }) => {
-  const { licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64 } = route.params;
+const BestPerformance = ({ navigation }) => {
 
   useEffect(() => {  
     navigation.setOptions({ title: "Performance" });

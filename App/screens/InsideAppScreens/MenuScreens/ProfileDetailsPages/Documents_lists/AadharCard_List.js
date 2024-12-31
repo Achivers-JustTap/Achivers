@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, TextInput, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
-const AadharCard_List = ({ route, navigation }) => {
+const AadharCard_List = ({ navigation }) => {
+  const {aadhar} = useSelector(state=>state.documents);
   useEffect(() => {
     navigation.setOptions({ title: 'My Aadhar' });
   }, [navigation]);
 
-  const { aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile } = route.params;
 
-  const displayAadharFront = aadharFront || (aadharFrontFile && aadharFrontFile.uri);
-  const displayAadharBack = aadharBack || (aadharBackFile && aadharBackFile.uri);
 
   return (
     <View style={styles.container}>
@@ -17,17 +16,17 @@ const AadharCard_List = ({ route, navigation }) => {
       <Text style={styles.boxHeading}>Aadhar Number</Text>
       <TextInput
         style={styles.aadharNumber}
-        value={aadharNumber || 'Not Available'}
+        value={aadhar.number || 'Not Available'}
         editable={false}
         selectTextOnFocus={false} 
       />
 
       <View style={styles.imageContainer}>
-        {displayAadharFront ? (
+        {aadhar.frontImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>Aadhar Front</Text>
             <Image
-              source={{ uri: displayAadharFront }}
+              source={{ uri: aadhar.frontImage }}
               style={styles.image}
               resizeMode="contain"
             />
@@ -36,11 +35,11 @@ const AadharCard_List = ({ route, navigation }) => {
           <Text>No Aadhar Front image available</Text>
         )}
 
-        {displayAadharBack ? (
+        {aadhar.backImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>Aadhar Back</Text>
             <Image
-              source={{ uri: displayAadharBack }}
+              source={{ uri: aadhar.backImage }}
               style={styles.image}
               resizeMode="contain"
             />

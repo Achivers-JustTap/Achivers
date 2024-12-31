@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, TextInput, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
-const PanCard_List = ({ route, navigation }) => {
+const PanCard_List = ({ navigation }) => {
+  const{pan} = useSelector(state=>state.documents)
+
   useEffect(() => {
     navigation.setOptions({ title: 'My PAN Card' });
   }, [navigation]);
 
-  const { panNumber , panFrontImage,panBackImage,panFrontFile,panBackFile } = route.params;
 
-  const displayPanFront = panFrontImage || (panFrontFile && panFrontFile.uri);
-  const displayPanBack = panBackImage || (panBackFile && panBackFile.uri);
 
   return (
     <View style={styles.container}>
@@ -17,17 +17,17 @@ const PanCard_List = ({ route, navigation }) => {
       <Text style={styles.boxHeading}>PAN Number</Text>
       <TextInput
         style={styles.panNumber}
-        value={panNumber || 'Not Available'}
+        value={pan.number || 'Not Available'}
         editable={false}
         selectTextOnFocus={false} 
       />
 
       <View style={styles.imageContainer}>
-        {displayPanFront ? (
+        {pan.frontImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>Pan Card Front</Text>
             <Image
-              source={{ uri: displayPanFront }}
+              source={{ uri: pan.frontImage }}
               style={styles.image}
               resizeMode="contain"
             />
@@ -36,11 +36,11 @@ const PanCard_List = ({ route, navigation }) => {
           <Text>No pan Front image available</Text>
         )}
 
-        {displayPanBack ? (
+        {pan.backImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>Pan Card Back</Text>
             <Image
-              source={{ uri: displayPanBack }}
+              source={{ uri: pan.backImage }}
               style={styles.image}
               resizeMode="contain"
             />

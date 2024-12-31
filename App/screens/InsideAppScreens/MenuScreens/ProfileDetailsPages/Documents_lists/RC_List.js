@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
 import { View, Text, Image, TextInput, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const RC_List = ({ route, navigation }) => {
+  const {rc} = useSelector(state=>state.documents)
   useEffect(() => {
     navigation.setOptions({ title: 'My PAN Card' });
   }, [navigation]);
-
-  const { RC,rcFrontImage,rcBackImage,rcFrontFile,rcBackFile  } = route.params;
-
-  const displayRCFront = rcFrontImage || (rcFrontFile && rcFrontFile.uri);
-  const displayRCBack = rcBackImage || (rcBackFile && rcBackFile.uri);
 
   return (
     <View style={styles.container}>
@@ -17,36 +14,36 @@ const RC_List = ({ route, navigation }) => {
       <Text style={styles.boxHeading}>Vehcile Number</Text>
       <TextInput
         style={styles.rcNumber}
-        value={RC || 'Not Available'}
+        value={rc.number || 'Not Available'}
         editable={false}
         selectTextOnFocus={false} 
       />
 
       <View style={styles.imageContainer}>
-        {displayRCFront ? (
+        {rc.frontImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>RC Front</Text>
             <Image
-              source={{ uri: displayRCFront }}
+              source={{ uri: rc.frontImage }}
               style={styles.image}
               resizeMode="contain"
             />
           </View>
         ) : (
-          <Text>No pan Front image available</Text>
+          <Text>No Rc Front image available</Text>
         )}
 
-        {displayRCBack ? (
+        {rc.backImage ? (
           <View style={styles.imageWrapper}>
             <Text style={styles.imageLabel}>RC Back</Text>
             <Image
-              source={{ uri: displayRCBack }}
+              source={{ uri: rc.backImage }}
               style={styles.image}
               resizeMode="contain"
             />
           </View>
         ) : (
-          <Text>No pan Back image available</Text>
+          <Text>No RC Back image available</Text>
         )}
       </View>
     </View>
