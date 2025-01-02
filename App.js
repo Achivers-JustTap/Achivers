@@ -77,6 +77,7 @@ import HistoryBikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningS
 import HistoryParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryParcelDelivery';
 import HistoryGroceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryGroceries';
 import EarningsHelp from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/EarningsHelp';
+import TransactionDetailsPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/TransactionDetailsPage';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -156,6 +157,7 @@ export default function App() {
           <Stack.Screen name="RechargePage" component={RechargePage} options={{ headerShown: false }} />
           <Stack.Screen name="BuddyRecharge" component={BuddyRecharge}/>
           <Stack.Screen name="AllTransactionPage" component={AllTransactionPage} options={{ headerShown: false }} />
+          <Stack.Screen name="TransactionDetailsPage" component={TransactionDetailsPage} options={{ headerShown: false }} />
           <Stack.Screen name="PendingPage" component={PendingPage} options={{ headerShown: false }} />
 
           <Stack.Screen name="BikeReference" component={BikeReference} />
