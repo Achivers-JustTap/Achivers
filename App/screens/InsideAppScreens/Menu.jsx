@@ -1,22 +1,25 @@
-import { StyleSheet, SafeAreaView, View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';  
-import { useSelector } from 'react-redux';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';  // Import FontAwesome
+import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';  // Import MaterialIcons
 
-const Menu = ({ navigation }) => {
+const Menu = ({ navigation, route }) => {
+  const vehicleAltImage = route.params?.vehicleAltImage; 
 
   const [rating, setRating] = useState(0);
-  const {name,email,mobileNumber,gender,dateOfBirth,profilePicture} = useSelector((state)=>{
-    return state.user;})
 
   const DATA = [
-    { id: '1', title: 'Inbox', route: 'Inbox', icon: 'envelope' },
-    { id: '2', title: 'Refer Friends', route: 'ReferFriends', icon: 'users' },
-    { id: '3', title: 'Opportunities', route: 'Opportunities', icon: 'lightbulb-o' },
-    { id: '4', title: 'Earnings', route: 'Earnings', icon: 'money' },
-    { id: '6', title: 'Account', route: 'ProfiledetailsPage', icon: 'cogs' },
-    { id: '7', title: 'Help', route: 'Help', icon: 'question-circle' },
-    { id: '8', title: 'Tips & Info', route: 'TipsandInfo', icon: 'info-circle' },
+    { id: '1', title: 'Inbox', route: 'Inbox', icon: 'envelope', type: 'FontAwesome' },
+    { id: '2', title: 'Refer Friends', route: 'ReferFriends', icon: 'users', type: 'FontAwesome' },
+    { id: '3', title: 'Opportunities', route: 'Opportunities', icon: 'lightbulb', type: 'MaterialIcons' },
+    { id: '4', title: 'Earnings', route: 'Earnings', icon: 'money', type: 'FontAwesome' },
+    { id: '5', title: 'Incentives and Bonuses', route: 'IncentivesAndBonuses', icon: 'rupee', type: 'FontAwesome' },
+    { id: '6', title: 'Rewards', route: 'Rewards', icon: 'gift', type: 'FontAwesome' },
+    { id: '7', title: 'Service Manager', route: 'ServiceManager', icon: 'dashboard', type: 'MaterialIcons' },
+    { id: '8', title: 'Demand Planner', route: 'DemandPlanner', icon: 'area-chart', type: 'FontAwesome' },
+    { id: '9', title: 'Account', route: 'ProfiledetailsPage', icon: 'cogs', type: 'FontAwesome' },
+    { id: '10', title: 'Help', route: 'Help', icon: 'help', type: 'MaterialIcons' },
+    { id: '11', title: 'Tips & Info', route: 'TipsandInfo', icon: 'info', type: 'MaterialIcons' },
   ];
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const Menu = ({ navigation }) => {
     let stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
-        <Icon
+        <FontAwesomeIcon
           key={i}
           name={i <= rating ? 'star' : 'star-o'} 
           size={18}
@@ -42,21 +45,21 @@ const Menu = ({ navigation }) => {
     return stars;
   };
 
-  const renderItem = ({ item }) => (
-
-    <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route, {
-      profilePicture, name, email, mobileNumber ,gender, dateOfBirth
-    })}>
-      <View style={styles.itemContent}>
-        <Icon name={item.icon} size={20} color="#0F4A97" style={styles.itemIcon} />
-        <Text style={styles.itemText}>{item.title}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+  const renderItem = ({ item }) => {
+    const IconComponent = item.type === 'MaterialIcons' ? MaterialIconsIcon : FontAwesomeIcon;
+    return (
+      <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route)}>
+        <View style={styles.itemContent}>
+          <IconComponent name={item.icon} size={20} color="#0F4A97" style={styles.itemIcon} />
+          <Text style={styles.itemText}>{item.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.name}>charitha</Text>
       <View style={styles.ratingContainer}>
         <View style={styles.starsContainer}>
           {renderStars()} 
@@ -65,19 +68,17 @@ const Menu = ({ navigation }) => {
       </View>
 
       <View style={styles.headerContainer}>
-        {profilePicture ? (
-          <TouchableOpacity onPress={handleProfileImagePress}>
-            <View style={styles.profileContainer}>
-              <Image
-                source={{ uri: profilePicture }} 
-                style={styles.profileImage}
-                onError={(error) => console.log('Error loading image: ', error)}
-              />
-            </View>
-          </TouchableOpacity>
-        ) : (
-          <Text>No profile image available</Text>
-        )}
+        <TouchableOpacity onPress={handleProfileImagePress}>
+          <View style={styles.profileContainer}>
+            {/* Uncomment and provide the image URL here */}
+            {/* <Image
+              source={{ uri: profileImageBase64 }} 
+              style={styles.profileImage}
+              onError={(error) => console.log('Error loading image: ', error)}
+            /> */}
+          </View>
+        </TouchableOpacity>
+        <Text>No profile image available</Text>
       </View>
 
       <FlatList
@@ -104,13 +105,13 @@ const styles = StyleSheet.create({
   },
   name: {
     marginTop: 53,
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: 'bold',  
   },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 5,
   },
   starsContainer: {
     flexDirection: 'row',

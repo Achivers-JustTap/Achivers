@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux'; 
 import store from './App/screens/SignUpScreens/store_management/store';
 import { StyleSheet } from 'react-native';
+import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WelcomeScreen from './App/screens/SignUpScreens/WelcomeScreen';
@@ -78,9 +79,27 @@ import HistoryParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/Ea
 import HistoryGroceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryGroceries';
 import EarningsHelp from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/EarningsHelp';
 import TransactionDetailsPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/TransactionDetailsPage';
+import IncentivesAndBonuses from './App/screens/InsideAppScreens/MenuScreens/IncentivesAndBonuses';
+import Rewards from './App/screens/InsideAppScreens/MenuScreens/Rewards';
+import ServiceManager from './App/screens/InsideAppScreens/MenuScreens/ServiceManager';
+import DemandPlanner from './App/screens/InsideAppScreens/MenuScreens/DemandPlanner';
+import IncentivesPage from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/IncentivesPage';
+import IncentivesHelpPage from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/IncentivesHelpPage';
+import Bonuses from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/Bonuses';
+import WeeklyIncentives from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/WeeklyIncentives';
+import DailyIncentives from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/DailyIncentives';
 const Stack = createStackNavigator();
 
 export default function App() {
+
+    const [fontsLoaded] = useFonts({
+      'SofadiOne': require('./assets/fonts/SofadiOne-Regular.ttf'), // Load your font
+    });
+  
+    if (!fontsLoaded) {
+      return <Text>Loading...</Text>; // Show loading screen until font is loaded
+    }
+  
   return (
     <Provider store={store}> 
     <UserLocationProvider>
@@ -122,6 +141,10 @@ export default function App() {
           <Stack.Screen name="ReferFriends" component={ReferFriends} />
           <Stack.Screen name="Oppurtunities" component={Oppurtunities} />
           <Stack.Screen name="Earnings" component={Earnings} options={{ headerShown: false }} />
+          <Stack.Screen name="IncentivesAndBonuses" component={IncentivesAndBonuses} />
+          <Stack.Screen name="Rewards" component={Rewards} />
+          <Stack.Screen name="ServiceManager" component={ServiceManager} />
+          <Stack.Screen name="DemandPlanner" component={DemandPlanner} />
           <Stack.Screen name="Help" component={Help} />
           <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
 
@@ -168,7 +191,15 @@ export default function App() {
           <Stack.Screen name="HistoryBikeTaxi" component={HistoryBikeTaxi} options={{ headerShown: false }} />
           <Stack.Screen name="HistoryParcelDelivery" component={HistoryParcelDelivery} options={{ headerShown: false }} />
           <Stack.Screen name="HistoryGroceries" component={HistoryGroceries} options={{ headerShown: false }} />
+
+           {/*Incentives and Bonuses*/}
+           <Stack.Screen name="IncentivesPage" component={IncentivesPage} options={{ headerShown: false }} /> 
+           <Stack.Screen name="DailyIncentives" component={DailyIncentives} />
+           <Stack.Screen name="WeeklyIncentives" component={WeeklyIncentives} />
+           <Stack.Screen name="Bonuses" component={Bonuses} />
+           <Stack.Screen name="IncentivesHelpPage" component={IncentivesHelpPage} />
         </Stack.Navigator>
+
       </NavigationContainer>
     </UserLocationProvider>
     </Provider>
