@@ -1,66 +1,165 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-const SubscriptionDetails = () => {
-  const [selectedPlan, setSelectedPlan] = useState(null);
-  const [subscriptionMessage, setSubscriptionMessage] = useState('');
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { LinearGradient } from 'expo-linear-gradient';
 
-  const handleSubscribe = () => {
-    if (selectedPlan) {
-      setSubscriptionMessage(`Congratulations! You've successfully subscribed for Just Tap Subscription plans for ${selectedPlan.days} days! Have fun with driving for earning more.`);
-    } else {
-      setSubscriptionMessage('Please select a subscription plan.');
-    }
-  };
+const DailyIncentives = ({ route, navigation }) => {
+  const [selectedVehicleType, setSelectedVehicleType] = useState(route.params?.selectedVehicleName || 'Moto');
+  const [activeTab, setActiveTab] = useState('Bike Taxi');
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const [isDateSelected, setIsDateSelected] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [isPresentDate, setIsPresentDate] = useState(false);
+  const [isPastDate, setIsPastDate] = useState(false);  
+  const [isFutureDate, setIsFutureDate] = useState(false);
 
-  const plans = [
-    { id: 1, amount: 500, days: 1, earnings: 30 },
-    { id: 2, amount: 1000, days: 3, earnings: 50 },
-    { id: 3, amount: 1500, days: 5, earnings: 80 },
+  const timeSlots = [
+    { title: 'Earn Upto ₹85', time: '7:00 AM - 11:59 AM', gradientColors: ['#96c93d', '#00b09b'], rides: ['3', '6', '9'], amounts: ['15', '30', '40'], start: '07:00', end: '11:59' },
+    { title: 'Earn Upto ₹95', time: '1:00 PM - 5:59 PM', gradientColors: ['#64B5F6', '#90CAF9'], rides: ['3', '6', '9'], amounts: ['15', '35', '55'], start: '13:00', end: '17:59' },
+    { title: 'Earn Upto ₹115', time: '7:00 PM - 11:59 PM', gradientColors: ['#FFE324', '#FFB533'], rides: ['3', '6', '9'], amounts: ['25', '40', '50'], start: '19:00', end: '23:59' }
   ];
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Select Your Plan</Text>
+  const getCurrentTime = () => {
+    const now = new Date();
+    return now.getHours() * 100 + now.getMinutes();
+  };
 
-      <View style={styles.planContainer}>
-        <View style={styles.planBox}>
-          {plans.map((plan) => (
-            <TouchableOpacity
-              key={plan.id}
-              style={[styles.plan, selectedPlan?.id === plan.id && styles.selectedPlan]}
-              onPress={() => setSelectedPlan(plan)}
-            >
-              <Text style={styles.planText}>₹{plan.amount}</Text>
-              <Text style={styles.subHeading}>Earnings</Text>
-              <Text style={styles.subText}>{plan.earnings} per day</Text>
-              <Text style={styles.subHeading}>{plan.days} Days</Text>
-            </TouchableOpacity>
-          ))}
+  const checkIfSlotPassed = (start, end) => {
+    const currentTime = getCurrentTime();
+    const startTime = parseInt(start.replace(':', ''), 10);
+    const endTime = parseInt(end.replace(':', ''), 10);
+    return currentTime > endTime;
+  };
+
+  useEffect(() => {
+    if (route.params?.vehicleType) {
+      setSelectedVehicleType(route.params.vehicleType);
+    }
+
+    if (isDateSelected) {
+      const currentDate = new Date();
+
+      if (date.toLocaleDateString('en-GB') !== currentDate.toLocaleDateString('en-GB')) {
+        setIsPresentDate(false);
+        setIsPastDate(date < currentDate); 
+        setIsFutureDate(date > currentDate); 
+      } else {
+        setIsPresentDate(true);
+        setIsPastDate(false); 
+        setIsFutureDate(false); 
+      }
+    }
+
+    setCurrentTime(new Date());
+  }, [route.params, date, isDateSelected]);
+
+  const handleTabPress = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const onChange = (event, selectedDate) => {
+    if (selectedDate) {
+      setDate(selectedDate);
+      setIsDateSelected(true);
+    }
+    setShowPicker(false);
+  };
+
+  const handleBackPress = () => {
+    setIsDateSelected(false);
+    setDate(new Date());
+    setShowPicker(false);
+    setIsPresentDate(false);
+    setIsPastDate(false); 
+    setIsFutureDate(false); 
+  };
+
+  const renderCard = (title, time, gradientColors, rides, amounts, start, end) => {
+    const isSlotPassed = checkIfSlotPassed(start, end);
+    const headerGradient = isPastDate || (isPresentDate && isSlotPassed) ? ['#FF0000', '#FF3333'] : gradientColors;
+    const message = (isSlotPassed && isPresentDate) || isPastDate ? 'You Cannot get this incentive today!' : '';
+    
+   
+    const noDateMessage = !isDateSelected ? 'Select a date to see the incentives' : null;
+
+    const futureDateMessage = isFutureDate && isDateSelected ? 'These incentives are not yet released!' : null;
+
+    return (
+      <View style={styles.cardContainer}>
+        <LinearGradient colors={headerGradient} style={styles.cardHeaderContainer}>
+          <Text style={styles.cardHeader}>{time}</Text>
+        </LinearGradient>
+        <View style={styles.cardBodyContainer}>
+          <Text style={styles.cardTitle}>{!isDateSelected || isFutureDate ? '' : title}</Text>
+          {noDateMessage || futureDateMessage ? (
+            <Text style={[styles.incentiveMessage, { color: headerGradient[0] }]}>
+              {noDateMessage || futureDateMessage}
+            </Text>
+          ) : (
+            <View style={styles.cardContent}>
+              {rides.map((ride, index) => (
+                <View key={index} style={styles.rowContent}>
+                  <Text style={[styles.dot, { color: headerGradient[0] }]}>●</Text>
+                  <Text style={styles.rideText}>{ride} rides</Text>
+                  <Text style={styles.amountText}>₹{amounts[index]}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+          {message ? <Text style={styles.incentiveMessage}>{message}</Text> : null}
         </View>
       </View>
+    );
+  };
 
-      <Text style={styles.termsHeading}>Terms & Conditions</Text>
-      <Text style={styles.termsText}>
-        By subscribing, you agree to the Just Tap terms and conditions for drivers. Ensure you follow all the necessary safety measures while driving.
-      </Text>
+  return (
+    <ScrollView style={styles.container}>
+      {/* Date Picker Section */}
+      <View style={styles.datePickerContainer}>
+        {isDateSelected ? (
+          <View style={styles.dateSelectedContainer}>
+            <Text style={styles.dateText}>{date.toLocaleDateString('en-GB')}</Text>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={handleBackPress}
+            >
+              <Text style={styles.backButtonText}>Back</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={styles.dateButton}
+            onPress={() => setShowPicker(true)}
+          >
+            <Text style={styles.dateButtonText}>Select Date</Text>
+          </TouchableOpacity>
+        )}
 
-      {subscriptionMessage && (
-        <View style={styles.messageBox}>
-          <Text style={styles.messageText}>{subscriptionMessage}</Text>
+        {showPicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onChange}
+          />
+        )}
+      </View>
+
+   
+      {isPastDate && isDateSelected && (
+        <View style={styles.pastDateMessageContainer}>
+          <Text style={styles.pastDateMessage}>These incentives are unavailable!</Text>
         </View>
       )}
 
-      <View style={styles.selectedPlanBox}>
-        <Text style={styles.selectedPlanText}>
-          {selectedPlan ? `Selected Plan: ₹${selectedPlan.amount} for ${selectedPlan.days} days` : 'No plan selected'}
-        </Text>
-      </View>
-
-      <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscribe}>
-        <Text style={styles.subscribeText}>Subscribe to Just Tap</Text>
-      </TouchableOpacity>
-    </View>
+      {timeSlots.map((slot, index) => 
+        renderCard(slot.title, slot.time, slot.gradientColors, slot.rides, slot.amounts, slot.start, slot.end)
+      )}
+      <Text styles={{paddingBottom: 70}}></Text>
+    </ScrollView>
   );
 };
 
@@ -69,125 +168,125 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  heading: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#0F4A97',
-    textTransform: 'uppercase',
-    fontFamily: 'Montserrat-Bold',
-  },
-  planContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 40,
-    width: '100%',
-  },
-  planBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    width: '100%',
-  },
-  plan: {
-    backgroundColor: '#FF6347',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    width: '30%',
-    marginBottom: 20,
-    borderRadius: 15,
-    alignItems: 'center',
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-  },
-  selectedPlan: {
-    backgroundColor: '#FFD700',
-    shadowOpacity: 0.4,
-  },
-  planText: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  subHeading: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#FFF',
-    marginTop: 5,
-  },
-  subText: {
-    fontSize: 14,
-    color: '#FFF',
-    marginBottom: 5,
-  },
-  termsHeading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    color: '#333',
-  },
-  termsText: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 20,
-    lineHeight: 22,
-    textAlign: 'center',
-  },
-  selectedPlanBox: {
-    backgroundColor: '#ffffff',
-    padding: 15,
+  datePickerContainer: {
+    padding: 10,
+    backgroundColor: '#fff',
     borderRadius: 10,
-    marginBottom: 30,
-    width: '100%',
-    elevation: 8,
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    marginBottom: 10,
+    elevation: 5,
   },
-  selectedPlanText: {
-    fontSize: 18,
-    color: '#333',
-    textAlign: 'center',
-    fontWeight: '500',
-  },
-  subscribeButton: {
-    backgroundColor: '#20B2AA',
-    paddingVertical: 18,
-    paddingHorizontal: 25,
-    borderRadius: 50,
+  dateSelectedContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
   },
-  subscribeText: {
+  dateText: {
+    fontSize: 20,
+    left: 10,
+    fontWeight: 'bold',
+    color: '#0F4A97',
+  },
+  dateButton: {
+    backgroundColor: '#0F4A97',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  dateButtonText: {
     color: '#fff',
+    fontWeight: 'bold',
+  },
+  backButton: {
+    backgroundColor: '#FFB74D',
+    padding: 10,
+    borderRadius: 5,
+  },
+  backButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  cardContainer: {
+    padding: 0,
+    borderRadius: 10,
+    marginVertical: 10,
+    backgroundColor: '#fff',
+    elevation: 5,
+  },
+  cardHeaderContainer: {
+    padding: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  cardBodyContainer: {
+    padding: 10,
+  },
+  cardHeader: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center', 
   },
-  messageBox: {
-    marginTop: 20,
-    padding: 20,
-    backgroundColor: '#E0F7FA',
-    borderRadius: 10,
-    width: '100%',
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 2,
+    textAlign: 'center', 
+  },
+  cardContent: {
+    marginTop: 3,
+  },
+  rowContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    elevation: 8,
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
+    marginBottom: 5,
   },
-  messageText: {
+  dot: {
+    fontSize: 20,
+    marginRight: 10,
+  },
+  rideText: {
     fontSize: 16,
-    color: '#0F4A97',
+    left: -100,
+    textAlign: 'left',  
+  },
+  amountText: {
+    fontSize: 16,
+    right:20,
+    fontWeight: 'bold',
+    textAlign: 'right',  
+  },
+  incentiveMessage: {
+    color: '#FF0000',
+    fontWeight: 'bold',
+    fontSize:17,
     textAlign: 'center',
-    fontWeight: '500',
+    marginTop: 10,
+  },
+  pastDateMessageContainer: {
+    padding: 10,
+    backgroundColor: '#FFEBEE',
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  pastDateMessage: {
+    color: '#FF0000',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  homeButton: {
+    backgroundColor: '#64B5F6',
+    padding: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  homeButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 
-export default SubscriptionDetails;
+export default DailyIncentives; 
