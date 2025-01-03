@@ -51,7 +51,7 @@ const WeeklyIncentives = ({ route, navigation }) => {
     const startOfWeek = new Date(selectedDate);
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 6); 
+    endOfWeek.setDate(endOfWeek.getDate() + 7); 
     return currentDate >= startOfWeek && currentDate <= endOfWeek;
   };
 
