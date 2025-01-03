@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const WeeklyIncentives = ({ route, navigation }) => {
   const [selectedVehicleType, setSelectedVehicleType] = useState(route.params?.selectedVehicleName || 'Moto');
@@ -8,6 +9,20 @@ const WeeklyIncentives = ({ route, navigation }) => {
   const [week, setWeek] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [isWeekSelected, setIsWeekSelected] = useState(false);
+  const [isFutureWeek, setIsFutureWeek] = useState(false); 
+  const [isCurrentWeek, setIsCurrentWeek] = useState(false); 
+
+  const timeSlots = [
+    {
+      title: 'Earn Upto ₹1000',
+      time: '7:00 AM - 11:59 PM',
+      gradientColors: ['#96c93d', '#00b09b'],
+      rides: ['40', '60', '75'],
+      amounts: ['250', '300', '450'],
+      start: '07:00',
+      end: '11:59'
+    },
+  ];
 
   useEffect(() => {
     if (route.params?.vehicleType) {
@@ -24,19 +39,47 @@ const WeeklyIncentives = ({ route, navigation }) => {
     return days[date.getDay()];
   };
 
+  
+  const isFutureDate = (selectedDate) => {
+    const currentDate = new Date();
+    return selectedDate > currentDate;
+  };
+
+
+  const isCurrentWeekCheck = (selectedDate) => {
+    const currentDate = new Date();
+    const startOfWeek = new Date(selectedDate);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(endOfWeek.getDate() + 6); 
+    return currentDate >= startOfWeek && currentDate <= endOfWeek;
+  };
+
   const onChange = (event, selectedDate) => {
     if (selectedDate) {
       const startOfWeek = new Date(selectedDate);
       const endOfWeek = new Date(selectedDate);
 
-      // Calculate start and end of the week
-      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Sunday
-      endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay())); // Saturday
+    
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
+      endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay())); 
 
       setWeek(
         `${getDayName(startOfWeek)} (${startOfWeek.toLocaleDateString('en-GB')}) - ${getDayName(endOfWeek)} (${endOfWeek.toLocaleDateString('en-GB')})`
       );
       setIsWeekSelected(true);
+      
+   
+      if (isFutureDate(startOfWeek)) {
+        setIsFutureWeek(true);
+        setIsCurrentWeek(false);
+      } else if (isCurrentWeekCheck(startOfWeek)) {
+        setIsCurrentWeek(true);
+        setIsFutureWeek(false);
+      } else {
+        setIsFutureWeek(false);
+        setIsCurrentWeek(false);
+      }
     }
     setShowPicker(false);
   };
@@ -44,11 +87,49 @@ const WeeklyIncentives = ({ route, navigation }) => {
   const handleBackPress = () => {
     setIsWeekSelected(false);
     setWeek('');
+    setIsFutureWeek(false); 
+    setIsCurrentWeek(false); 
+  };
+
+  const renderCard = (title, time, gradientColors, rides, amounts, start, end, key) => {
+    return (
+      <View key={key} style={styles.cardContainer}>
+        <LinearGradient colors={gradientColors} style={styles.cardHeaderContainer}>
+          <Text style={[styles.cardHeader, { color: isFutureWeek || isCurrentWeek ? '#fff' : '#fff' }]}>
+            {time}
+          </Text>
+        </LinearGradient>
+        <View style={styles.cardBodyContainer}>
+          {isWeekSelected ? (
+            isFutureWeek ? (
+              
+              <Text style={styles.noWeekMessage}>These incentives are not yet released!</Text>
+            ) : isCurrentWeek ? (
+              <>
+                <Text style={styles.cardTitle}>{title}</Text>
+                <View style={styles.cardContent}>
+                  {rides.map((ride, index) => (
+                    <View key={index} style={styles.rowContent}>
+                      <Text style={[styles.dot, { color: gradientColors[0] }]}>●</Text>
+                      <Text style={styles.rideText}>{ride} rides</Text>
+                      <Text style={styles.amountText}>₹{amounts[index]}</Text>
+                    </View>
+                  ))}
+                </View>
+              </>
+            ) : (
+              <Text style={styles.PastWeekMessage}>These incentives are unavailable now!</Text>
+            )
+          ) : (
+            <Text style={styles.noWeekMessage}>Please select a week to get incentives!</Text>
+          )}
+        </View>
+      </View>
+    );
   };
 
   return (
     <ScrollView style={styles.container}>
-      {/* Week Picker Section */}
       <View style={styles.datePickerContainer}>
         {isWeekSelected ? (
           <View style={styles.dateSelectedContainer}>
@@ -69,7 +150,6 @@ const WeeklyIncentives = ({ route, navigation }) => {
           </TouchableOpacity>
         )}
 
-        {/* DateTimePicker */}
         {showPicker && (
           <DateTimePicker
             value={new Date()}
@@ -79,14 +159,20 @@ const WeeklyIncentives = ({ route, navigation }) => {
           />
         )}
       </View>
+
+      {timeSlots.map((slot, index) => 
+        renderCard(slot.title, slot.time, slot.gradientColors, slot.rides, slot.amounts, slot.start, slot.end, index) 
+      )}
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: '#F5F5F5',
   },
   datePickerContainer: {
     padding: 10,
@@ -101,7 +187,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dateText: {
-    fontSize: 12,
+    fontSize: 12.5,
     fontWeight: 'bold',
     color: '#0F4A97',
   },
@@ -116,7 +202,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   backButton: {
-    backgroundColor: '#FF5733',
+    backgroundColor: '#FFB74D',
     padding: 10,
     borderRadius: 5,
   },
@@ -124,6 +210,71 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  cardContainer: {
+    padding: 0,
+    borderRadius: 10,
+    marginVertical: 10,
+    backgroundColor: '#fff',
+    elevation: 5,
+  },
+  cardHeaderContainer: {
+    padding: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  cardBodyContainer: {
+    padding: 10,
+  },
+  cardHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 2,
+    textAlign: 'center',
+  },
+  cardContent: {
+    marginTop: 3,
+  },
+  rowContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  dot: {
+    fontSize: 20,
+    marginRight: 10,
+  },
+  rideText: {
+    fontSize: 16,
+    left: -90,
+    textAlign: 'left',
+  },
+  amountText: {
+    right: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'right',
+  },
+  noWeekMessage: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'green',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  PastWeekMessage:{
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  }
 });
 
 export default WeeklyIncentives;

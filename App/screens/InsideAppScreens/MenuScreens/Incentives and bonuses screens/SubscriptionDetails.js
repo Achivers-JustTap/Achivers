@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
-const SubscriptionDetails = () => {
+const SubscriptionDetails = ({navigation}) => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [subscriptionMessage, setSubscriptionMessage] = useState('');
 
@@ -21,6 +22,10 @@ const SubscriptionDetails = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate('SubscriptionHelp')}>
+              <FontAwesomeIcon name="hands-helping" size={15} color="#fff" />
+              <Text style={styles.helpText}>Help</Text>
+            </TouchableOpacity>
       <Text style={styles.heading}>Select Your Plan</Text>
 
       <View style={styles.planContainer}>
@@ -44,7 +49,8 @@ const SubscriptionDetails = () => {
       <Text style={styles.termsText}>
         By subscribing, you agree to the Just Tap terms and conditions for drivers. Ensure you follow all the necessary safety measures while driving.
       </Text>
-
+      
+     
       {subscriptionMessage && (
         <View style={styles.messageBox}>
           <Text style={styles.messageText}>{subscriptionMessage}</Text>
@@ -58,8 +64,9 @@ const SubscriptionDetails = () => {
       </View>
 
       <TouchableOpacity style={styles.subscribeButton} onPress={handleSubscribe}>
-        <Text style={styles.subscribeText}>Subscribe to Just Tap</Text>
+        <Text style={styles.subscribeText}>Subscribe to {''}<Text style={styles.justTapText}>JUST TAP!</Text></Text>
       </TouchableOpacity>
+
     </View>
   );
 };
@@ -68,125 +75,116 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  helpButton: {
+    position: 'absolute',
+    top: 12,
+    right: 15,
+    backgroundColor: '#0F4A97',
+    paddingVertical: 7,
+    paddingHorizontal: 15,
+    borderRadius: 50,
+    flexDirection: 'row',
     alignItems: 'center',
+    top:-45,
+    zIndex: 10,
+  },
+  helpText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginLeft: 5,
   },
   heading: {
-    fontSize: 30,
+    fontSize: 24,
+    color: '#0F4A97',
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: '#0F4A97',
-    textTransform: 'uppercase',
-    fontFamily: 'Montserrat-Bold',
   },
   planContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 40,
-    width: '100%',
+    width:'100%',
+    marginBottom: 20,
   },
   planBox: {
     flexDirection: 'row',
+    width:'100%',
     justifyContent: 'space-between',
-    flexWrap: 'wrap',
-    width: '100%',
   },
   plan: {
-    backgroundColor: '#FF6347',
-    paddingVertical: 20,
-    paddingHorizontal: 15,
+    backgroundColor: '#f1f1f1',
+    padding: 15,
     width: '30%',
-    marginBottom: 20,
-    borderRadius: 15,
+    borderRadius: 8,
     alignItems: 'center',
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
   },
   selectedPlan: {
-    backgroundColor: '#FFD700',
-    shadowOpacity: 0.4,
+    backgroundColor: '#0cc0df'
   },
   planText: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
   },
   subHeading: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#FFF',
-    marginTop: 5,
   },
   subText: {
     fontSize: 14,
-    color: '#FFF',
-    marginBottom: 5,
+    color: '#777',
   },
   termsHeading: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     marginVertical: 10,
-    color: '#333',
   },
   termsText: {
     fontSize: 14,
     color: '#555',
-    marginBottom: 20,
-    lineHeight: 22,
-    textAlign: 'center',
+    textAlign:'justify',
+    marginBottom: 20
   },
   selectedPlanBox: {
-    backgroundColor: '#ffffff',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 30,
-    width: '100%',
-    elevation: 8,
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    backgroundColor: '#f9f9f9',
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 20,
   },
   selectedPlanText: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#333',
-    textAlign: 'center',
-    fontWeight: '500',
   },
   subscribeButton: {
-    backgroundColor: '#20B2AA',
-    paddingVertical: 18,
-    paddingHorizontal: 25,
-    borderRadius: 50,
+    backgroundColor: '#ff6347',
+    padding: 15,
+    borderRadius: 8,
     alignItems: 'center',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
   },
   subscribeText: {
     color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
   },
   messageBox: {
     marginTop: 20,
     padding: 20,
-    backgroundColor: '#E0F7FA',
-    borderRadius: 10,
-    width: '100%',
-    alignItems: 'center',
-    elevation: 8,
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
+    backgroundColor: '#c6d6eb',
+    borderRadius: 8,
+    marginBottom: 30,
   },
   messageText: {
     fontSize: 16,
+    fontWeight:'bold',
     color: '#0F4A97',
     textAlign: 'center',
-    fontWeight: '500',
+  },
+  justTapText: {
+    fontFamily: 'SofadiOne',
+    fontSize: 18,
+    color: 'white',
+   
   },
 });
 
