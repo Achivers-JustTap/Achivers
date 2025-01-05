@@ -90,6 +90,7 @@ import WeeklyIncentives from './App/screens/InsideAppScreens/MenuScreens/Incenti
 import DailyIncentives from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/DailyIncentives';
 import SubscriptionDetails from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/DailyIncentives';
 import SubscriptionHelp from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/SubscriptionHelp';
+import ServiceManagerHelp from './App/screens/InsideAppScreens/MenuScreens/ServiceManagerScreens/ServiceManagerHelp';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -202,6 +203,8 @@ export default function App() {
            <Stack.Screen name="IncentivesHelpPage" component={IncentivesHelpPage} />
            <Stack.Screen name="SubscriptionDetails" component={SubscriptionDetails} />
            <Stack.Screen name="SubscriptionHelp" component={SubscriptionHelp} />
+
+           <Stack.Screen name="ServiceManagerHelp" component={ServiceManagerHelp} />
         </Stack.Navigator>
 
       </NavigationContainer>

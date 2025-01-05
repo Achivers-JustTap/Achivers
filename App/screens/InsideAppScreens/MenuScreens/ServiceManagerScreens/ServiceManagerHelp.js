@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 
-const IncentivesHelpPage = () => {
+const ServiceManagerHelp = () => {
   const [selectedConcern, setSelectedConcern] = useState(null)
   const [driverConcern, setDriverConcern] = useState('')
   const [driverName, setDriverName] = useState('')
@@ -9,47 +9,66 @@ const IncentivesHelpPage = () => {
   const [driverEmail, setDriverEmail] = useState('')
 
   const concerns = [
-    { id: '1', title: 'What are incentives?', answer: 'Incentives are additional earnings offered to drivers for achieving specific targets, such as completing a certain number of rides, driving during peak hours, or covering specific zones. These are designed to boost earnings and reward performance.' },
+    { id: '1', title: 'What are the other services provided by Just Tap?', answer: 'Just Tap offers multiple Services, including: Bike Metro, Bike, Bike Boost, Parcel Delivery, Groceries Delivery, Auto Rides and Cab rides' },
     {
-      id: '2', title: 'How can I check what incentives I am eligible for?',
-      answer: `You can check your eligible incentives by:
-1.Opening the Just Tap Driver App.
-2.Navigating to the Earnings tab from the menu.
-3.Clicking on the Incentives section to view available offers and details about eligibility criteria.` },
+      id: '2', title: 'How can I become a food delivery partner with Just Tap?',
+      answer: `To become a food delivery partner:
+1.Download the Just Tap Driver App and register.
+2.Upload the required documents (ID proof, driving license, vehicle details, etc.).
+3.Wait Till Your Documents Get Approved.
+4.After Your Documents ot approved go to Service manager and Activate food Delivery Option.
+5.Start accepting delivery orders.` },
     {
-      id: '3', title: 'Can I update my driving license?',
+      id: '3', title: ' What are the working hours for a food delivery partner at Just Tap?',
       answer: `Incentives may not appear for the day if:
-1.There are no active incentive programs scheduled for the current day.
-2.You have already completed the incentive target for the current day.
-3.Your app is not updated.
-
-Solution:
-1.Check the app for updates in the Play Store or App Store.
-2.Ensure your profile and documents are verified and active.
-3.Contact support through the Help Center in the app for further assistance.`
+1.Just Tap offers flexible working hours.
+2.You can log in and log out at your convenience.
+3.Peak hours typically offer higher earnings (e.g., lunch and dinner times).`
     },
     {
-      id: '4', title: 'What should I do if my incentive amount is not added after completing the incentive target?',
-      answer: `If your incentive amount is missing even after meeting the target:
-1.Go to the Earnings tab and review your Ride History and Incentives section.
-2.Confirm that you have met all the requirements for the incentive.
-3.Wait for 24 hours, as incentives are sometimes updated at the end of the day.
-4.If the issue persists, contact Support via the app and share the details of the incentive target and ride history.` },
+      id: '4', title: 'How much more can I earn with Just Tap by becoming a food delivery partner?',
+      answer: `1.Earnings depend on the number of deliveries, distance covered, and peak hours bonuses.
+2.Additional income is possible through incentives, cashback offers, and referral bonuses.` },
     {
-      id: '5', title: 'How can I track my progress towards my incentive target?',
+      id: '5', title: 'When and how will I be paid by Just Tap?',
       answer: `You can track your progress by:
-1.Opening the Incentives section under the Earnings tab.
-2.Viewing the Incentive Tracker, which displays your completed rides or earnings versus the target.
-3.Ensuring that your rides are counted in real-time for an accurate status update.`
+1.Payments are credited weekly to your registered bank account.
+2.You can track your earnings through the earnings page.`
     },
     {
-      id: '7', title: ' I did not receive my incentive.',
-      answer: `If you didn’t receive your incentive:
-1.Verify the incentive details in the Earnings tab.
-2.Confirm if all conditions, such as ride count, time frame, or zones, were met.
-3.Wait for 24 hours to allow for processing.
-4.If the incentive is still missing, contact Support through the app and submit your ride details and screenshots if needed.` },
-  ]
+      id: '6', title: 'How will I get the cashback?',
+      answer: `Cashback is credited directly to your account after meeting the target requirements set during registration or promotional offers.` },
+      {
+        id: '7', title: 'When will I get the cashback?',
+        answer: `Cashback is usually credited within 7-10 working days after achieving the specified target (rides/deliveries or active days).`
+      },
+      {
+        id: '8', title: ' How can I track my progress for rides and number of days left to complete the target?',
+        answer: `Use the Driver App Dashboard to monitor:
+1.Total rides/deliveries completed.
+2.Pending targets.
+3.Days left to complete your goal.`
+      },
+      {
+        id: '9', title:  'What will happen if I change my city or mobile number after paying the joining fee and before receiving the cashback?',
+        answer: `1.Changing your city or mobile number may delay cashback processing.
+2.Inform customer support immediately to update your details and avoid issues.`
+      },
+      {
+        id: '10', title: 'Can I Turn Off a service?',
+        answer: `Yes, you can:
+1.Pause or stop accepting rides/deliveries temporarily using the Service Manager.
+2.Reactivate services whenever required.`
+      },
+      {
+        id: '11', title: 'A service has been suspended for my account. What should I do?',
+        answer: `1.Check the Driver App Notifications for details on the suspension.
+2.Review any pending documents or unresolved complaints.
+3.Contact customer support to resolve the issue and reactivate the service`
+      },
+    ]
+
+
 
   const handleSubmitConcern = () => {
     if (driverConcern.trim() && driverName.trim() && driverPhone.trim() && driverEmail.trim()) {
@@ -133,7 +152,7 @@ Solution:
   )
 }
 
-export default IncentivesHelpPage;
+export default ServiceManagerHelp;
 
 const styles = StyleSheet.create({
   container: {
