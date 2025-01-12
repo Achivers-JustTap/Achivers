@@ -30,8 +30,7 @@ const AadharUpload = ({ navigation }) => {
 
     // Show an alert confirming the Aadhaar number is valid
     Alert.alert('Success', 'Aadhaar number entered is valid');
-    // You can proceed with the next navigation or logic here
-    navigation.navigate('NextScreen'); // Replace with the correct screen if needed
+    
   };
 
   const handleTakeAadharImage = () => {

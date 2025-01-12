@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux'; 
 import store from './App/screens/SignUpScreens/store_management/store';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -88,7 +88,7 @@ import IncentivesHelpPage from './App/screens/InsideAppScreens/MenuScreens/Incen
 import Bonuses from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/Bonuses';
 import WeeklyIncentives from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/WeeklyIncentives';
 import DailyIncentives from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/DailyIncentives';
-import SubscriptionDetails from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/DailyIncentives';
+import SubscriptionDetails from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/SubscriptionDetails';
 import SubscriptionHelp from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/SubscriptionHelp';
 import ServiceManagerHelp from './App/screens/InsideAppScreens/MenuScreens/ServiceManagerScreens/ServiceManagerHelp';
 const Stack = createStackNavigator();
@@ -146,7 +146,7 @@ export default function App() {
           <Stack.Screen name="Earnings" component={Earnings} options={{ headerShown: false }} />
           <Stack.Screen name="IncentivesAndBonuses" component={IncentivesAndBonuses} />
           <Stack.Screen name="Rewards" component={Rewards} />
-          <Stack.Screen name="ServiceManager" component={ServiceManager} />
+          <Stack.Screen name="ServiceManager" component={ServiceManager} options={{ headerShown: false }}/>
           <Stack.Screen name="DemandPlanner" component={DemandPlanner} />
           <Stack.Screen name="Help" component={Help} />
           <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
