@@ -13,14 +13,14 @@ const LicenseFileChange = ({ navigation,route }) => {
   const handleUploadFile = async (type) => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: ['application/pdf', 'image/*'], // Restrict to PDF and images
+        type: ['application/pdf', 'image/*'], 
         copyToCacheDirectory: true,
       });
       
       console.log("Result: ", result);
       
       if (!result.canceled) {
-        const file = result.assets[0]; // Get the selected file
+        const file = result.assets[0]; 
         if (type === 'front') {
           setLicenseFrontFile(file);
         } else {
@@ -40,7 +40,6 @@ const LicenseFileChange = ({ navigation,route }) => {
       return;
     }
 
-    // Navigate to the next screen with both files
     navigation.navigate('DriverLicence_list', {licenseFrontFile,licenseBackFile,licenseNumber, validTillDate, uploadSuccess: true,}); 
  };
 
@@ -48,7 +47,7 @@ const LicenseFileChange = ({ navigation,route }) => {
     <View style={styles.container}>
       <Text style={styles.header}>Upload Driving License</Text>
 
-      {/* Section for Driving License Front File Upload */}
+
       <View style={styles.section}>
         <Text style={styles.label}>License Front</Text>
         {licenseFrontFile ? (
@@ -60,7 +59,7 @@ const LicenseFileChange = ({ navigation,route }) => {
         )}
       </View>
 
-      {/* Section for Driving License Back File Upload */}
+
       <View style={styles.section}>
         <Text style={styles.label}>License Back</Text>
         {licenseBackFile ? (
@@ -72,7 +71,7 @@ const LicenseFileChange = ({ navigation,route }) => {
         )}
       </View>
 
-      {/* Proceed button once both files are uploaded */}
+    
       {licenseFrontFile && licenseBackFile && (
         <TouchableOpacity style={styles.proceedButton} onPress={proceedToNext}>
           <Text style={styles.buttonText}>Proceed</Text>

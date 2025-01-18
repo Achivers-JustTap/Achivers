@@ -4,6 +4,7 @@ import AppMapView from '../../../components/AppMapView';
 import * as Location from 'expo-location';
 import { UserLocationContext } from '../../Context/UserLocationContext';
 import { useSelector } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome'; 
 
 const HomePage = ({ navigation }) => {
     const { location, setLocation } = useContext(UserLocationContext);
@@ -11,7 +12,7 @@ const HomePage = ({ navigation }) => {
     const [searchText, setSearchText] = useState('');
     const userImaageUrl = useSelector((state) => state.user.profilePicture);
     console.log(userImaageUrl);
-    // const[base64Image,setBase64Image]= useState(profileImageBase64);
+
     useEffect(() => {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
@@ -39,19 +40,18 @@ const HomePage = ({ navigation }) => {
     const handleProfileImagePress = () => {
         navigation.navigate('ProfiledetailsPage');
     };
-    
-    const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate(item.route,)}>
-          <Text style={styles.itemText}>{item.title}</Text>
-        </TouchableOpacity>
-      );
 
-      const image1={}
+    const handleFavLocationPress = () => {
+        navigation.navigate('FavLocation');
+    };
+
+    const handleNotificationPress = () => {
+        navigation.navigate('NotificationPage');
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={styles.header}>JUST TAP!</Text>
-
                 {userImaageUrl ? (
                     <TouchableOpacity onPress={handleProfileImagePress}>
                         <View style={styles.profileContainer}>
@@ -65,12 +65,21 @@ const HomePage = ({ navigation }) => {
                 ) : (
                     <Text>No profile image available</Text>
                 )}
+                
+                <View style={styles.iconContainer}>
+                    <TouchableOpacity onPress={handleFavLocationPress}>
+                        <Icon name="map-marker" size={36} color="#0F4A97" style={styles.icon} />
+                        <Icon name="heart" size={16} color="white" style={styles.heartIcon} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleNotificationPress}>
+                        <Icon name="bell" size={30} color="#0F4A97" style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <View style={styles.mapContainer}>
                 <AppMapView style={styles.map} />
 
-                
                 <View style={styles.searchBackground}>
                     <TextInput
                         style={styles.searchBox}
@@ -82,7 +91,6 @@ const HomePage = ({ navigation }) => {
                 </View>
 
                 <View style={styles.statsContainer}>
-               
                     <View style={styles.leftStats}>
                         <Text style={styles.titleText}>Today's Earnings</Text>
                         <Text style={styles.valueText}>₹ 0.00</Text>
@@ -101,6 +109,7 @@ const HomePage = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor:"white"
     },
     headerContainer: {
         flexDirection: 'row',
@@ -108,14 +117,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 50,
         paddingHorizontal: 20,
-    },
-    header: {
-        fontFamily: 'SofadiOne',
-        fontSize: 35,
-        color: '#0F4A97',
-        textShadowColor: 'rgba(0, 0, 0, 0.75)',
-        textShadowOffset: { width: 2, height: 2 },
-        textShadowRadius: 4,
     },
     profileContainer: {
         width: 50,  
@@ -131,6 +132,19 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         resizeMode: 'cover', 
+    },
+    iconContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    icon: {
+        marginLeft: 10,
+        position: 'relative',
+    },
+    heartIcon: {
+        position: 'absolute',
+        top:5.5,
+        left:12.5,
     },
     mapContainer: {
         flex: 1,

@@ -52,7 +52,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
     const handleCenterButtonPress = () => {
         const newOnlineState = !isOnline;
         Animated.timing(animation, {
-            toValue: newOnlineState ? 0 : 1,
+            toValue: newOnlineState ? 1 : 0,
             duration: 1000,
             easing: Easing.out(Easing.exp),
             useNativeDriver: true,

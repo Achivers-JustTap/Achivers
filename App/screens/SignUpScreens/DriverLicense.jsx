@@ -19,7 +19,7 @@ const DrivingLicense = ({ navigation }) => {
     if (!validTillDate.trim()) return 'Please select the valid till date.';
   };
 
-  // Handle taking a Driving License image
+
   const handleTakeLicenseImage = () => {
     const validationError = validateLicenseNumber();
     if (validationError) {

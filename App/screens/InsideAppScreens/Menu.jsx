@@ -1,7 +1,7 @@
 import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';  // Import FontAwesome
-import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';  // Import MaterialIcons
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'; 
+import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';  
 
 const Menu = ({ navigation, route }) => {
   const vehicleAltImage = route.params?.vehicleAltImage; 
@@ -9,17 +9,14 @@ const Menu = ({ navigation, route }) => {
   const [rating, setRating] = useState(0);
 
   const DATA = [
-    { id: '1', title: 'Inbox', route: 'Inbox', icon: 'envelope', type: 'FontAwesome' },
-    { id: '2', title: 'Refer Friends', route: 'ReferFriends', icon: 'users', type: 'FontAwesome' },
-    { id: '3', title: 'Opportunities', route: 'Opportunities', icon: 'lightbulb', type: 'MaterialIcons' },
-    { id: '4', title: 'Earnings', route: 'Earnings', icon: 'money', type: 'FontAwesome' },
-    { id: '5', title: 'Incentives and Bonuses', route: 'IncentivesAndBonuses', icon: 'rupee', type: 'FontAwesome' },
-    { id: '6', title: 'Rewards', route: 'Rewards', icon: 'gift', type: 'FontAwesome' },
-    { id: '7', title: 'Service Manager', route: 'ServiceManager', icon: 'dashboard', type: 'MaterialIcons' },
-    { id: '8', title: 'Demand Planner', route: 'DemandPlanner', icon: 'area-chart', type: 'FontAwesome' },
-    { id: '9', title: 'Account', route: 'ProfiledetailsPage', icon: 'cogs', type: 'FontAwesome' },
-    { id: '10', title: 'Help', route: 'Help', icon: 'help', type: 'MaterialIcons' },
-    { id: '11', title: 'Tips & Info', route: 'TipsandInfo', icon: 'info', type: 'MaterialIcons' },
+    { id: '1', title: 'Refer Friends', route: 'ReferFriends', icon: 'users', type: 'FontAwesome' },
+    { id: '2', title: 'Earnings', route: 'Earnings', icon: 'money', type: 'FontAwesome' },
+    { id: '3', title: 'My Loan', route: 'MyLoan', icon: 'bank', type: 'FontAwesome' },
+    { id: '4', title: 'Incentives and Bonuses', route: 'IncentivesAndBonuses', icon: 'rupee', type: 'FontAwesome' },
+    { id: '5', title: 'Service Manager', route: 'ServiceManager', icon: 'dashboard', type: 'MaterialIcons' },
+    { id: '6', title: 'Demand Planner', route: 'DemandPlanner', icon: 'area-chart', type: 'FontAwesome' },
+    { id: '7', title: 'Account', route: 'ProfiledetailsPage', icon: 'cogs', type: 'FontAwesome' },
+    { id: '8', title: 'Help', route: 'Help', icon: 'help', type: 'MaterialIcons' }
   ];
 
   useEffect(() => {
@@ -139,6 +136,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     padding: 15,
+    top:30,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },

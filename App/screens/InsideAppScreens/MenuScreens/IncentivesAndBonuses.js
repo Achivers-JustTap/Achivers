@@ -54,6 +54,23 @@ const IncentivesAndBonuses = ({ navigation }) => {
           </LinearGradient>
         </TouchableOpacity>
 
+        <TouchableOpacity 
+          style={styles.card} 
+          onPress={() => handleNavigate('Rewards')} 
+        >
+          <LinearGradient 
+            colors={['#0F4A97', '#123B72']} 
+            style={styles.cardBackground}
+          >
+            <View style={styles.cardContent}>
+              <FontAwesomeIcon name='gift' size={30} color="#fff" />
+              <Text style={[styles.cardText, { fontSize:20 }]}>Rewards</Text>
+            </View>
+            <MaterialIconsIcon name="arrow-forward" size={23} color="#fff" />
+          </LinearGradient>
+        </TouchableOpacity>
+
+
       </View>
     </LinearGradient>
   );

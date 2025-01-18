@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, Image, TextInput, StyleSheet } from 'react-native';
+import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 
 const DriverLicence_list = ({ route, navigation }) => {
@@ -8,6 +8,25 @@ const DriverLicence_list = ({ route, navigation }) => {
   useEffect(() => {
     navigation.setOptions({ title: 'My Driver Licence' });
   }, [navigation]);
+
+   const handleTakeLicenseImage = () => {
+      const validationError = validateLicenseNumber();
+      if (validationError) {
+        Alert.alert('Error', validationError);
+        return;
+      }
+      navigation.navigate('LicenseImageChange');
+    };
+  
+
+    const handleUploadFromFiles = () => {
+      const validationError = validateLicenseNumber();
+      if (validationError) {
+        Alert.alert('Error', validationError);
+        return;
+      }
+      navigation.navigate('LicenseFileChange');
+    };
 
 
 
@@ -56,6 +75,16 @@ const DriverLicence_list = ({ route, navigation }) => {
           <Text>No Aadhar Back image available</Text>
         )}
       </View>
+      <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.button} onPress={handleTakeLicenseImage}>
+                <Text style={styles.buttonText}>Take Driving License Image</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
+                <Text style={styles.buttonText}>Upload from Files</Text>
+              </TouchableOpacity>
+            </View>
+
     </View>
   );
 };
@@ -101,6 +130,26 @@ const styles = StyleSheet.create({
     borderRadius: 0, 
     marginBottom: 10,
     resizeMode: 'cover',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '80%',
+    marginTop: 30, 
+  },
+  button: {
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 8,
+    flex: 1,
+    marginBottom: 30,
+    marginHorizontal: 5,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

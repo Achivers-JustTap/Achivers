@@ -29,12 +29,9 @@ import FileDetailsScreen from './App/screens/SignUpScreens/FileDetailsScreen';
 import TabNavigationComponent from './App/screens/InsideAppScreens/TabNavigationComponent';
 import { UserLocationProvider } from './App/Context/UserLocationContext';
 import ProfiledetailsPage from './App/screens/InsideAppScreens/ProfiledetailsPage';
-import Inbox from './App/screens/InsideAppScreens/MenuScreens/Inbox';
 import ReferFriends from './App/screens/InsideAppScreens/MenuScreens/ReferFriends';
-import Oppurtunities from './App/screens/InsideAppScreens/MenuScreens/Oppurtunities';
 import Earnings from './App/screens/InsideAppScreens/MenuScreens/Earnings';
 import Help from './App/screens/InsideAppScreens/MenuScreens/Help';
-import TipsandInfo from './App/screens/InsideAppScreens/MenuScreens/Tips&Info';
 import BestPerformance from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/BestPerformance';
 import IDCard from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/IDCard';
 import Documents from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents';
@@ -80,8 +77,6 @@ import HistoryGroceries from './App/screens/InsideAppScreens/MenuScreens/Earning
 import EarningsHelp from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/EarningsHelp';
 import TransactionDetailsPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/TransactionDetailsPage';
 import IncentivesAndBonuses from './App/screens/InsideAppScreens/MenuScreens/IncentivesAndBonuses';
-import Rewards from './App/screens/InsideAppScreens/MenuScreens/Rewards';
-import ServiceManager from './App/screens/InsideAppScreens/MenuScreens/ServiceManager';
 import DemandPlanner from './App/screens/InsideAppScreens/MenuScreens/DemandPlanner';
 import IncentivesPage from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/IncentivesPage';
 import IncentivesHelpPage from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/IncentivesHelpPage';
@@ -91,6 +86,12 @@ import DailyIncentives from './App/screens/InsideAppScreens/MenuScreens/Incentiv
 import SubscriptionDetails from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/SubscriptionDetails';
 import SubscriptionHelp from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/SubscriptionHelp';
 import ServiceManagerHelp from './App/screens/InsideAppScreens/MenuScreens/ServiceManagerScreens/ServiceManagerHelp';
+import Notifications from './App/screens/InsideAppScreens/HomeScreens/Notifications';
+import FavLocation from './App/screens/InsideAppScreens/HomeScreens/FavLocation';
+import Rewards from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/Rewards';
+import ServiceManager from './App/screens/InsideAppScreens/MenuScreens/ServiceManager';
+import RewardsHelp from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/RewardsHelp';
+import MyLoan from './App/screens/InsideAppScreens/MenuScreens/MyLoan';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -134,22 +135,21 @@ export default function App() {
 
           {/* Home Tab Navigation */}
           <Stack.Screen name="HomeTabs" component={TabNavigationComponent} options={{ headerShown: false }} />
+          <Stack.Screen name="Notifications" component={Notifications} />
+          <Stack.Screen name="FavLocation" component={FavLocation} />
           <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
           <Stack.Screen name="BestPerformance" component={BestPerformance} />
           <Stack.Screen name="IDCard" component={IDCard} />
           <Stack.Screen name="Documents" component={Documents} />
           <Stack.Screen name="LanguageSettings" component={LanguageSetting} />
           <Stack.Screen name="ProfileHelp" component={ProfileHelp} />
-          <Stack.Screen name="Inbox" component={Inbox} />
           <Stack.Screen name="ReferFriends" component={ReferFriends} />
-          <Stack.Screen name="Oppurtunities" component={Oppurtunities} />
           <Stack.Screen name="Earnings" component={Earnings} options={{ headerShown: false }} />
+          <Stack.Screen name="MyLoan" component={MyLoan} />
           <Stack.Screen name="IncentivesAndBonuses" component={IncentivesAndBonuses} />
-          <Stack.Screen name="Rewards" component={Rewards} />
           <Stack.Screen name="ServiceManager" component={ServiceManager} options={{ headerShown: false }}/>
           <Stack.Screen name="DemandPlanner" component={DemandPlanner} />
           <Stack.Screen name="Help" component={Help} />
-          <Stack.Screen name="TipsandInfo" component={TipsandInfo} />
 
           <Stack.Screen name="AadharCard_List" component={AadharCard_List} options={{ headerShown: false }}/>
           <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} options={{ headerShown: false }}/>
@@ -203,7 +203,8 @@ export default function App() {
            <Stack.Screen name="IncentivesHelpPage" component={IncentivesHelpPage} />
            <Stack.Screen name="SubscriptionDetails" component={SubscriptionDetails} />
            <Stack.Screen name="SubscriptionHelp" component={SubscriptionHelp} />
-
+          <Stack.Screen name="Rewards" component={Rewards}  options={{ headerShown: false }}/>
+          <Stack.Screen name="RewardsHelp" component={RewardsHelp} />
            <Stack.Screen name="ServiceManagerHelp" component={ServiceManagerHelp} />
         </Stack.Navigator>
 

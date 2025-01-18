@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '.././../../../../../components/MyCamera.jsx';
 
-// LicenseImageChange.js
-
 const LicenseImageChange = ({ navigation, route }) => {
     const [licenseFrontImage, setLicenseFrontImage] = useState(null);
     const [licenseBackImage, setLicenseBackImage] = useState(null);
@@ -15,25 +13,23 @@ const LicenseImageChange = ({ navigation, route }) => {
   
     const { licenseNumber, validTillDate } = route.params;
   
-    // Handle the upload of the front image
+ 
     const handleFrontUpload = (base64Image) => {
       setLicenseFrontImage(base64Image);
       setIsCapturing(null);
     };
   
-    // Handle the upload of the back image
     const handleBackUpload = (base64Image) => {
       setLicenseBackImage(base64Image);
       setIsCapturing(null);
     };
   
-    // Reset the front image and retake it
+
     const retakeFrontImage = () => {
       setLicenseFrontImage(null);
       setIsCapturing('front');
     };
-  
-    // Reset the back image and retake it
+
     const retakeBackImage = () => {
       setLicenseBackImage(null);
       setIsCapturing('back');
