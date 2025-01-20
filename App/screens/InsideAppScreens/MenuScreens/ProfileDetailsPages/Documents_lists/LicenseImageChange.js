@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '.././../../../../../components/MyCamera.jsx';
-
+import { useDispatch } from 'react-redux';
+import { setDrivingLicenseDetails } from '../../../../SignUpScreens/store_management/actions/documentActions.jsx';
 const LicenseImageChange = ({ navigation, route }) => {
     const [licenseFrontImage, setLicenseFrontImage] = useState(null);
     const [licenseBackImage, setLicenseBackImage] = useState(null);
     const [isCapturing, setIsCapturing] = useState(null);
-  
+      const [licenseFrontUrl,setLicenseFrontUrl]     = useState()
+      const[licenseBackUrl,setLicenseBackUrl] = useState()
+      const dispatch = useDispatch();
+
     useEffect(() => {
       navigation.setOptions({ title: 'My Driver Licence' });
     }, [navigation]);
@@ -40,6 +44,7 @@ const LicenseImageChange = ({ navigation, route }) => {
         <MyCamera
           onUpload={isCapturing === 'front' ? handleFrontUpload : handleBackUpload}
           onRetake={isCapturing === 'front' ? retakeFrontImage : retakeBackImage}
+          setImageURL={isCapturing === 'front' ? setLicenseFrontUrl : setLicenseBackUrl }
         />
       );
     }
@@ -80,6 +85,12 @@ const LicenseImageChange = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.proceedButton}
             onPress={() => {
+              dispatch(setDrivingLicenseDetails({
+                            number: licenseNumber,
+                            validDate: validTillDate,
+                            frontImage: licenseFrontUrl,
+                            backImage: licenseBackUrl,
+                          }))
               navigation.navigate('DriverLicence_list', {
                 licenseFront: licenseFrontImage,
                 licenseBack: licenseBackImage,
