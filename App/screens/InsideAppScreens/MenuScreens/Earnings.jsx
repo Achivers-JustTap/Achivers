@@ -9,8 +9,6 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 const Tab = createMaterialTopTabNavigator();
 
 export default function Earnings({ route, navigation }) {
-  const vehicleAltImage = route.params?.vehicleAltImage;
-  //const { RC, rcFrontImage, rcBackImage, rcFrontFile, selectedVehicleType: selectedVehicleName , rcBackFile, panNumber, panFrontImage, panBackImage, panFrontFile, panBackFile, licenseFrontFile, licenseBackFile, licenseFront, licenseBack, licenseNumber, validTillDate, name, email, gender, dateOfBirth, phoneNumber, profileImageBase64, aadharNumber, aadharFront, aadharBack, aadharFrontFile, aadharBackFile } = route.params;
 
   return (
     <SafeAreaView style={styles.container}>

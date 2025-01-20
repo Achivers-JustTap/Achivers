@@ -11,7 +11,7 @@ const LicenseImageChange = ({ navigation, route }) => {
       navigation.setOptions({ title: 'My Driver Licence' });
     }, [navigation]);
   
-    const { licenseNumber, validTillDate } = route.params;
+    
   
  
     const handleFrontUpload = (base64Image) => {
@@ -85,7 +85,7 @@ const LicenseImageChange = ({ navigation, route }) => {
                 licenseBack: licenseBackImage,
                 licenseNumber,
                 validTillDate,
-                uploadSuccess: true, // Add success flag
+                uploadSuccess: true, 
               });
             }}
           >

@@ -1,31 +1,63 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import { 
+  Animated, 
   Image, 
   ScrollView, 
   StyleSheet, 
   Text, 
   TouchableOpacity, 
-  View, 
-  Animated 
+  View 
 } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import { useSelector } from 'react-redux';
 
 const ServiceManager = ({ navigation }) => {
-
-  const [services, setServices] = useState([
-    { id: 1, name: 'Bike Metro', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false },
-    { id: 2, name: 'Bike', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false },
-    { id: 3, name: 'Bike Boost', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false },
-    { id: 4, name: 'Parcel Delivery', image: require('../../../../assets/images/parcel.png'), altImage: require('../../../../assets/images/parcel top right.png'), active: false },
-    { id: 5, name: 'Groceries Delivery', image: require('../../../../assets/images/Groceries.png'), altImage: require('../../../../assets/images/GroceriesDeliveryTopRight.png'), active: false },
-  ]);
-
+  const [services, setServices] = useState([]);
   const [imageAnimation] = useState(new Animated.Value(0));
   const [fadeAnimation] = useState(new Animated.Value(0));
 
+  const selectedVehicleType = useSelector(state => state.documents.vehicleType); 
+
+  useEffect(() => {
+    // Fetch services based on the selected vehicle type from backend
+    const fetchServices = async () => {
+      // Example backend response simulation
+      const serviceData = {
+        bike: [
+          { id: 1, name: 'Bike Metro', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
+    { id: 2, name: 'Bike', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
+    { id: 3, name: 'Bike Boost', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
+    { id: 4, name: 'Parcel Delivery', image: require('../../../../assets/images/parcel.png'), altImage: require('../../../../assets/images/parcel top right.png'), active: false, duplicate: false },
+    { id: 5, name: 'Groceries Delivery', image: require('../../../../assets/images/Groceries.png'), altImage: require('../../../../assets/images/GroceriesDeliveryTopRight.png'), active: false, duplicate: false },
+        ],
+        auto: [
+          { id: 1, name: 'Auto Ride', image: require('../../../../assets/images/auto.png'), altImage: require('../../../../assets/images/auto_top_right.png'), active: false, duplicate: false },
+          { id: 2, name: 'Auto Metro', image: require('../../../../assets/images/auto.png'), altImage: require('../../../../assets/images/auto_top_right.png'), active: false, duplicate: false },
+        ],
+        car: [
+          { id: 1, name: 'Car Ride', image: require('../../../../assets/images/car.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
+          { id: 2, name: 'Car Metro', image: require('../../../../assets/images/car.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
+          { id: 3, name: 'Intercity', image: require('../../../../assets/images/intercity.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
+        ],
+      };
+
+      const vehicleServices = serviceData[selectedVehicleType.toLowerCase()] || [];
+      setServices(vehicleServices);
+    };
+
+    fetchServices();
+  }, [selectedVehicleType]);
+
+  const deactivateService = (id) => {
+    const updatedServices = services.map(service =>
+      service.id === id ? { ...service, active: false, duplicate: false } : service
+    );
+    setServices(updatedServices);
+  };
 
   const activateService = (id) => {
-    const updatedServices = services.map(service => 
+    const updatedServices = services.map(service =>
       service.id === id ? { ...service, active: true } : service
     );
     setServices(updatedServices);
@@ -36,30 +68,19 @@ const ServiceManager = ({ navigation }) => {
       useNativeDriver: true,
     }).start();
 
-   
     setTimeout(() => {
       Animated.timing(fadeAnimation, {
         toValue: 1, 
         duration: 900,
         useNativeDriver: true,
       }).start();
+    }, 2000);
 
-    
-      setServices(prevServices =>
-        prevServices.map(service => 
-          service.id === id ? { ...service, active: true } : service
-        )
-      );
-    }, 2000); 
-
-  
     setTimeout(() => {
       resetServiceState(id);
-     
       addDeactivatedService(id);
     }, 4000); 
   };
-
 
   const resetServiceState = (id) => {
     const updatedServices = services.map(service =>
@@ -67,21 +88,12 @@ const ServiceManager = ({ navigation }) => {
     );
     setServices(updatedServices);
     fadeAnimation.setValue(0);
-    imageAnimation.setValue(0); 
+    imageAnimation.setValue(0);
   };
 
- 
   const addDeactivatedService = (id) => {
     const updatedServices = services.map(service => 
       service.id === id ? { ...service, active: false, duplicate: true } : service
-    );
-    setServices(updatedServices);
-  };
-
-  // Deactivate service
-  const deactivateService = (id) => {
-    const updatedServices = services.map(service =>
-      service.id === id ? { ...service, active: false, duplicate: false } : service
     );
     setServices(updatedServices);
   };
@@ -102,20 +114,46 @@ const ServiceManager = ({ navigation }) => {
 
       <Image source={require('../../../../assets/images/ServiceManagertop.jpg')} style={styles.headerImage} />
 
-      <View style={styles.serviceContainer}>
+      <View style={styles.serviceContainer}>   
         {services.map(service => (
           <View 
             key={service.id} 
             style={[
               styles.serviceBox, 
               service.active && styles.activatedBox, 
-    service.duplicate && styles.deactivatedBox 
+              service.duplicate && styles.deactivatedBox
             ]}
           >
+            {service.duplicate && (
+              <>
+                <Image source={service.image} style={styles.serviceImage} />
+                <Text style={styles.serviceText}>{service.name}</Text>
+                <TouchableOpacity 
+                  style={styles.deactivateButton} 
+                  onPress={() => deactivateService(service.id)} 
+                >
+                  <Text style={styles.deactivateButtonText}>Deactivate</Text>
+                </TouchableOpacity>
+              </>
+            )}
+
+            {!service.active && !service.duplicate && (
+              <>
+                <Image source={service.image} style={styles.serviceImage} />
+                <Text style={styles.serviceText}>{service.name}</Text>
+                <TouchableOpacity 
+                  style={styles.activateButton} 
+                  onPress={() => activateService(service.id)} 
+                >
+                  <Text style={styles.activateButtonText}>Activate</Text>
+                </TouchableOpacity>
+              </>
+            )}
+
             {service.active && !service.duplicate && (
               <Animated.View
-                style={[
-                  styles.altImageContainer,
+                style={[ 
+                  styles.altImageContainer, 
                   {
                     transform: [
                       {
@@ -131,51 +169,15 @@ const ServiceManager = ({ navigation }) => {
               </Animated.View>
             )}
 
-           
             {service.active && !service.duplicate && (
               <Animated.Text
                 style={[
-                  styles.activatedText,
-                  {
-                    opacity: fadeAnimation, 
-                  },
+                  styles.activatedText, 
+                  { opacity: fadeAnimation },
                 ]}
               >
                 Activated!
               </Animated.Text>
-            )}
-
-           
-            {!service.active && !service.duplicate && (
-              <>
-                <Image source={service.image} style={styles.serviceImage} />
-                <Text style={styles.serviceText}>{service.name}</Text>
-              </>
-            )}
-
-         
-            {!service.active && !service.duplicate && (
-              <TouchableOpacity 
-                style={styles.activateButton} 
-                onPress={() => activateService(service.id)} 
-              >
-                <Text style={styles.activateButtonText}>Activate</Text>
-              </TouchableOpacity>
-            )}
-
-           
-            {service.duplicate && (
-              <>
-              <Image source={service.image} style={styles.serviceImage} />
-              <Text style={styles.serviceText}>{service.name}</Text>
-            
-              <TouchableOpacity 
-                style={styles.deactivateButton} 
-                onPress={() => deactivateService(service.id)} 
-              >
-                <Text style={styles.deactivateButtonText}>Deactivate</Text>
-              </TouchableOpacity>
-              </>
             )}
           </View>
         ))}
@@ -185,6 +187,7 @@ const ServiceManager = ({ navigation }) => {
 };
 
 export default ServiceManager;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -262,8 +265,8 @@ const styles = StyleSheet.create({
     left: 0,
   },
   altImage: {
-    width: 60,
-    height: 60,
+    width: 110,
+    height: 50,
   },
   activatedText: {
     fontSize: 18,

@@ -8,7 +8,6 @@ const LicenseFileChange = ({ navigation,route }) => {
   const [licenseBackFile, setLicenseBackFile] = useState(null);   
 
   
-  const {licenseNumber, validTillDate} = route.params;
 
   const handleUploadFile = async (type) => {
     try {

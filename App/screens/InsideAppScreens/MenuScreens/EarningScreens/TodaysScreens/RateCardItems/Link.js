@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
     color: '#3F51B5',
     marginBottom: 8,
     textAlign: 'center',

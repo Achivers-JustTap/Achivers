@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: 50,
     fontSize: 22,
-    fontWeight: 'bold',
     color: 'white',
     marginBottom: 10,
   },
@@ -82,7 +81,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   memberText: {
-    fontWeight: '700',
     textAlign: 'center',
     color: 'white',
     marginBottom: 30,

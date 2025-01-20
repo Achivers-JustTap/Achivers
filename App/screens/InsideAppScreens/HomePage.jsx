@@ -10,6 +10,7 @@ const HomePage = ({ navigation }) => {
     const { location, setLocation } = useContext(UserLocationContext);
     const [errorMsg, setErrorMsg] = useState(null);
     const [searchText, setSearchText] = useState('');
+    const [notificationCount, setNotificationCount] = useState(1); 
     const userImaageUrl = useSelector((state) => state.user.profilePicture);
     console.log(userImaageUrl);
 
@@ -46,7 +47,8 @@ const HomePage = ({ navigation }) => {
     };
 
     const handleNotificationPress = () => {
-        navigation.navigate('NotificationPage');
+        navigation.navigate('Notifications');
+        setNotificationCount(1);
     };
 
     return (
@@ -68,11 +70,17 @@ const HomePage = ({ navigation }) => {
                 
                 <View style={styles.iconContainer}>
                     <TouchableOpacity onPress={handleFavLocationPress}>
-                        <Icon name="map-marker" size={36} color="#0F4A97" style={styles.icon} />
-                        <Icon name="heart" size={16} color="white" style={styles.heartIcon} />
+                        <Icon name="map-marker" size={40} color="#0F4A97" style={styles.icon} />
+                        <Icon name="circle" size={20} color="#0F4A97" style={styles.circleIcon} />
+                        <Icon name="heart" size={15} color="white" style={styles.heartIcon} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleNotificationPress}>
-                        <Icon name="bell" size={30} color="#0F4A97" style={styles.icon} />
+                    <TouchableOpacity onPress={handleNotificationPress} style={styles.notificationContainer}>
+                        <Icon name="bell" size={35} color="#0F4A97" style={styles.icon} />
+                        {notificationCount > 0 && (
+                            <View style={styles.badgeContainer}>
+                                <Text style={styles.badgeText}>{notificationCount}</Text>
+                            </View>
+                        )}
                     </TouchableOpacity>
                 </View>
             </View>
@@ -137,14 +145,39 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    notificationContainer: {
+        position: 'relative',
+        marginLeft: 10,
+    },
+    badgeContainer: {
+        position: 'absolute',
+        right: -10,
+        top: -5,
+        backgroundColor: 'red',
+        borderRadius: 10,
+        height: 20,
+        width: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    badgeText: {
+        color: 'white',
+        fontSize: 12,
+        fontWeight: 'bold',
+    },
     icon: {
         marginLeft: 10,
         position: 'relative',
     },
+    circleIcon: {
+        position: 'absolute',
+        top:5.91,
+        left:12.95,
+    },
     heartIcon: {
         position: 'absolute',
-        top:5.5,
-        left:12.5,
+        top:8,
+        left:14,
     },
     mapContainer: {
         flex: 1,
@@ -164,20 +197,20 @@ const styles = StyleSheet.create({
         borderColor: '#0F4A97',
         borderWidth: 3,
         borderRadius: 25,
-        height: 45,
+        height: 50,
         width: 300,
         zIndex: 10,
         justifyContent: 'center',
         alignItems: 'center',
     },
     searchBox: {
-        height: 37,
+        height: 40,
         width: 290,
         borderColor: '#0F4A97',
         borderWidth: 1,
         borderRadius: 20,
         backgroundColor: '#0F4A97',
-        paddingHorizontal: 15,
+        paddingHorizontal: 25,
         color: 'white',
     },
     statsContainer: {

@@ -60,6 +60,7 @@ import KPN from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today
 import Guidelines from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Guidelines';
 import RechargePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/RechargePage';
 import BuddyRecharge from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/BuddyRecharge';
+
 import AllTransactionPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/AllTransactionPage';
 import PendingPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/PendingPage';
 import LicenseImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/LicenseImageChange';
@@ -92,6 +93,15 @@ import Rewards from './App/screens/InsideAppScreens/MenuScreens/Incentives and b
 import ServiceManager from './App/screens/InsideAppScreens/MenuScreens/ServiceManager';
 import RewardsHelp from './App/screens/InsideAppScreens/MenuScreens/Incentives and bonuses screens/RewardsHelp';
 import MyLoan from './App/screens/InsideAppScreens/MenuScreens/MyLoan';
+import AadharImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharImageChange';
+import AadharFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharFileChange';
+import PanImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanImageChange';
+import PanFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanFileChange';
+import CarAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CarAll';
+import CarRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CarRides';
+import Intercity from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Intercity';
+import AutoAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoAll';
+import AutoRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoRides';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -151,12 +161,16 @@ export default function App() {
           <Stack.Screen name="DemandPlanner" component={DemandPlanner} />
           <Stack.Screen name="Help" component={Help} />
 
-          <Stack.Screen name="AadharCard_List" component={AadharCard_List} options={{ headerShown: false }}/>
-          <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} options={{ headerShown: false }}/>
+          <Stack.Screen name="AadharCard_List" component={AadharCard_List} />
+          <Stack.Screen name="AadharImageChange" component={AadharImageChange} />
+          <Stack.Screen name="AadharFileChange" component={AadharFileChange} />
+          <Stack.Screen name="DriverLicence_list" component={DriverLicence_list}/>
           <Stack.Screen name="LicenseImageChange" component={LicenseImageChange} />
           <Stack.Screen name="LicenseFileChange" component={LicenseFileChange} />
-          <Stack.Screen name="PanCard_List" component={PanCard_List} options={{ headerShown: false }}/>
-          <Stack.Screen name="RC_List" component={RC_List} options={{ headerShown: false }}/>
+          <Stack.Screen name="PanCard_List" component={PanCard_List}/>
+          <Stack.Screen name="PanImageChange" component={PanImageChange}/>
+          <Stack.Screen name="PanFileChange" component={PanFileChange}/>
+          <Stack.Screen name="RC_List" component={RC_List} />
           <Stack.Screen name="RcImageChange" component={RcImageChange} />
           <Stack.Screen name="RcFileChange" component={RcFileChange} />
 
@@ -179,6 +193,11 @@ export default function App() {
           <Stack.Screen name="SwiggyGinie" component={SwiggyGinie} />
           <Stack.Screen name="KPN" component={KPN} />
           <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
+          <Stack.Screen name="CarAll" component={CarAll} />
+          <Stack.Screen name="CarRides" component={CarRides} />
+          <Stack.Screen name="Intercity" component={Intercity} />
+          <Stack.Screen name="AutoAll" component={AutoAll} />
+          <Stack.Screen name="AutoRides" component={AutoRides} />
 
           <Stack.Screen name="RechargePage" component={RechargePage} options={{ headerShown: false }} />
           <Stack.Screen name="BuddyRecharge" component={BuddyRecharge}/>

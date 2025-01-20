@@ -2,26 +2,40 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, SafeAreaVi
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useEffect, useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import All from './TodaysScreens/All';
 import Gorceries from './TodaysScreens/Groceries';
 import ParcelDelivery from './TodaysScreens/ParcelDelivery';
 import BikeTaxi from './TodaysScreens/BikeTaxi';
-import All from './TodaysScreens/All';
+import CarAll from './TodaysScreens/CarAll';
+import CarRides from './TodaysScreens/CarRides'; 
+import Intercity from './TodaysScreens/Intercity'; 
+import AutoAll from './TodaysScreens/AutoAll';
+import AutoRides from './TodaysScreens/AutoRides';
+import { useSelector } from 'react-redux';  
 
 const Tab = createMaterialTopTabNavigator();
+
 const Today = ({ route, navigation }) => {
-    const [selectedVehicleType, setSelectedVehicleType] = useState(route.params?.selectedVehicleName || 'Moto'); 
-    const [activeTab, setActiveTab] = useState('All');
+    const selectedVehicleType = useSelector(state => state.documents.vehicleType); 
+    const [activeTab, setActiveTab] = useState('');
     
-    useEffect(() => {
-        if (route.params?.vehicleType) {
-            setSelectedVehicleType(route.params.vehicleType); 
-        }
-    }, [route.params]);
-  
+    
+    let vehicleTypes = [];
+    console.log('selectedVehicleType', selectedVehicleType);
+    if (selectedVehicleType === 'car') {
+        vehicleTypes = ['All', 'Cab Rides', 'Intercity'];
+    } else if (selectedVehicleType === 'Auto') {
+        vehicleTypes = ['All', 'Auto Rides'];
+    } else if (selectedVehicleType === 'Bike') {
+        vehicleTypes = ['All', 'Bike Taxi', 'Parcel Delivery', 'Groceries Delivery'];
+    } else {
+       console.log("error")
+    }
+
     const handleTabPress = (tab) => {
         setActiveTab(tab);
     };
-  
+    
     return (
         <ScrollView style={styles.container}>
             <View style={styles.boxWithShadow}>
@@ -80,38 +94,39 @@ const Today = ({ route, navigation }) => {
 
             {/* Horizontal scrollable tabs */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabNav}>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'All' && styles.tabButtonActive]}
-                    onPress={() => setActiveTab('All')}
-                >
-                    <Text style={styles.tabText}>All</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'Bike Taxi' && styles.tabButtonActive]}
-                    onPress={() => setActiveTab('Bike Taxi')}
-                >
-                    <Text style={styles.tabText}>Bike Taxi</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'Parcels Delivery' && styles.tabButtonActive]}
-                    onPress={() => setActiveTab('Parcels Delivery')}
-                >
-                    <Text style={styles.tabText}>Parcels Delivery</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.tabButton, activeTab === 'Groceries Delivery' && styles.tabButtonActive]}
-                    onPress={() => setActiveTab('Groceries Delivery')}
-                >
-                    <Text style={styles.tabText}>Groceries Delivery</Text>
-                </TouchableOpacity>
+                {vehicleTypes.map((tab, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={[styles.tabButton, activeTab === tab && styles.tabButtonActive]}
+                        onPress={() => setActiveTab(tab)}
+                    >
+                        <Text style={styles.tabText}>{tab}</Text>
+                    </TouchableOpacity>
+                ))}
             </ScrollView>
 
             <View style={styles.tabContent}>
-                {activeTab === 'All' && <All />}
-                {activeTab === 'Bike Taxi' && <BikeTaxi />}
-                {activeTab === 'Parcels Delivery' && <ParcelDelivery />}
-                {activeTab === 'Groceries Delivery' && <Gorceries />}
-            </View>
+    
+    {activeTab === 'All' && selectedVehicleType === 'Bike' && <All />}
+    
+   
+    {activeTab === 'Bike Taxi' && <BikeTaxi />}
+    {activeTab === 'Parcel Delivery' && <ParcelDelivery />}
+    {activeTab === 'Groceries Delivery' && <Gorceries />}
+
+    {activeTab === 'Cab Rides' && <CarRides />}
+    {activeTab === 'Intercity' && <Intercity />}
+    
+    {activeTab === 'Auto Rides' && <AutoRides />}
+    
+    {/* Render content for All tab for each vehicle type */}
+    {activeTab === 'All' && selectedVehicleType === 'car' && <CarAll />}
+    {activeTab === 'All' && selectedVehicleType === 'auto' && <AutoAll />}
+
+    {/* Fallback to show selectedVehicleType content if no specific tab */}
+    {activeTab === selectedVehicleType && <Text>{selectedVehicleType} content</Text>}
+</View>
+
         </ScrollView>
     );
 };
@@ -121,7 +136,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
     },
-
     boxWithShadow: {
         backgroundColor: '#fff',
         padding: 10,

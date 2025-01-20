@@ -36,7 +36,7 @@ const Wallet = () => {
       
       <TouchableOpacity
         style={styles.referEarnBox}
-        onPress={() => navigation.navigate('ReferencePage')} 
+        onPress={() => navigation.navigate('ReferFriends')} 
       >
         <Text style={styles.referText}>Refer and Earn Up to ₹3000</Text>
       </TouchableOpacity>
