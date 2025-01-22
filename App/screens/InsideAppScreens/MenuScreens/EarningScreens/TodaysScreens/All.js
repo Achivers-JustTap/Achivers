@@ -2,9 +2,17 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-nati
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 
-const All = () => {
+const All = ({navigation}) => {
+  
   // State to manage the visibility of the incentives and bonuses dropdown
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+
+  const handleCompletedOrdersPress = () =>{
+    navigation.navigate('CompletedRides')
+}
+const handleMissedOrdersPress = () => {
+    navigation.navigate('MissedOrders')
+}
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
@@ -32,7 +40,7 @@ const All = () => {
         )}
       </View>
 
-      <TouchableOpacity onPress={() => console.log('completed orders page mounted')} style={styles.box4WithShadow}>
+      <TouchableOpacity onPress={handleCompletedOrdersPress} style={styles.box4WithShadow}>
         <View style={styles.row}>
           <Text style={styles.boldText}>0</Text>
           <Text style={{ fontSize: 15, padding: 7, color: 'green' }}>Completed Orders</Text>
@@ -59,7 +67,7 @@ const All = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => console.log('missed orders page mounted')} style={styles.box5WithShadow}>
+      <TouchableOpacity onPress={handleMissedOrdersPress} style={styles.box5WithShadow}>
         <View style={styles.row}>
           <Text style={styles.boldText}>0</Text>
           <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Missed Orders</Text>

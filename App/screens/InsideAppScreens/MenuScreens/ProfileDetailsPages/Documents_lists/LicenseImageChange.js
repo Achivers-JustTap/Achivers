@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import MyCamera from '.././../../../../../components/MyCamera.jsx';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { setDrivingLicenseDetails } from '../../../../SignUpScreens/store_management/actions/documentActions.jsx';
 const LicenseImageChange = ({ navigation, route }) => {
+  
+  const { drivingLicense } = useSelector((state) => state.documents);
     const [licenseFrontImage, setLicenseFrontImage] = useState(null);
     const [licenseBackImage, setLicenseBackImage] = useState(null);
     const [isCapturing, setIsCapturing] = useState(null);
@@ -86,7 +88,7 @@ const LicenseImageChange = ({ navigation, route }) => {
             style={styles.proceedButton}
             onPress={() => {
               dispatch(setDrivingLicenseDetails({
-                            number: licenseNumber,
+                            dlnumber: licenseNumber,
                             validDate: validTillDate,
                             frontImage: licenseFrontUrl,
                             backImage: licenseBackUrl,
@@ -94,8 +96,8 @@ const LicenseImageChange = ({ navigation, route }) => {
               navigation.navigate('DriverLicence_list', {
                 licenseFront: licenseFrontImage,
                 licenseBack: licenseBackImage,
-                licenseNumber,
-                validTillDate,
+                dlNumber,
+                validDate,
                 uploadSuccess: true, 
               });
             }}

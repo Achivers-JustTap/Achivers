@@ -40,12 +40,34 @@ const DriverLicence_list = ({ route, navigation }) => {
   
 
   const handleTakeLicenseImage = () => {
-    navigation.navigate('LicenseImageChange');
+    navigation.navigate('LicenseImageChange', {
+      dlNumber,
+      validTill,
+    });
   };
-
+  
   const handleUploadFromFiles = () => {
-    navigation.navigate('LicenseFileChange');
+    navigation.navigate('LicenseFileChange', {
+      dlNumber,
+      validTill,
+    });
   };
+  
+  useEffect(() => {
+    if (route.params?.licenseFrontFile && route.params?.licenseBackFile) {
+      setMessage(route.params.uploadSuccess ? 'Files uploaded successfully!' : '');
+      setShowSendButton(true);
+  
+      dispatch(
+        setDrivingLicenseDetails({
+          ...drivingLicense,
+          frontImage: route.params.licenseFrontFile.uri,
+          backImage: route.params.licenseBackFile.uri,
+        })
+      );
+    }
+  }, [route.params]);
+  
 
   const handleSendDetails = () => {
     setMessage('Your details were sent and you will be notified within 24 hours. Until then, you will not be able to take any rides.');

@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, ScrollView, Linking } from 'react-native'
 import React, { useState } from 'react';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
+
 
 const Help = () => {
   const [selectedConcern, setSelectedConcern] = useState(null)
@@ -9,6 +10,13 @@ const Help = () => {
   const [driverName, setDriverName] = useState('')
   const [driverPhone, setDriverPhone] = useState('')
   const [driverEmail, setDriverEmail] = useState('')
+
+  const handleCallSupport = () => {
+    const phoneNumber = 'tel:8340863204';
+    Linking.openURL(phoneNumber).catch((err) =>
+      alert('Unable to make the call. Please try again later.')
+    );
+  };
 
   const concerns = [
     {
@@ -183,6 +191,7 @@ const Help = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Support</Text>
+    
 
       <View style={styles.concernsList}>
         <FlatList
@@ -225,6 +234,13 @@ const Help = () => {
           )}
         />
       </View>
+
+
+      <TouchableOpacity onPress={handleCallSupport} style={styles.callIcon}>
+  <Text style={styles.callIconText}>Call Support </Text>
+  <MaterialIcons name="call" size={24} color="#0F4A97" style={styles.callIconButton} />
+</TouchableOpacity>
+  <Text style={{textAlign:'center'}}> Or </Text>
 
       <View style={styles.submitContainer}>
         <Text style={styles.subheading}>Have a concern?</Text>
@@ -282,6 +298,23 @@ const styles = StyleSheet.create({
     color: '#0F4A97',
     marginBottom: 16,
     textAlign: 'center',
+  },
+  callIcon: {
+    flexDirection: 'row',
+    alignItems: 'center', 
+    justifyContent: 'center',
+    backgroundColor: '#F0F4F8',
+    padding: 8,
+    borderRadius: 8,
+  },
+  callIconText: {
+    color: "#0F4A97",
+    fontSize: 24,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  callIconButton: {
+    marginTop: 2, 
   },
   concernsList: {
     flex: 1,
@@ -383,4 +416,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
   },
-})
+})                  

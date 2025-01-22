@@ -1,10 +1,11 @@
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, FlatList,Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'; 
 import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';  
+import { useSelector } from 'react-redux';
 
 const Menu = ({ navigation, route }) => {
-  const vehicleAltImage = route.params?.vehicleAltImage; 
+   const{name,profilePicture} = useSelector(state=>state.user); 
 
   const [rating, setRating] = useState(0);
 
@@ -14,9 +15,8 @@ const Menu = ({ navigation, route }) => {
     { id: '3', title: 'My Loan', route: 'MyLoan', icon: 'bank', type: 'FontAwesome' },
     { id: '4', title: 'Incentives and Bonuses', route: 'IncentivesAndBonuses', icon: 'rupee', type: 'FontAwesome' },
     { id: '5', title: 'Service Manager', route: 'ServiceManager', icon: 'dashboard', type: 'MaterialIcons' },
-    { id: '6', title: 'Demand Planner', route: 'DemandPlanner', icon: 'area-chart', type: 'FontAwesome' },
-    { id: '7', title: 'Account', route: 'ProfiledetailsPage', icon: 'cogs', type: 'FontAwesome' },
-    { id: '8', title: 'Help', route: 'Help', icon: 'help', type: 'MaterialIcons' }
+    { id: '6', title: 'Account', route: 'ProfiledetailsPage', icon: 'cogs', type: 'FontAwesome' },
+    { id: '7', title: 'Help', route: 'Help', icon: 'help', type: 'MaterialIcons' }
   ];
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Menu = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.name}>charitha</Text>
+      <Text style={styles.name}>{name}</Text>
       <View style={styles.ratingContainer}>
         <View style={styles.starsContainer}>
           {renderStars()} 
@@ -68,14 +68,13 @@ const Menu = ({ navigation, route }) => {
         <TouchableOpacity onPress={handleProfileImagePress}>
           <View style={styles.profileContainer}>
             {/* Uncomment and provide the image URL here */}
-            {/* <Image
-              source={{ uri: profileImageBase64 }} 
+            <Image
+             source={{ uri: profilePicture }} 
               style={styles.profileImage}
               onError={(error) => console.log('Error loading image: ', error)}
-            /> */}
+            /> 
           </View>
         </TouchableOpacity>
-        <Text>No profile image available</Text>
       </View>
 
       <FlatList

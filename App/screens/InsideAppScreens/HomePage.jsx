@@ -1,18 +1,27 @@
-import { StyleSheet, SafeAreaView, View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, Image, TouchableOpacity, Animated } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import AppMapView from '../../../components/AppMapView';
 import * as Location from 'expo-location';
 import { UserLocationContext } from '../../Context/UserLocationContext';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
+import IncentivesCarousel from "../../../components/IncentivesCorousel";
 
 const HomePage = ({ navigation }) => {
     const { location, setLocation } = useContext(UserLocationContext);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [searchText, setSearchText] = useState('');
     const [notificationCount, setNotificationCount] = useState(1); 
     const userImaageUrl = useSelector((state) => state.user.profilePicture);
-    console.log(userImaageUrl);
+    const [showAlert, setShowAlert] = useState(false);
+    const [timer, setTimer] = useState(20);
+    const [alertOpacity] = useState(new Animated.Value(0));
+    const navigateToIncentives = () => {
+        navigation.navigate("IncentivesPage"); 
+      };
+
+    // Sample data for pickup and destination
+    const pickupPoint = { lat: 12.9716, lon: 77.5946, address: "chintal" };
+    const destinationPoint = { lat: 12.9352, lon: 77.6245, address: "moosapet" };
 
     useEffect(() => {
         (async () => {
@@ -38,6 +47,38 @@ const HomePage = ({ navigation }) => {
         navigation.setOptions({ headerShown: false });
     }, [navigation]);
 
+    useEffect(() => {
+        if (showAlert) {
+            const countdown = setInterval(() => {
+                setTimer((prevTime) => {
+                    if (prevTime === 0) {
+                        clearInterval(countdown);
+                        handleAlertClose();
+                    }
+                    return prevTime - 1;
+                });
+            }, 1000);
+
+            return () => clearInterval(countdown);
+        }
+    }, [showAlert]);
+
+    useEffect(() => {
+        const alertInterval = setInterval(() => {
+            if (!showAlert) {
+                setTimer(20);
+                setShowAlert(true);
+                Animated.timing(alertOpacity, {
+                    toValue: 1,
+                    duration: 300,
+                    useNativeDriver: true,
+                }).start();
+            }
+        }, 5000);
+
+        return () => clearInterval(alertInterval);
+    }, [showAlert]);
+
     const handleProfileImagePress = () => {
         navigation.navigate('ProfiledetailsPage');
     };
@@ -49,6 +90,32 @@ const HomePage = ({ navigation }) => {
     const handleNotificationPress = () => {
         navigation.navigate('Notifications');
         setNotificationCount(1);
+    };
+
+    const handleEarningsPress = () => {
+        navigation.navigate('Earnings');
+    };
+
+    const handleRidesPress = () => {
+        navigation.navigate('CompletedRides');
+    };
+
+    const handleAlertClose = () => {
+        setShowAlert(false);
+        Animated.timing(alertOpacity, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
+        }).start();
+    };
+
+    const handleAlertAccept = () => {
+        handleAlertClose();
+    };
+
+    const handleAlertSkip = () => {
+        setTimer(20);
+        handleAlertClose();
     };
 
     return (
@@ -67,7 +134,7 @@ const HomePage = ({ navigation }) => {
                 ) : (
                     <Text>No profile image available</Text>
                 )}
-                
+
                 <View style={styles.iconContainer}>
                     <TouchableOpacity onPress={handleFavLocationPress}>
                         <Icon name="map-marker" size={40} color="#0F4A97" style={styles.icon} />
@@ -87,29 +154,60 @@ const HomePage = ({ navigation }) => {
 
             <View style={styles.mapContainer}>
                 <AppMapView style={styles.map} />
+                <View style={styles.carouselContainer}>
+                <IncentivesCarousel onRideAndEarnPress={navigateToIncentives} />
+            </View>
 
-                <View style={styles.searchBackground}>
-                    <TextInput
-                        style={styles.searchBox}
-                        placeholder="Search"
-                        placeholderTextColor="white"
-                        value={searchText}
-                        onChangeText={setSearchText}
-                    />
-                </View>
 
                 <View style={styles.statsContainer}>
-                    <View style={styles.leftStats}>
+                    <TouchableOpacity style={styles.leftStats} onPress={handleEarningsPress}>
                         <Text style={styles.titleText}>Today's Earnings</Text>
                         <Text style={styles.valueText}>₹ 0.00</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.rightStats}>
-                        <Text style={styles.titleText}>Driving Time</Text>
-                        <Text style={styles.valueText}>00:00:00</Text>
-                    </View>
+                    <TouchableOpacity style={styles.rightStats} onPress={handleRidesPress}>
+                        <Text style={styles.titleText}>Completed Rides</Text>
+                        <Text style={styles.valueText}>0/20</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
+
+            {/* Alert Box */}
+            {showAlert && (
+                <Animated.View style={[styles.alertBox, { opacity: alertOpacity }]}>
+                    <View style={styles.alertContent}>
+                        <View style={styles.pinContainer}>
+                            <Icon name="map-pin" size={24} color="green" />
+                            <Text style={styles.pinText}>Pickup: {pickupPoint.address}</Text>
+                        </View>
+                        <View style={styles.pinContainer}>
+                            <Icon name="map-pin" size={24} color="red" />
+                            <Text style={styles.pinText}>Destination: {destinationPoint.address}</Text>
+                        </View>
+
+                        <View style={styles.fareContainer}>
+                            <Text style={styles.fareText}>Fare: ₹ 150.00</Text>
+                            <Text style={styles.fareText}>Time: 15 mins</Text>
+                            <Text style={styles.fareText}>Distance: 5 km</Text>
+                           
+                        </View>
+                        <Text style={styles.fareText}>1.1 km to Pickup Point</Text>
+
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity onPress={handleAlertAccept} style={styles.button}>
+                                <Text style={styles.buttonText}>Accept</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handleAlertSkip} style={styles.button}>
+                                <Text style={styles.buttonText}>Skip</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.timerContainer}>
+                            <Text style={styles.timerText}>{timer}s</Text>
+                        </View>
+                    </View>
+                </Animated.View>
+            )} 
         </SafeAreaView>
     );
 };
@@ -117,7 +215,7 @@ const HomePage = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:"white"
+        backgroundColor: 'white',
     },
     headerContainer: {
         flexDirection: 'row',
@@ -126,6 +224,17 @@ const styles = StyleSheet.create({
         marginTop: 50,
         paddingHorizontal: 20,
     },
+    carouselContainer: {
+        position: 'absolute',
+        alignItems: 'center',
+        top: 10,
+        width: '100%',
+        borderRadius:50,
+        paddingHorizontal: 20, 
+        zIndex: 1,
+    },
+    
+   
     profileContainer: {
         width: 50,  
         height: 50, 
@@ -166,52 +275,30 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     icon: {
-        marginLeft: 10,
+        marginLeft: -7,
         position: 'relative',
     },
     circleIcon: {
         position: 'absolute',
-        top:5.91,
-        left:12.95,
+        top: 5.91,
+        left: -3,
     },
     heartIcon: {
         position: 'absolute',
-        top:8,
-        left:14,
+        top: 8,
+        left: -3,
     },
     mapContainer: {
         flex: 1,
         borderRadius: 10,
         overflow: 'hidden',
         position: 'relative',
+        margin: 0, 
+        padding: 0,
     },
     map: {
-        flex: 1,
-    },
-    searchBackground: {
-        position: 'absolute',
-        top: 20,
-        left: '50%',
-        transform: [{ translateX: -150 }],
-        backgroundColor: 'white',
-        borderColor: '#0F4A97',
-        borderWidth: 3,
-        borderRadius: 25,
-        height: 50,
-        width: 300,
-        zIndex: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    searchBox: {
-        height: 40,
-        width: 290,
-        borderColor: '#0F4A97',
-        borderWidth: 1,
-        borderRadius: 20,
-        backgroundColor: '#0F4A97',
-        paddingHorizontal: 25,
-        color: 'white',
+        width: '100%',
+        height: '100%',
     },
     statsContainer: {
         position: 'absolute',
@@ -246,6 +333,94 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: 'white',
+    },
+    alertBox: {
+        position: 'absolute',
+        top: '25%', 
+        left: '5%',
+        right: '5%',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        padding: 20,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '55%',
+        borderWidth: 2,
+        borderColor: '#0F4A97',  
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 6,  
+    },
+    alertContent: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+    },
+    pinContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
+    },
+    pinText: {
+        marginLeft: 10,
+        color: 'white',
+        fontSize: 16,
+        fontWeight: '500',
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 2,
+    },
+    fareContainer: {
+        marginVertical: 10,
+        paddingVertical: 3,
+        borderTopWidth: 1,
+        borderTopColor: 'white',
+        marginHorizontal: 10,
+    },
+    fareText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    timerContainer: {
+        marginVertical: 10,
+        backgroundColor: '#0F4A97',
+        padding: 10,
+        borderRadius: 10,
+        minWidth: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    timerText: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        textShadowColor: 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 3,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 10,
+    },
+    button: {
+        backgroundColor: '#0F4A97',
+        padding: 15,
+        borderRadius: 30,
+        marginHorizontal: 10,
+        minWidth: 120,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: '600',
     },
 });
 

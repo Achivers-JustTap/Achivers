@@ -102,6 +102,8 @@ import CarRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/
 import Intercity from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Intercity';
 import AutoAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoAll';
 import AutoRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoRides';
+import CompletedRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CompletedRides';
+import MissedOrders from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/MissedOrders';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -120,6 +122,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           {/* Initial Sign Up Screens */}
+          
           <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
           <Stack.Screen name="WhichVehicleScreen" component={WhichVehicleScreen} />
           <Stack.Screen name="MobileOTPScreen" component={MobileOTPScreen} />
@@ -182,9 +185,12 @@ export default function App() {
           <Stack.Screen name="History" component={History} options={{ headerShown: false }} />
            
           <Stack.Screen name="All" component={All} />
+
           <Stack.Screen name="BikeTaxi" component={BikeTaxi} options={{ headerShown: false }} />
           <Stack.Screen name="ParcelDelivery" component={ParcelDelivery} options={{ headerShown: false }} />
           <Stack.Screen name="Groceries" component={Groceries} options={{ headerShown: false }} />
+          <Stack.Screen name="CompletedRides" component={CompletedRides} />
+          <Stack.Screen name="MissedOrders" component={MissedOrders} />
           <Stack.Screen name="RateCard" component={RateCard} />
           <Stack.Screen name="Link" component={Link} />
           <Stack.Screen name="BikeLite" component={BikeLite} />
@@ -228,6 +234,7 @@ export default function App() {
         </Stack.Navigator>
 
       </NavigationContainer>
+     
     </UserLocationProvider>
     </Provider>
   );

@@ -9,7 +9,7 @@ const IDCard = ({navigation }) => {
   const {name,profilePicture,mobileNumber} = useSelector(state=>state.user)
   const {drivingLicense,} = useSelector(state => state.documents)
   useEffect(() => {
-    navigation.setOptions({ title: "My ID" });
+    navigation.setOptions({ title: "Just Tap ID" });
   }, [navigation]);
 
   const handleHelpPress = () => {
@@ -116,7 +116,6 @@ const styles = StyleSheet.create({
   idheaderText: {
     color: 'white',
     fontSize: 27,
-    fontWeight: 'bold',
   },
   justTapText: {
     fontFamily: 'SofadiOne',

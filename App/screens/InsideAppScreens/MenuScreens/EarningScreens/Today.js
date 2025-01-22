@@ -19,17 +19,17 @@ const Today = ({ route, navigation }) => {
     const selectedVehicleType = useSelector(state => state.documents.vehicleType); 
     const [activeTab, setActiveTab] = useState('');
     
-    
+    // List of available vehicle types for the tabs based on selectedVehicleType
     let vehicleTypes = [];
     console.log('selectedVehicleType', selectedVehicleType);
     if (selectedVehicleType === 'car') {
         vehicleTypes = ['All', 'Cab Rides', 'Intercity'];
-    } else if (selectedVehicleType === 'Auto') {
+    } else if (selectedVehicleType === 'auto') {
         vehicleTypes = ['All', 'Auto Rides'];
-    } else if (selectedVehicleType === 'Bike') {
+    } else if (selectedVehicleType === 'bike') {
         vehicleTypes = ['All', 'Bike Taxi', 'Parcel Delivery', 'Groceries Delivery'];
     } else {
-       console.log("error")
+        vehicleTypes = ['All', 'Bike Taxi', 'Parcel Delivery', 'Groceries Delivery'];
     }
 
     const handleTabPress = (tab) => {
@@ -106,10 +106,10 @@ const Today = ({ route, navigation }) => {
             </ScrollView>
 
             <View style={styles.tabContent}>
+ 
+    {activeTab === 'All' && selectedVehicleType === 'bike' && <All />}
     
-    {activeTab === 'All' && selectedVehicleType === 'Bike' && <All />}
-    
-   
+ 
     {activeTab === 'Bike Taxi' && <BikeTaxi />}
     {activeTab === 'Parcel Delivery' && <ParcelDelivery />}
     {activeTab === 'Groceries Delivery' && <Gorceries />}
@@ -118,15 +118,13 @@ const Today = ({ route, navigation }) => {
     {activeTab === 'Intercity' && <Intercity />}
     
     {activeTab === 'Auto Rides' && <AutoRides />}
-    
-    {/* Render content for All tab for each vehicle type */}
+
     {activeTab === 'All' && selectedVehicleType === 'car' && <CarAll />}
     {activeTab === 'All' && selectedVehicleType === 'auto' && <AutoAll />}
 
-    {/* Fallback to show selectedVehicleType content if no specific tab */}
+
     {activeTab === selectedVehicleType && <Text>{selectedVehicleType} content</Text>}
 </View>
-
         </ScrollView>
     );
 };
