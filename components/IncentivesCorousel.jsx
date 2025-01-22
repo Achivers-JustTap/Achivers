@@ -7,7 +7,6 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 
 const { width } = Dimensions.get("window");
 
@@ -37,7 +36,7 @@ const IncentivesCarousel = ({ onRideAndEarnPress }) => {
         });
         return nextIndex;
       });
-    }, 5000);
+    }, 3000);
   };
 
   const stopAutoScroll = () => {
@@ -52,7 +51,7 @@ const IncentivesCarousel = ({ onRideAndEarnPress }) => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <View style={styles.carouselItem} >
+    <View style={styles.carouselItem}>
       <Text style={styles.timeText}>{item.time}</Text>
       <Text style={styles.incentiveText}>{item.incentive}</Text>
     </View>
@@ -60,7 +59,7 @@ const IncentivesCarousel = ({ onRideAndEarnPress }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Just Tap! Incentives</Text>
+      <Text style={styles.title}> <Text style={{ fontSize: 19.5, fontFamily: 'SofadiOne' }}>JUST TAP!</Text> Incentives</Text>
       <FlatList
         ref={flatListRef}
         data={incentivesData}
@@ -93,41 +92,38 @@ const styles = StyleSheet.create({
     borderColor: "#173F71",
     zIndex: 10,
     height: 130,
-    borderRadius:20,
+    borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
     color: "#fff",
-    fontWeight: "bold",
     marginBottom: 10,
   },
   carousel: {
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
   },
   carouselItem: {
-    width: width-70,
+    width: width - 30,
     height: 50,
-    borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 10,
+    marginHorizontal: 5,
+    backgroundColor: "#1A72B8", 
   },
   timeText: {
     fontSize: 14,
-    textAlign:'center',
     fontWeight: "bold",
     color: "#fff",
     marginBottom: 5,
-    
   },
   incentiveText: {
     fontSize: 12,
-    textAlign:'center',
-
     color: "#E0E0E0",
-    textAlign: "center",
+    textAlign:'center'
   },
   button: {
     marginTop: 5,

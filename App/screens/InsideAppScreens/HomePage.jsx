@@ -20,8 +20,8 @@ const HomePage = ({ navigation }) => {
       };
 
     // Sample data for pickup and destination
-    const pickupPoint = { lat: 12.9716, lon: 77.5946, address: "chintal" };
-    const destinationPoint = { lat: 12.9352, lon: 77.6245, address: "moosapet" };
+    const pickupPoint = { lat: 12.9716, lon: 77.5946, address: "48-320/sri nilayam,ganesh Nagar, chintal,qutbullarpur,hyderadab,telangana" };
+    const destinationPoint = { lat: 12.9352, lon: 77.6245, address: "Opp. Laxmikaka and Sashikala Theaters, Bhavani Nagar Moosapet, Near State Bank Of Hyderabad, Hyderabad, Telangana 500018, India" };
 
     useEffect(() => {
         (async () => {
@@ -207,7 +207,7 @@ const HomePage = ({ navigation }) => {
                         </View>
                     </View>
                 </Animated.View>
-            )} 
+            )}  
         </SafeAreaView>
     );
 };
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
         top: 10,
         width: '100%',
         borderRadius:50,
-        paddingHorizontal: 20, 
+        paddingHorizontal: 10, 
         zIndex: 1,
     },
     
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     },
     alertBox: {
         position: 'absolute',
-        top: '25%', 
+        top: '33%', 
         left: '5%',
         right: '5%',
         backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -361,13 +361,15 @@ const styles = StyleSheet.create({
     },
     pinContainer: {
         flexDirection: 'row',
+        justifyContent:'flex-start',
         alignItems: 'center',
         marginVertical: 5,
     },
     pinText: {
         marginLeft: 10,
+        textAlign:'justify',
         color: 'white',
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: '500',
         textShadowColor: 'rgba(0, 0, 0, 0.5)',
         textShadowOffset: { width: 1, height: 1 },
