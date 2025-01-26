@@ -1,18 +1,14 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-const All = ({navigation}) => {
-  
-  // State to manage the visibility of the incentives and bonuses dropdown
+const All = () => {
+  const navigation = useNavigation();
+    
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
-  const handleCompletedOrdersPress = () =>{
-    navigation.navigate('CompletedRides')
-}
-const handleMissedOrdersPress = () => {
-    navigation.navigate('MissedOrders')
-}
+
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
@@ -33,15 +29,14 @@ const handleMissedOrdersPress = () => {
         {/* Conditional rendering of the dropdown content */}
         {isDropdownVisible && (
           <View style={styles.dropdownContent}>
-            <Text style={styles.dropdownText}>Bonus 1: ₹500</Text>
+            <Text style={styles.dropdownText}>Bonus 1: ₹000</Text>
             <Text style={styles.dropdownText}>Bonus 2: ₹1000</Text>
             <Text style={styles.dropdownText}>Incentive 1: ₹200</Text>
           </View>
         )}
       </View>
 
-      <TouchableOpacity onPress={handleCompletedOrdersPress} style={styles.box4WithShadow}>
-        <View style={styles.row}>
+   <TouchableOpacity onPress={() => navigation.navigate('CompletedRides')} style={styles.box4WithShadow}>        <View style={styles.row}>
           <Text style={styles.boldText}>0</Text>
           <Text style={{ fontSize: 15, padding: 7, color: 'green' }}>Completed Orders</Text>
           <View style={styles.ratingContainer}>
@@ -67,7 +62,7 @@ const handleMissedOrdersPress = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={handleMissedOrdersPress} style={styles.box5WithShadow}>
+      <TouchableOpacity onPress={() => navigation.navigate('MissedOrders')} style={styles.box5WithShadow}>
         <View style={styles.row}>
           <Text style={styles.boldText}>0</Text>
           <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Missed Orders</Text>

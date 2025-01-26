@@ -15,7 +15,7 @@ const Wallet = () => {
    
       <View style={styles.balanceBox}>
         <Text style={styles.balanceText}>Your Balance</Text>
-        <Text style={styles.balanceAmount}>₹2500</Text>
+        <Text style={styles.balanceAmount}>₹-200</Text>
       </View>
 
       <View style={styles.rechargeBox}>

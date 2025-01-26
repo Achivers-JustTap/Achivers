@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Today from './EarningScreens/Today';
@@ -10,6 +10,9 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function Earnings({ route, navigation }) {
 
+  const initialTab = route?.params?.initialTab || 'Today';
+ 
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={{ flexGrow:3 }}>
@@ -20,12 +23,12 @@ export default function Earnings({ route, navigation }) {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.helpButton} onPress={() => navigation.navigate('EarningsHelp')}>
+      <TouchableOpacity style={styles.helpButton} >
         <FontAwesomeIcon name="hands-helping" size={15} color="#fff" />
         <Text style={styles.helpText}>Help</Text>
       </TouchableOpacity>
       <Tab.Navigator
-        initialRouteName="Today"
+        initialRouteName={initialTab}
         screenOptions={{
           tabBarActiveTintColor: '#fff',
           tabBarInactiveTintColor: '#888',

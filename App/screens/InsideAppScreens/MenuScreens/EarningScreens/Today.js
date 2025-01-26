@@ -35,22 +35,27 @@ const Today = ({ route, navigation }) => {
     const handleTabPress = (tab) => {
         setActiveTab(tab);
     };
+    const handleEarningsPress = () => {
+        navigation.navigate('EarningsOnDatePage'); 
+    };
     
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.boxWithShadow}>
-                <View style={styles.headerBox}>
-                    <Text style={styles.headerText}>₹ 0.0</Text>
-                    <Text style={styles.subHeaderText}>
-                        Today's Earnings <FontAwesomeIcon name="arrow-right" size={13} color="white" />
-                    </Text>
+           <TouchableOpacity onPress={handleEarningsPress}>
+                <View style={styles.boxWithShadow}>
+                    <View style={styles.headerBox}>
+                        <Text style={styles.headerText}>₹ 0.0</Text>
+                        <Text style={styles.subHeaderText}>
+                            Today's Earnings <FontAwesomeIcon name="arrow-right" size={13} color="white" />
+                        </Text>
+                    </View>
+                    <View style={styles.line} />
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
+                        <Text style={styles.footerText}>Cash Collected</Text>
+                        <Text style={styles.footerText}>₹ 0.0</Text>
+                    </View>
                 </View>
-                <View style={styles.line} />
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-                    <Text style={styles.footerText}>Cash Collected</Text>
-                    <Text style={styles.footerText}>₹ 0.0</Text>
-                </View>
-            </View>
+            </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('RateCard')} style={styles.box2WithShadow}>
                 <Image source={require('../../../../../assets/images/rupee.png')} style={styles.image} />

@@ -28,6 +28,20 @@ const WeeklyIncentives = ({ route, navigation }) => {
     if (route.params?.vehicleType) {
       setSelectedVehicleType(route.params.vehicleType);
     }
+
+    // Set the current week by default
+    const currentDate = new Date();
+    const startOfWeek = new Date(currentDate);
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay()); // Set to Sunday
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(endOfWeek.getDate() + 6); // Set to Saturday
+
+    setWeek(
+      `${getDayName(startOfWeek)} (${startOfWeek.toLocaleDateString('en-GB')}) - ${getDayName(endOfWeek)} (${endOfWeek.toLocaleDateString('en-GB')})`
+    );
+    setIsWeekSelected(true);
+    setIsCurrentWeek(true);
+    setIsFutureWeek(false);
   }, [route.params]);
 
   const handleTabPress = (tab) => {
@@ -39,19 +53,17 @@ const WeeklyIncentives = ({ route, navigation }) => {
     return days[date.getDay()];
   };
 
-  
   const isFutureDate = (selectedDate) => {
     const currentDate = new Date();
     return selectedDate > currentDate;
   };
-
 
   const isCurrentWeekCheck = (selectedDate) => {
     const currentDate = new Date();
     const startOfWeek = new Date(selectedDate);
     startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 7); 
+    endOfWeek.setDate(endOfWeek.getDate() + 6); 
     return currentDate >= startOfWeek && currentDate <= endOfWeek;
   };
 
@@ -60,16 +72,14 @@ const WeeklyIncentives = ({ route, navigation }) => {
       const startOfWeek = new Date(selectedDate);
       const endOfWeek = new Date(selectedDate);
 
-    
       startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
-      endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay())); 
+      endOfWeek.setDate(endOfWeek.getDate() + 6); 
 
       setWeek(
         `${getDayName(startOfWeek)} (${startOfWeek.toLocaleDateString('en-GB')}) - ${getDayName(endOfWeek)} (${endOfWeek.toLocaleDateString('en-GB')})`
       );
       setIsWeekSelected(true);
       
-   
       if (isFutureDate(startOfWeek)) {
         setIsFutureWeek(true);
         setIsCurrentWeek(false);
@@ -102,7 +112,6 @@ const WeeklyIncentives = ({ route, navigation }) => {
         <View style={styles.cardBodyContainer}>
           {isWeekSelected ? (
             isFutureWeek ? (
-              
               <Text style={styles.noWeekMessage}>These incentives are not yet released!</Text>
             ) : isCurrentWeek ? (
               <>
@@ -166,7 +175,6 @@ const WeeklyIncentives = ({ route, navigation }) => {
     </ScrollView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -268,7 +276,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
   },
-  PastWeekMessage:{
+  PastWeekMessage: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'red',

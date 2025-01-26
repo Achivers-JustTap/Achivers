@@ -3,8 +3,7 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-
-const HistoryBikeTaxi = () => {
+const HistoryAutoRides = () => {
   const navigation = useNavigation();
   // State to manage the visibility of the incentives and bonuses dropdown
   const [isDropdownVisible, setDropdownVisible] = useState(false);
@@ -35,8 +34,8 @@ const HistoryBikeTaxi = () => {
         )}
       </View>
 
-
-   <TouchableOpacity onPress={() => navigation.navigate('CompletedRides')} style={styles.box4WithShadow}>           <View style={styles.row}>
+      <TouchableOpacity onPress={() => navigation.navigate('CompletedRides')} style={styles.box4WithShadow}>
+        <View style={styles.row}>
           <Text style={styles.boldText}>0</Text>
           <Text style={{ fontSize: 15, padding: 7, color: 'green' }}>Completed Orders</Text>
           <View style={styles.ratingContainer}>
@@ -62,6 +61,7 @@ const HistoryBikeTaxi = () => {
         </View>
       </TouchableOpacity>
 
+     
     </ScrollView>
   );
 };
@@ -155,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HistoryBikeTaxi;
+export default HistoryAutoRides;

@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing } from 'react-native'; 
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 
-const TransactionDetailsPage = ({ route, navigation }) => {
+const RidesSummary = ({ route, navigation }) => {
   const { transaction } = route.params;
 
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -23,6 +23,36 @@ const TransactionDetailsPage = ({ route, navigation }) => {
 
   const formattedDate = moment(transaction.date).format('YYYY-MM-DD');
   const formattedDay = moment(transaction.date).format('dddd');
+
+  // Function to show alert with order timeline
+  const showOrderTimeline = () => {
+    Alert.alert(
+      "Order Timeline",
+      "Your order timeline consists of 3 main stages: Assigned, Started, and Completed. Whenever an order is Cancelled or Aborted, you can view it on the timeline.\n\n" +
+      "The First Mile distance and time (from order assignment point to pickup point) are shown on the timeline between Assigned and Started.\n" +
+      "The Last Mile distance and time (from pickup point to drop point) are shown on the timeline between Started and Completed.\n\n" +
+      "The distance and time shown on the timeline are based on the data provided by Google."
+    );
+  };
+
+  // Function to show info about Tax, Time Taken, and Platform Fee
+  const showInfo = (label) => {
+    let message = '';
+    switch (label) {
+      case 'tax':
+        message = 'Goods and Service Tax levied on Ride Charges and Booking/Convenience fees paid by Customer to the Government Authorities.';
+        break;
+      case 'timeTaken':
+        message = 'Rupees 0.0/min';
+        break;
+      case 'platformFee':
+        message = 'Platform charge 0% for each.';
+        break;
+      default:
+        message = '';
+    }
+    Alert.alert(label.charAt(0).toUpperCase() + label.slice(1), message);
+  };
 
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
@@ -45,28 +75,32 @@ const TransactionDetailsPage = ({ route, navigation }) => {
       </View>
 
       <LinearGradient
-        colors={isAmountAdded ? ['#00b09b', '#96c93d'] : ['#ff7e5f', '#feb47b']} 
+        colors={isAmountAdded ? ['#00b09b', '#96c93d'] : ['#ff7e5f', '#feb47b']}
         style={styles.serviceStatusContainer}>
         <Text style={styles.serviceType}>{transaction.service}</Text>
         <Text style={styles.status}>{transaction.Status}</Text>
       </LinearGradient>
 
+      <TouchableOpacity style={styles.howItWorksButton} onPress={showOrderTimeline}>
+        <Text style={styles.howItWorksText}>How it works?</Text>
+      </TouchableOpacity>
+
       <View style={styles.bookingStatusContainer}>
         <View style={styles.routeContainer}>
           <View style={styles.routeStep}>
-            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View> 
+            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View>
             <Text style={styles.routeLabel}>Booking Accepted</Text>
             <Text style={styles.routeTime}>{transaction.BookingAccepted}</Text>
           </View>
 
           <View style={styles.routeStep}>
-            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View> 
+            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View>
             <Text style={styles.routeLabel}>Start Time</Text>
             <Text style={styles.routeTime}>{transaction.startTime}</Text>
           </View>
 
           <View style={styles.routeStep}>
-            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View> 
+            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View>
             <Text style={styles.routeLabel}>End Time</Text>
             <Text style={styles.routeTime}>{transaction.endTime}</Text>
           </View>
@@ -74,8 +108,8 @@ const TransactionDetailsPage = ({ route, navigation }) => {
       </View>
 
       <View style={styles.locationDetailsContainer}>
-        <Text style={[styles.locationText, { color: '#96c93d' }]}>Pickup Point: {transaction.Pickup}</Text>
-        <Text style={[styles.locationText, { color: '#ff7e5f' }]}>Dropping Point: {transaction.Dropping}</Text>
+        <Text style={[styles.locationText, { color: '#96c93d' }]}>Pickup Point: <Text style={[styles.locationText, { color: '#000' }]}>{transaction.Pickup}</Text></Text>
+        <Text style={[styles.locationText, { color: '#ff7e5f' }]}>Dropping Point: <Text style={[styles.locationText, { color: '#000' }]}>{transaction.Dropping}</Text></Text>
       </View>
 
       <View style={styles.costContainer}>
@@ -84,7 +118,10 @@ const TransactionDetailsPage = ({ route, navigation }) => {
           <Text style={styles.costValue}>{transaction.TripCharges}</Text>
         </View>
         <View style={styles.costRow}>
-          <Text style={styles.costLabel}>Tax:</Text>
+          <Text style={styles.costLabel}>Tax Collected</Text>
+          <TouchableOpacity onPress={() => showInfo('tax')}>
+            <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
+          </TouchableOpacity>
           <Text style={styles.costValue}>{transaction.tax}</Text>
         </View>
         <View style={styles.costRow}>
@@ -95,11 +132,15 @@ const TransactionDetailsPage = ({ route, navigation }) => {
           <Text style={styles.costLabel}>Base Amount:</Text>
           <Text style={styles.costValue}>{transaction.baseAmount}</Text>
         </View>
-        
+
         <View style={styles.costRow}>
           <Text style={styles.routeLabel}>Time Taken({transaction.timeTaken})</Text>
+          <TouchableOpacity onPress={() => showInfo('timeTaken')}>
+            <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
+          </TouchableOpacity>
           <Text style={styles.costValue}>{transaction.timeCharges}</Text>
         </View>
+
         <View style={styles.costRow}>
           <Text style={styles.routeLabel}>Distance({transaction.distance})</Text>
           <Text style={styles.costValue}>{transaction.distanceCharges}</Text>
@@ -110,16 +151,12 @@ const TransactionDetailsPage = ({ route, navigation }) => {
           <Text style={styles.costValue}>{transaction.waitTimeFee}</Text>
         </View>
 
-        {/* Added platform fee and wallet amount details */}
         <View style={styles.costRow}>
-          <Text style={styles.routeLabel}>Platform Fee:</Text>
+          <Text style={styles.routeLabel}>Platform Fee</Text>
+          <TouchableOpacity onPress={() => showInfo('platformFee')}>
+            <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
+          </TouchableOpacity>
           <Text style={styles.costValue}>11.7</Text>
-        </View>
-        <View style={styles.costRow}>
-          <Text style={styles.routeLabel}>
-            Amount {isAmountAdded ? 'Added to Wallet' : 'Deducted from Wallet'}:
-          </Text>
-          <Text style={styles.costValue}>{transaction.amount}</Text>
         </View>
       </View>
     </Animated.View>
@@ -148,7 +185,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   orderIdContainer: {
-    flex: 1, 
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -171,6 +208,17 @@ const styles = StyleSheet.create({
   },
   help: {
     color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  howItWorksButton: {
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+  howItWorksText: {
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
   },
@@ -216,18 +264,19 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   routeTime: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#888',
   },
   locationDetailsContainer: {
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 30,
   },
   locationText: {
-    fontSize: 16,
+    fontSize: 14,
     marginBottom: 5,
   },
   costContainer: {
-    marginTop: 10,
+    marginBottom: 50,
   },
   costRow: {
     flexDirection: 'row',
@@ -241,8 +290,12 @@ const styles = StyleSheet.create({
   costValue: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#ff7e5f', 
+    color: '#333',
+  },
+  infoIcon: {
+    marginLeft: -80,
+    marginTop: 2
   },
 });
 
-export default TransactionDetailsPage;
+export default RidesSummary;

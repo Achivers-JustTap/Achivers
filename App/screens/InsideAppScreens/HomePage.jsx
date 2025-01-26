@@ -6,6 +6,7 @@ import { UserLocationContext } from '../../Context/UserLocationContext';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 import IncentivesCarousel from "../../../components/IncentivesCorousel";
+import RideAlertBox from '../../../components/RideAlertBox';
 
 const HomePage = ({ navigation }) => {
     const { location, setLocation } = useContext(UserLocationContext);
@@ -20,8 +21,8 @@ const HomePage = ({ navigation }) => {
       };
 
     // Sample data for pickup and destination
-    const pickupPoint = { lat: 12.9716, lon: 77.5946, address: "48-320/sri nilayam,ganesh Nagar, chintal,qutbullarpur,hyderadab,telangana" };
-    const destinationPoint = { lat: 12.9352, lon: 77.6245, address: "Opp. Laxmikaka and Sashikala Theaters, Bhavani Nagar Moosapet, Near State Bank Of Hyderabad, Hyderabad, Telangana 500018, India" };
+    // const pickupPoint = { lat: 12.9716, lon: 77.5946, address: "48-320/sri nilayam,ganesh Nagar, chintal,qutbullarpur,hyderadab,telangana" };
+    // const destinationPoint = { lat: 12.9352, lon: 77.6245, address: "Opp. Laxmikaka and Sashikala Theaters, Bhavani Nagar Moosapet, Near State Bank Of Hyderabad, Hyderabad, Telangana 500018, India" };
 
     useEffect(() => {
         (async () => {
@@ -63,21 +64,6 @@ const HomePage = ({ navigation }) => {
         }
     }, [showAlert]);
 
-    useEffect(() => {
-        const alertInterval = setInterval(() => {
-            if (!showAlert) {
-                setTimer(20);
-                setShowAlert(true);
-                Animated.timing(alertOpacity, {
-                    toValue: 1,
-                    duration: 300,
-                    useNativeDriver: true,
-                }).start();
-            }
-        }, 5000);
-
-        return () => clearInterval(alertInterval);
-    }, [showAlert]);
 
     const handleProfileImagePress = () => {
         navigation.navigate('ProfiledetailsPage');
@@ -156,8 +142,11 @@ const HomePage = ({ navigation }) => {
                 <AppMapView style={styles.map} />
                 <View style={styles.carouselContainer}>
                 <IncentivesCarousel onRideAndEarnPress={navigateToIncentives} />
-            </View>
-
+                <View style={styles.alertContainer}>
+        <RideAlertBox />
+    </View>   
+                       </View>
+           
 
                 <View style={styles.statsContainer}>
                     <TouchableOpacity style={styles.leftStats} onPress={handleEarningsPress}>
@@ -172,8 +161,10 @@ const HomePage = ({ navigation }) => {
                 </View>
             </View>
 
+
+             
             {/* Alert Box */}
-            {showAlert && (
+            {/* {showAlert && (
                 <Animated.View style={[styles.alertBox, { opacity: alertOpacity }]}>
                     <View style={styles.alertContent}>
                         <View style={styles.pinContainer}>
@@ -207,7 +198,9 @@ const HomePage = ({ navigation }) => {
                         </View>
                     </View>
                 </Animated.View>
-            )}  
+            )}   */}
+
+               
         </SafeAreaView>
     );
 };
@@ -234,7 +227,16 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     
-   
+    alertBox: {
+        height:'200',
+        width:'500',
+        alignSelf: 'center',
+        padding: 10,
+        backgroundColor: 'orange', 
+        borderRadius: 10,
+        textAlign: 'center',
+        zindex: '10'
+    },
     profileContainer: {
         width: 50,  
         height: 50, 

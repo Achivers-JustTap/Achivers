@@ -1,7 +1,37 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const Link = () => {
+const IntercityRateCard = () => {
+   
+    const showAlert = () => {
+      Alert.alert(
+        'Fare Information',
+        `
+        1. Base Fare: 
+        The base amount upon which distance fare and time fare is added. For every order, you will receive Base fare + ride distance * Price per km + ride time * Price per min.
+  
+        2. Minimum Fare: 
+        The minimum amount you would receive per order.
+  
+        3. Price per minute: 
+        The ride time amount earned per minute.
+  
+        4. Platform Charges: 
+        Amount you would be charged per order for Rapido services.
+  
+        5. Pickup Extra Km Fare post 0 km (Max 0): 
+        Extra amount you would receive if pickup distance exceeds 0 km. You will be paid extra only for the distance travelled beyond 0 km.
+  
+        Terms and Conditions:
+        - You will be paid only as per the route given by Rapido.
+        - You might not receive the bonus amount if you are involved in any fraud, and additionally, you will be penalized.
+        - Captain denied duties, cancellations, and asking the customers for extra cash are strictly not acceptable.
+        `,
+        [
+          { text: 'OK' }
+        ]
+      );
+    };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
@@ -17,58 +47,61 @@ const Link = () => {
       <View style={styles.rateContainer}>
         <View style={styles.rateItem}>
           <Text style={styles.label}>Base Fare</Text>
-          <Text style={styles.value}>₹25</Text>
+          <Text style={styles.value}>₹0</Text>
         </View>
 
         <View style={styles.rateItem}>
           <Text style={styles.label}>Minimum Charge</Text>
-          <Text style={styles.value}>₹35</Text>
+          <Text style={styles.value}>₹0</Text>
         </View>
 
         <View style={styles.rateItem}>
           <Text style={styles.label}>Distance Cost</Text>
-          <Text style={styles.value}>₹10/km</Text>
+          <Text style={styles.value}>₹0/km</Text>
         </View>
 
         <View style={styles.subItem}>
-          <Text style={styles.subLabel}>• First 8 kms</Text>
-          <Text style={styles.value}>₹10/km</Text>
+          <Text style={styles.subLabel}>• First 0 kms</Text>
+          <Text style={styles.value}>₹0/km</Text>
         </View>
 
         <View style={styles.subItem}>
-          <Text style={styles.subLabel}>• Beyond 8 kms</Text>
-          <Text style={styles.value}>₹12/km</Text>
+          <Text style={styles.subLabel}>• Beyond 0 kms</Text>
+          <Text style={styles.value}>₹0/km</Text>
         </View>
 
         <View style={styles.rateItem}>
           <Text style={styles.label}>Minute Cost</Text>
-          <Text style={styles.value}>₹1/min</Text>
+          <Text style={styles.value}>₹0/min</Text>
         </View>
 
         <View style={styles.rateItem}>
           <Text style={styles.label}>Waiting (Post 3 mins)</Text>
-          <Text style={styles.value}>₹1.5/min</Text>
+          <Text style={styles.value}>₹0/min</Text>
         </View>
 
         <View style={styles.rateItem}>
           <Text style={styles.label}>Platform Fee</Text>
-          <Text style={styles.value}>₹5</Text>
+          <Text style={styles.value}>₹0</Text>
         </View>
 
         <View style={styles.rateItem}>
           <Text style={styles.label}>Pickup (Extra KM)</Text>
-          <Text style={styles.value}>₹8/km</Text>
+          <Text style={styles.value}>₹0/km</Text>
         </View>
       </View>
 
       <Text style={styles.note}>
         * Fares may vary based on traffic, surge, or time of day.
       </Text>
+
+       <Button title="More Info" onPress={showAlert} />
+       
     </View>
   );
 };
 
-export default Link;
+export default IntercityRateCard;
 
 const styles = StyleSheet.create({
   container: {

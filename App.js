@@ -51,12 +51,12 @@ import All from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today
 import BikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/BikeTaxi';
 import ParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/ParcelDelivery';
 import RateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCard';
-import Link from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/Link';
-import BikeLite from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeLite';
-import C2C from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/C2C';
-import BikeMetro from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeMetro';
-import SwiggyGinie from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/SwiggyGinie';
-import KPN from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/KPN';
+import BikeRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeRateCard';
+import AutoRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/AutoRateCard';
+import MiniCabRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/MiniCabRateCard';
+import MaxiCabRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/MaxiCabRateCard';
+import XLCabRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/XLCabRateCard';
+import IntercityRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/IntercityRateCard';
 import Guidelines from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Guidelines';
 import RechargePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/RechargePage';
 import BuddyRecharge from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/BuddyRecharge';
@@ -104,6 +104,14 @@ import AutoAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/T
 import AutoRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoRides';
 import CompletedRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CompletedRides';
 import MissedOrders from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/MissedOrders';
+import HistoryCabRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryCabRides';
+import HistoryCarAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryCarAll';
+import HistoryAutoRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryAutoRides';
+import HistoryAutoAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryAutoAll';
+import EarningsOnDatePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/EarningsOnDatePage';
+import RidesSummary from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/RidesSummary';
+
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -183,27 +191,33 @@ export default function App() {
           <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
           <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
           <Stack.Screen name="History" component={History} options={{ headerShown: false }} />
-           
+          
+          <Stack.Screen name="CompletedRides" component={CompletedRides} />
+          <Stack.Screen name="MissedOrders" component={MissedOrders} />
+          
           <Stack.Screen name="All" component={All} />
 
           <Stack.Screen name="BikeTaxi" component={BikeTaxi} options={{ headerShown: false }} />
           <Stack.Screen name="ParcelDelivery" component={ParcelDelivery} options={{ headerShown: false }} />
           <Stack.Screen name="Groceries" component={Groceries} options={{ headerShown: false }} />
-          <Stack.Screen name="CompletedRides" component={CompletedRides} />
-          <Stack.Screen name="MissedOrders" component={MissedOrders} />
+          
           <Stack.Screen name="RateCard" component={RateCard} />
-          <Stack.Screen name="Link" component={Link} />
-          <Stack.Screen name="BikeLite" component={BikeLite} />
-          <Stack.Screen name="C2C" component={C2C} />
-          <Stack.Screen name="BikeMetro" component={BikeMetro} />
-          <Stack.Screen name="SwiggyGinie" component={SwiggyGinie} />
-          <Stack.Screen name="KPN" component={KPN} />
+          <Stack.Screen name="BikeRateCard" component={BikeRateCard} />
+          <Stack.Screen name="AutoRateCard" component={AutoRateCard} />
+          <Stack.Screen name="MiniCabRateCard" component={MiniCabRateCard} />
+          <Stack.Screen name="MaxiCabRateCard" component={MaxiCabRateCard} />
+          <Stack.Screen name="XLCabRateCard" component={XLCabRateCard} />
+          <Stack.Screen name="IntercityRateCard" component={IntercityRateCard} />
           <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
           <Stack.Screen name="CarAll" component={CarAll} />
           <Stack.Screen name="CarRides" component={CarRides} />
           <Stack.Screen name="Intercity" component={Intercity} />
           <Stack.Screen name="AutoAll" component={AutoAll} />
           <Stack.Screen name="AutoRides" component={AutoRides} />
+
+          <Stack.Screen name="EarningsOnDatePage" component={EarningsOnDatePage} />
+          <Stack.Screen name="RidesSummary" component={RidesSummary} options={{ headerShown: false }}  />
+
 
           <Stack.Screen name="RechargePage" component={RechargePage} options={{ headerShown: false }} />
           <Stack.Screen name="BuddyRecharge" component={BuddyRecharge}/>
@@ -219,6 +233,11 @@ export default function App() {
           <Stack.Screen name="HistoryBikeTaxi" component={HistoryBikeTaxi} options={{ headerShown: false }} />
           <Stack.Screen name="HistoryParcelDelivery" component={HistoryParcelDelivery} options={{ headerShown: false }} />
           <Stack.Screen name="HistoryGroceries" component={HistoryGroceries} options={{ headerShown: false }} />
+          <Stack.Screen name="HistoryAutoAll" component={HistoryAutoAll} options={{ headerShown: false }} />
+          <Stack.Screen name="HistoryAutoRides" component={HistoryAutoRides} options={{ headerShown: false }} />
+          <Stack.Screen name="HistoryCarAll" component={HistoryCarAll} options={{ headerShown: false }} />
+          <Stack.Screen name="HistoryCabRides" component={HistoryCabRides} options={{ headerShown: false }} />
+
 
            {/*Incentives and Bonuses*/}
            <Stack.Screen name="IncentivesPage" component={IncentivesPage} options={{ headerShown: false }} /> 

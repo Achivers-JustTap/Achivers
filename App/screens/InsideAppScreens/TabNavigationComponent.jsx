@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, TouchableOpacity, Image, StyleSheet, Text, Animated, Easing } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, Text, Animated, Easing, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Menu from './Menu';
 import HomePage from './HomePage';
 import Activity from './Activity';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 function TabNavigationComponent() {
     const RC = useSelector(state => state.RC);
+    const [alertShown, setAlertShown] = useState(false); // Track if alert has been shown
+
+    const navigation = useNavigation();
+
+  
 
     return (
         <Tab.Navigator
@@ -27,7 +33,10 @@ function TabNavigationComponent() {
 function CustomTabBar({ state, descriptors, navigation }) {
     const [isOnline, setIsOnline] = useState(false);
     const [animation] = useState(new Animated.Value(0));
+    const [alertShown, setAlertShown] = useState(false); // Track if alert has been shown
     const vehicle = useSelector(state => state.documents.vehicleType);
+    const dispatch = useDispatch();
+    const navigationHook = useNavigation(); // Access navigation hook here
 
     const vehicles = [
         {
@@ -50,21 +59,53 @@ function CustomTabBar({ state, descriptors, navigation }) {
     const selectedVehicleInfo = vehicles.find(v => v.id === vehicle);
 
     const handleCenterButtonPress = () => {
-        const newOnlineState = !isOnline;
-        Animated.timing(animation, {
-            toValue: newOnlineState ? 1 : 0,
-            duration: 1000,
-            easing: Easing.out(Easing.exp),
-            useNativeDriver: true,
-        }).start(() => {
-            setIsOnline(newOnlineState);
-        });
+        if (vehicle === 'car' && !alertShown) {
+            // Show alert only if not already shown
+            Alert.alert(
+                'Service Manager',
+                'To start your ride, you need to add a service in the Service Manager.',
+                [
+                    {
+                        text: 'Cancel',
+                        onPress: () => {
+                            setIsOnline(false); // Prevent going online
+                        },
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => {
+                            // Navigate to service manager page
+                            navigationHook.navigate('ServiceManager');
+                            setAlertShown(true); // Mark the alert as shown
+                        },
+                    },
+                ],
+                { cancelable: false }
+            );
+        } else {
+            // After OK is clicked and user returns to the screen, handle the online status animation
+            Animated.timing(animation, {
+                toValue: isOnline ? 0 : 1,
+                duration: 1000,
+                easing: Easing.out(Easing.exp),
+                useNativeDriver: true,
+            }).start(() => {
+                setIsOnline(!isOnline);
+            });
+        }
     };
 
     const translateY = animation.interpolate({
         inputRange: [0, 1],
         outputRange: [0, -1000],
     });
+
+    useEffect(() => {
+        if (alertShown) {
+            setIsOnline(false); // Ensure user is offline until they click the center button again
+        }
+    }, [alertShown]);
 
     return (
         <View style={styles.tabBarContainer}>

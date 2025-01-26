@@ -20,25 +20,23 @@ const ServiceManager = ({ navigation }) => {
   const selectedVehicleType = useSelector(state => state.documents.vehicleType); 
 
   useEffect(() => {
-    // Fetch services based on the selected vehicle type from backend
+  
     const fetchServices = async () => {
-      // Example backend response simulation
+      
       const serviceData = {
         bike: [
-          { id: 1, name: 'Bike Metro', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
-    { id: 2, name: 'Bike', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
-    { id: 3, name: 'Bike Boost', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
-    { id: 4, name: 'Parcel Delivery', image: require('../../../../assets/images/parcel.png'), altImage: require('../../../../assets/images/parcel top right.png'), active: false, duplicate: false },
-    { id: 5, name: 'Groceries Delivery', image: require('../../../../assets/images/Groceries.png'), altImage: require('../../../../assets/images/GroceriesDeliveryTopRight.png'), active: false, duplicate: false },
+    { id: 1, name: 'Bike', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
+    { id: 2, name: 'Parcel Delivery', image: require('../../../../assets/images/parcel.png'), altImage: require('../../../../assets/images/parcel top right.png'), active: false, duplicate: false },
+    { id: 3, name: 'Groceries Delivery', image: require('../../../../assets/images/Groceries.png'), altImage: require('../../../../assets/images/GroceriesDeliveryTopRight.png'), active: false, duplicate: false },
         ],
         auto: [
           { id: 1, name: 'Auto Ride', image: require('../../../../assets/images/auto.png'), altImage: require('../../../../assets/images/auto_top_right.png'), active: false, duplicate: false },
-          { id: 2, name: 'Auto Metro', image: require('../../../../assets/images/auto.png'), altImage: require('../../../../assets/images/auto_top_right.png'), active: false, duplicate: false },
         ],
         car: [
-          { id: 1, name: 'Car Ride', image: require('../../../../assets/images/car.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
-          { id: 2, name: 'Car Metro', image: require('../../../../assets/images/car.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
-          { id: 3, name: 'Intercity', image: require('../../../../assets/images/intercity.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
+          { id: 1, name: 'Mini Cab', image: require('../../../../assets/images/car.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
+          { id: 2, name: 'Maxi Cab', image: require('../../../../assets/images/maxi cab.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
+          { id: 3, name: 'Xl Cab', image: require('../../../../assets/images/XL cab.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
+          { id: 4, name: 'Intercity', image: require('../../../../assets/images/intercity.png'), altImage: require('../../../../assets/images/car_top_right.png'), active: false, duplicate: false },
         ],
       };
 

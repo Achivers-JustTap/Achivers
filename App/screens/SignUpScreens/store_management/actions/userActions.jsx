@@ -17,5 +17,20 @@ export const setMobileNumber = (mobileNumber) => ({
     type: 'SET_PROFILE_PICTURE',
     payload: picture,
   });
+
+  export const activateService = ({ id, type }) => ({
+    type: 'ACTIVATE_SERVICE',
+    payload: { id, type },
+  });
+  
+  export const deactivateService = ({ id, type }) => ({
+    type: 'DEACTIVATE_SERVICE',
+    payload: { id, type },
+  });
+  
+  export const fetchServicesForVehicle = (vehicleType) => ({
+    type: 'FETCH_SERVICES',
+    payload: vehicleType,
+  });
   
   

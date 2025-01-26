@@ -31,32 +31,15 @@ const AllTransactionPage = () => {
       date: '2025-01-01',
     },
     {
-      id: 'JTRID002',
+    id: 'Wallet Recharged',
       amount: '+₹100',
-      amountType: 'added',
-      startTime: '5:00 PM',
-      endTime: '5:30 PM',
-      service: 'Bike',
-      Status: 'completed',
-      BookingAccepted: '4:55 PM',
-      waitingTime: '0min',
-      Pickup: 'Ameerpet',
-      Dropping: 'Madhapur',
-      TripCharges: '₹120.00',
-      tax: '₹5.00',
-      TotalEarnings: '₹115.00',
-      baseAmount: '₹10',
-      timeTaken: '30min',
-      timeCharges: '₹5',
-      distance: '20kms',
-      distanceCharges: '₹10',
-      waitTimeFee: '₹0',
-      date: '2024-12-24',
+      Time: '7:00 PM',
+      date: '2024-12-5',
     },
     {
       id: 'JTRID003',
-      amount: '+₹100',
-      amountType: 'added',
+      amount: '-₹100',
+      amountType: 'deducted',
       startTime: '7:00 PM',
       endTime: '7:45 PM',
       service: 'Auto',
@@ -84,23 +67,39 @@ const AllTransactionPage = () => {
 
   const renderItem = (item) => (
     <TouchableOpacity
-      style={[styles.card, item.amountType === 'added' ? styles.cardAdded : {}]}
-      onPress={() => handleNavigate(item)}
-    >
+    style={[styles.card, item.amountType === 'added' ? styles.cardAdded : {}]}
+    onPress={() => (item.id !== 'Wallet Recharged' ? handleNavigate(item) : null)} // Check for Wallet Recharged id
+  >
+    {item.id === 'Wallet Recharged' ? (
+      // Display details for Wallet Recharge transaction
+      <>
       <View style={styles.cardHeader}>
-        <Text style={styles.transactionText}>{item.id}</Text>
+        <Text style={styles.transactionText}>Wallet Recharged</Text>
         <Text style={styles.dateText}>{item.date}</Text>
-      </View>
-      <View style={styles.cardBody}>
-        <Text style={item.amountType === 'deducted' ? styles.amountDeducted : styles.amountAdded}>
-          {item.amount}
-        </Text>
-        <Text style={styles.timeText}>Start: {item.startTime}</Text>
-        <Text style={styles.timeText}>End: {item.endTime}</Text>
-      </View>
-      <FontAwesome name="arrow-right" size={20} color="black" style={styles.arrowIcon} />
-    </TouchableOpacity>
-  );
+        </View>
+        <Text style={styles.amountAdded}>{item.amount}</Text>
+        <Text style={styles.timeText}>{item.Time}</Text>
+        
+      </>
+    ) : (
+      // other transactions
+      <>
+        <View style={styles.cardHeader}>
+          <Text style={styles.transactionText}>{item.id}</Text>
+          <Text style={styles.dateText}>{item.date}</Text>
+        </View>
+        <View style={styles.cardBody}>
+          <Text style={item.amountType === 'deducted' ? styles.amountDeducted : styles.amountAdded}>
+            {item.amount}
+          </Text>
+          <Text style={styles.timeText}>Start: {item.startTime}</Text>
+          <Text style={styles.timeText}>End: {item.endTime}</Text>
+        </View>
+        <FontAwesome name="arrow-right" size={20} color="black" style={styles.arrowIcon} />
+      </>
+    )}
+  </TouchableOpacity>
+);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

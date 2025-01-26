@@ -1,7 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -10,10 +8,10 @@ const DailyIncentives = ({ route, navigation }) => {
   const [activeTab, setActiveTab] = useState('Bike Taxi');
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
-  const [isDateSelected, setIsDateSelected] = useState(false);
+  const [isDateSelected, setIsDateSelected] = useState(true); // Set to true to show today's date
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isPresentDate, setIsPresentDate] = useState(false);
-  const [isPastDate, setIsPastDate] = useState(false);  
+  const [isPastDate, setIsPastDate] = useState(false);
   const [isFutureDate, setIsFutureDate] = useState(false);
 
   const timeSlots = [
@@ -39,22 +37,22 @@ const DailyIncentives = ({ route, navigation }) => {
       setSelectedVehicleType(route.params.vehicleType);
     }
 
-    if (isDateSelected) {
-      const currentDate = new Date();
+    setIsDateSelected(true);
+    setDate(new Date());
 
-      if (date.toLocaleDateString('en-GB') !== currentDate.toLocaleDateString('en-GB')) {
-        setIsPresentDate(false);
-        setIsPastDate(date < currentDate); 
-        setIsFutureDate(date > currentDate); 
-      } else {
-        setIsPresentDate(true);
-        setIsPastDate(false); 
-        setIsFutureDate(false); 
-      }
+    const currentDate = new Date();
+    if (date.toLocaleDateString('en-GB') !== currentDate.toLocaleDateString('en-GB')) {
+      setIsPresentDate(false);
+      setIsPastDate(date < currentDate);
+      setIsFutureDate(date > currentDate);
+    } else {
+      setIsPresentDate(true);
+      setIsPastDate(false);
+      setIsFutureDate(false);
     }
 
     setCurrentTime(new Date());
-  }, [route.params, date, isDateSelected]);
+  }, [route.params]);
 
   const handleTabPress = (tab) => {
     setActiveTab(tab);
@@ -73,18 +71,15 @@ const DailyIncentives = ({ route, navigation }) => {
     setDate(new Date());
     setShowPicker(false);
     setIsPresentDate(false);
-    setIsPastDate(false); 
-    setIsFutureDate(false); 
+    setIsPastDate(false);
+    setIsFutureDate(false);
   };
 
   const renderCard = (title, time, gradientColors, rides, amounts, start, end) => {
     const isSlotPassed = checkIfSlotPassed(start, end);
     const headerGradient = isPastDate || (isPresentDate && isSlotPassed) ? ['#FF0000', '#FF3333'] : gradientColors;
     const message = (isSlotPassed && isPresentDate) || isPastDate ? 'You Cannot get this incentive today!' : '';
-    
-   
     const noDateMessage = !isDateSelected ? 'Select a date to see the incentives' : null;
-
     const futureDateMessage = isFutureDate && isDateSelected ? 'These incentives are not yet released!' : null;
 
     return (
@@ -148,10 +143,15 @@ const DailyIncentives = ({ route, navigation }) => {
         )}
       </View>
 
-   
       {isPastDate && isDateSelected && (
         <View style={styles.pastDateMessageContainer}>
           <Text style={styles.pastDateMessage}>These incentives are unavailable!</Text>
+        </View>
+      )}
+
+       {isFutureDate && isDateSelected && (
+        <View style={styles.pastDateMessageContainer}>
+          <Text style={styles.pastDateMessage}>These Incentives Are Not yet released</Text>
         </View>
       )}
 
@@ -289,4 +289,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DailyIncentives; 
+export default DailyIncentives;
