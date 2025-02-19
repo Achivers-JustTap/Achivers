@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import MyCamera from '../../../components/MyCamera';
 import { useDispatch} from 'react-redux'

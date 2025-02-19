@@ -13,6 +13,7 @@ const HomePage = ({ navigation }) => {
     const [errorMsg, setErrorMsg] = useState(null);
     const [notificationCount, setNotificationCount] = useState(1); 
     const userImaageUrl = useSelector((state) => state.user.profilePicture);
+    console.log(" Image Url", userImaageUrl)
     const [showAlert, setShowAlert] = useState(false);
     const [timer, setTimer] = useState(20);
     const [alertOpacity] = useState(new Animated.Value(0));
@@ -112,7 +113,7 @@ const HomePage = ({ navigation }) => {
                         <View style={styles.profileContainer}>
                             <Image
                                 style={styles.profileImage}
-                                source={{ uri: userImaageUrl }} 
+                                source={{ uri: 'https://cdni.iconscout.com/illustration/premium/thumb/male-user-image-illustration-download-in-svg-png-gif-file-formats--person-picture-profile-business-pack-illustrations-6515860.png' }} 
                                 onError={(error) => console.log('Error loading image: ', error)}
                             />
                         </View>

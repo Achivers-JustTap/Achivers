@@ -2,50 +2,48 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useSelector } from 'react-redux';
 
-const MobileOTPVerifyScreen = ({ route, navigation }) => {
+const MobileOTPVerifyScreen = ({ navigation }) => {
   const [otp, setOtp] = useState('');
-  const { isRegister,vehicleAltImage, selectedVehicleType} = route.params; 
-  const phoneNumber = useSelector((state)=> state.user.mobileNumber)
+  const phoneNumber = useSelector((state) => state.user.mobileNumber);
+  const mobileNumberExists = useSelector((state) => state.documents.mobileNumberExists); // Check if mobile number exists
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-    const handleVerifyOTP = async () => {
-    /* try {
-      const response = await fetch('https://6ab8-2405-201-c425-3854-a936-1e27-553c-27bf.ngrok-free.app/signup/verify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify({ otp }), 
-      });
-      if (!response.ok) {
-        throw new Error('Error verifying OTP'); 
-      } 
+  const handleVerifyOTP = async () => {
+    try {
+      // const response = await fetch('http://192.168.0.107:5000/api/captains/verifyOTP', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json', 
+      //   },
+      //   body: JSON.stringify({ otp, phoneNumber }), 
+      // });
 
-      const data = await response.json();
-      console.log('OTP verified successfully:', data);*/
+      // if (!response.ok) {
+      //   throw new Error('Error verifying OTP'); 
+      // } 
 
-      
-      if (true) {
-        
-        navigation.navigate('ProfileDetailsScreen',vehicleAltImage, selectedVehicleType);
+      // const data = await response.json();
+      // console.log('OTP verified successfully:', data);
+
+      // if (data.success && mobileNumberExists)
+        if (otp === '1234' && mobileNumberExists) {
+        navigation.navigate('HomeTabs'); // Navigate to home page
       } else {
-       
-        navigation.navigate('HomeTabs',);
+        navigation.navigate('ProfileDetailsScreen'); // Navigate to ProfileDetailsScreen if OTP is incorrect
       }
-
-    /*} catch (error) {
+    } catch (error) {
       console.error('Error verifying OTP:', error);
       alert('Invalid OTP. Please try again.'); 
-    } */
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Enter OTP</Text>
-      <Text style={{color:'white'}}>A verification code has been sent to {phoneNumber}</Text>
+      <Text style={{ color: 'white' }}>A verification code has been sent to {phoneNumber}</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter OTP"
@@ -67,11 +65,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#0F4A97',
   },
-  title:{
-    color:'white'
+  title: {
+    color: 'white',
   },
-  input:{
-    color: 'white'
+  input: {
+    color: 'white',
   },
   button: {
     backgroundColor: 'white', 

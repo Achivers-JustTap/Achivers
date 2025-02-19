@@ -8,9 +8,9 @@ export const setMobileNumber = (mobileNumber) => ({
     payload: isVerified,
   });
   
-  export const setUserDetails = (name, email, gender, dateOfBirth) => ({
+  export const setUserDetails = (name, email, gender, dateOfBirth,_id) => ({
     type: 'SET_USER_DETAILS',
-    payload: { name, email, gender, dateOfBirth },
+    payload: { name, email, gender, dateOfBirth,_id },
   });
   
   export const setProfilePicture = (picture) => ({

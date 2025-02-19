@@ -4,8 +4,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from './store_management/actions/userActions';
 
-const ProfileDetailsScreen = ({ navigation,route }) => {
-  const { vehicleAltImage, selectedVehicleType } = route.params;
+const ProfileDetailsScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gender, setGender] = useState(''); 
@@ -33,7 +32,7 @@ const ProfileDetailsScreen = ({ navigation,route }) => {
     }
     
     dispatch(setUserDetails(name, email, gender, dateOfBirth));
-    navigation.navigate('TakeSelfie', { vehicleAltImage, selectedVehicleType });
+    navigation.navigate('TakeSelfie');
   };
 
   const showDatePicker = () => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Image, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { useSelector } from 'react-redux';
-import { setAadharDetails } from './store_management/actions/documentActions';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const AadharUpload = ({ navigation }) => {

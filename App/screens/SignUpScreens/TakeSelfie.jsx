@@ -4,15 +4,14 @@ import { useSelector } from 'react-redux';
 
 
 
-const Takeselfie = ({ navigation,route }) => {
-  const { vehicleAltImage, selectedVehicleType} = route.params;
+const Takeselfie = ({ navigation }) => {
   const name = useSelector((state) => state.user.name);
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
   const handleTakeSelfie = () => {
-    navigation.navigate('ProfileImageScreen', {vehicleAltImage, selectedVehicleType});
+    navigation.navigate('ProfileImageScreen');
   
   };
 

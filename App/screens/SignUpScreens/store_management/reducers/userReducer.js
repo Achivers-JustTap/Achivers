@@ -22,6 +22,7 @@ const userReducer = (state = initialState, action) => {
         gender: action.payload.gender,
         dateOfBirth: action.payload.dateOfBirth,
         email: action.payload.email,
+        _id:action.payload._id
       };
     case 'SET_PROFILE_PICTURE':
       return { ...state, profilePicture: action.payload };
