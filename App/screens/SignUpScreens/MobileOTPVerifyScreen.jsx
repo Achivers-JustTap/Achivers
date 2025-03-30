@@ -13,7 +13,7 @@ const MobileOTPVerifyScreen = ({ navigation }) => {
 
   const handleVerifyOTP = async () => {
     try {
-      // const response = await fetch('http://192.168.0.107:5000/api/captains/verifyOTP', {
+      // const response = await fetch('http://192.168.0.126:5000/api/captains/verifyOTP', {
       //   method: 'POST',
       //   headers: {
       //     'Content-Type': 'application/json', 
