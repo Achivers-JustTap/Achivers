@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import { useSelector } from 'react-redux';
 import All from './HistoryScreens/HistoryAll';
 import BikeTaxi from './HistoryScreens/HistoryBikeTaxi';

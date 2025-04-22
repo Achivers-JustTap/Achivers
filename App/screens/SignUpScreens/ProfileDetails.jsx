@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, SafeAreaView, Alert } from 'react-native';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  Modal,
+  Platform,
+  Alert,
+} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from './store_management/actions/userActions';
 
 const ProfileDetailsScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [gender, setGender] = useState(''); 
+  const [gender, setGender] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
+  const [tempDate, setTempDate] = useState(new Date());
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,88 +33,79 @@ const ProfileDetailsScreen = ({ navigation }) => {
     if (!email.trim()) return 'Please enter your email.';
     if (!gender) return 'Please select your gender.';
     if (!dateOfBirth) return 'Please select your date of birth.';
-    return null; 
+    return null;
   };
 
   const handleNext = () => {
-    const validationError = validateFields();
-    if (validationError) {
-      Alert.alert('Error', validationError);
+    const error = validateFields();
+    if (error) {
+      Alert.alert('Error', error);
       return;
     }
-    
     dispatch(setUserDetails(name, email, gender, dateOfBirth));
     navigation.navigate('TakeSelfie');
   };
 
-  const showDatePicker = () => {
-    setIsDatePickerVisible(true);
-  };
-
-  const hideDatePicker = (date) => {
-    setIsDatePickerVisible(false);
-    if (date) {
-      setDateOfBirth(date.toLocaleDateString()); // Store date in a readable format
+  const onChangeDate = (event, selectedDate) => {
+    if (event.type === 'set') {
+      const chosenDate = selectedDate || tempDate;
+      const formatted = chosenDate.toLocaleDateString();
+      setDateOfBirth(formatted);
     }
+    setShowPicker(false);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Enter Profile Details</Text>
-      
-      {/* Name Input */}
-      <TextInput 
+
+      <TextInput
         style={styles.input}
         placeholder="Enter Full Name"
         value={name}
-        onChangeText={(text) => setName(text)}
+        onChangeText={setName}
       />
 
-      {/* Email Input */}
       <TextInput
         style={styles.input}
         placeholder="Enter Email"
         keyboardType="email-address"
         value={email}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={setEmail}
       />
 
-      {/* Gender Radio Buttons */}
       <View style={styles.radioGroup}>
         <Text style={styles.radioLabel}>Select Your Gender</Text>
         <View style={styles.radioButtonsRow}>
           {['Male', 'Female', 'Other'].map((item) => (
-            <TouchableOpacity
-              key={item}
-              style={styles.radioButton}
-              onPress={() => setGender(item)}
-            >
+            <TouchableOpacity key={item} style={styles.radioButton} onPress={() => setGender(item)}>
               <View style={[styles.radioCircle, gender === item && styles.selectedCircle]}>
                 {gender === item && <View style={styles.selectedDot} />}
               </View>
-              <Text style={[styles.radioButtonText, gender === item && styles.selectedText]}>{item}</Text>
+              <Text style={[styles.radioButtonText, gender === item && styles.selectedText]}>
+                {item}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
       </View>
 
-      {/* Date of Birth Picker */}
-      <TouchableOpacity onPress={showDatePicker}>
-        <TextInput
-          style={styles.input}
-          placeholder="Select Date of Birth"
-          value={dateOfBirth || ''}
-          editable={false}
-        />
+      <TouchableOpacity style={styles.input} onPress={() => setShowPicker(true)}>
+        <Text style={{ color: dateOfBirth ? 'black' : '#999' }}>
+          {dateOfBirth || 'Select Date of Birth'}
+        </Text>
       </TouchableOpacity>
-      <DateTimePicker
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={hideDatePicker}
-        onCancel={hideDatePicker}
-      />
 
-      {/* Next Button */}
+      {showPicker && (
+        <DateTimePicker
+          value={tempDate}
+          mode="date"
+          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+          onChange={onChangeDate}
+          maximumDate={new Date()}
+        />
+      )}
+
       <TouchableOpacity style={styles.button} onPress={handleNext}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
@@ -127,14 +130,14 @@ const styles = StyleSheet.create({
   input: {
     color: 'black',
     width: '80%',
-    height: 45, 
+    height: 45,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    paddingHorizontal: 15, 
+    paddingHorizontal: 15,
     marginBottom: 15,
     backgroundColor: 'white',
-    justifyContent: 'center',  
+    justifyContent: 'center',
   },
   radioGroup: {
     width: '80%',
@@ -146,7 +149,7 @@ const styles = StyleSheet.create({
   },
   radioButtonsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Space the buttons evenly in the row
+    justifyContent: 'space-between',
   },
   radioButton: {
     flexDirection: 'row',
@@ -162,7 +165,7 @@ const styles = StyleSheet.create({
   },
   selectedCircle: {
     borderColor: 'white',
-    backgroundColor: 'white', // Selected circle becomes white
+    backgroundColor: 'white',
   },
   selectedDot: {
     width: 18,
@@ -170,16 +173,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     borderWidth: 2,
-    borderColor:'#0F4A97', 
+    borderColor: '#0F4A97',
     marginLeft: -1,
-    marginTop: -0.6
+    marginTop: -0.6,
   },
   radioButtonText: {
     color: 'white',
     fontSize: 16,
   },
   selectedText: {
-    color: 'white', 
+    color: 'white',
   },
   button: {
     backgroundColor: 'white',

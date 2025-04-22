@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux'; 
 import store from './App/screens/SignUpScreens/store_management/store';
