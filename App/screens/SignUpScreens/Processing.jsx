@@ -73,7 +73,7 @@ const Processing = ({ navigation }) => {
 
       // API call
       const response = await axios.post(
-        'http://13.233.146.206:5000/api/captains/upload',
+        'http://192.168.29.13:5000/api/captains/upload',
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );

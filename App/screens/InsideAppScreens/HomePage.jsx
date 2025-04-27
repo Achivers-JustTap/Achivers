@@ -229,11 +229,9 @@ const styles = StyleSheet.create({
     },
     
     alertBox: {
-        height:'200',
-        width:'500',
+       
         alignSelf: 'center',
         padding: 10,
-        backgroundColor: 'orange', 
         borderRadius: 10,
         textAlign: 'center',
         zindex: '10'

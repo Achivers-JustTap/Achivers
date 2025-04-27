@@ -79,6 +79,26 @@ const Intercity = () => {
           <FontAwesomeIcon name="angle-right" size={18} color="#000" />
         </View>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('CancelledOrders')} style={styles.box5WithShadow}>
+              <View style={styles.row}>
+                <Text style={styles.boldText}>0</Text>
+                <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Cancelled Orders</Text>
+                <View style={styles.ratingContainer}>
+                  <Text style={styles.text}>₹ 0.0</Text>
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.item}>
+                  <Text style={styles.heading}>Adjustments</Text>
+                  <Text style={styles.value}>₹ 0.0</Text>
+                </View>
+                <View style={styles.item}>
+                  <Text style={styles.heading}>Penalty</Text>
+                  <Text style={styles.value}>₹ 0.0</Text>
+                </View>
+                <FontAwesomeIcon name="angle-right" size={18} color="#000" />
+              </View>
+            </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -168,7 +188,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 8,
     padding: 15,
-    marginBottom: 100,
+    marginBottom: 20,
   },
 });
 

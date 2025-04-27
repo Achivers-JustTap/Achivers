@@ -6,10 +6,8 @@ import All from './TodaysScreens/All';
 import Gorceries from './TodaysScreens/Groceries';
 import ParcelDelivery from './TodaysScreens/ParcelDelivery';
 import BikeTaxi from './TodaysScreens/BikeTaxi';
-import CarAll from './TodaysScreens/CarAll';
 import CarRides from './TodaysScreens/CarRides'; 
 import Intercity from './TodaysScreens/Intercity'; 
-import AutoAll from './TodaysScreens/AutoAll';
 import AutoRides from './TodaysScreens/AutoRides';
 import { useSelector } from 'react-redux';  
 
@@ -112,7 +110,7 @@ const Today = ({ route, navigation }) => {
 
             <View style={styles.tabContent}>
  
-    {activeTab === 'All' && selectedVehicleType === 'bike' && <All />}
+    {activeTab === 'All' && <All vehicleType={selectedVehicleType} />}
     
  
     {activeTab === 'Bike Taxi' && <BikeTaxi />}
@@ -123,10 +121,6 @@ const Today = ({ route, navigation }) => {
     {activeTab === 'Intercity' && <Intercity />}
     
     {activeTab === 'Auto Rides' && <AutoRides />}
-
-    {activeTab === 'All' && selectedVehicleType === 'car' && <CarAll />}
-    {activeTab === 'All' && selectedVehicleType === 'auto' && <AutoAll />}
-
 
     {activeTab === selectedVehicleType && <Text>{selectedVehicleType} content</Text>}
 </View>

@@ -14,7 +14,7 @@ const BuddyRecharge = () => {
     Alert.alert('Link copied', 'The recharge link has been copied to your clipboard.');
   };
 
-  /*const handleShareLink = async () => {
+  const handleShareLink = async () => {
     try {
       const result = await Share.share({
         message: `Click here to top up your account: ${link}`, // Using the dynamic link
@@ -31,7 +31,7 @@ const BuddyRecharge = () => {
     } catch (error) {
       Alert.alert(error.message);
     }
-  }; */
+  }; 
 
   const fadeInSteps = () => {
     Animated.timing(fadeAnim, {

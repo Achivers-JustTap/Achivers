@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert,ScrollView } from 'react-native';
 import React from 'react';
 
 const BikeRateCard = () => {
@@ -33,6 +33,7 @@ const BikeRateCard = () => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.title}>
         <Text style={styles.header}>JUST TAP!</Text> Your Fare Guide
@@ -50,10 +51,6 @@ const BikeRateCard = () => {
           <Text style={styles.value}>₹0</Text>
         </View>
 
-        <View style={styles.rateItem}>
-          <Text style={styles.label}>Minimum Charge</Text>
-          <Text style={styles.value}>₹0</Text>
-        </View>
 
         <View style={styles.rateItem}>
           <Text style={styles.label}>Distance Cost</Text>
@@ -89,7 +86,34 @@ const BikeRateCard = () => {
           <Text style={styles.label}>Pickup (Extra KM)</Text>
           <Text style={styles.value}>₹0/km</Text>
         </View>
+
+        <View style={styles.rateItem}>
+          <Text style={styles.label}>Cancellation Fee</Text>
+          <Text style={styles.value}>₹0</Text>
+        </View>
+
+        
+        <View style={styles.rateItem}>
+          <Text style={styles.label}>Surge Fare</Text>
+          <Text style={styles.value}>₹0</Text>
+        </View>
+
+        
+        <View style={styles.rateItem}>
+          <Text style={styles.label}>Night Fare(11pm - 6am)</Text>
+          <Text style={styles.value}>0%</Text>
+        </View>
+
+      
       </View>
+      <Text style={styles.ratecardText}>Just Tap! Commision</Text>
+      <Text style={styles.ratecardText1}>11%(order + surge, Long Pickup & Night Fare)</Text>
+
+      <Text style={styles.ratecardText}>GST</Text>
+      <Text style={styles.ratecardText1}>Which is paid to Government</Text>
+
+      <Text style={styles.ratecardText}>Handling Fee</Text>
+      <Text style={styles.ratecardText1}>For Facilitating a Safe Ride</Text>
 
       <Text style={styles.note}>
         * Fares may vary based on traffic, surge, or time of day.
@@ -99,6 +123,7 @@ const BikeRateCard = () => {
       <Button title="More Info" onPress={showAlert} />
 
     </View>
+    </ScrollView>
   );
 };
 
@@ -189,5 +214,17 @@ const styles = StyleSheet.create({
     color: '#607D8B',
     textAlign: 'center',
     marginTop: 12,
+  },
+  ratecardText:{
+    fontSize: 16,
+    color: '#0f4a97',
+    marginTop: 20,
+    fontWeight: 'bold',
+  },
+  ratecardText1:{
+    fontSize: 14,
+    color: '#000',
+    marginTop: 5,
+    fontWeight: 'bold',
   },
 });

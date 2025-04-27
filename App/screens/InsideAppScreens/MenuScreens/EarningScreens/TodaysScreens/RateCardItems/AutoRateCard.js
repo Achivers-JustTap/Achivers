@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 const AutoRateCard = () => {
@@ -33,6 +33,7 @@ const AutoRateCard = () => {
       );
     };
   return (
+    <ScrollView>
     <View style={styles.container}>
       <Text style={styles.title}>
         <Text style={styles.header}>JUST TAP!</Text> Your Fare Guide
@@ -91,12 +92,22 @@ const AutoRateCard = () => {
         </View>
       </View>
 
+        <Text style={styles.ratecardText}>Just Tap! Commision</Text>
+            <Text style={styles.ratecardText1}>11%(order + surge, Long Pickup & Night Fare)</Text>
+      
+            <Text style={styles.ratecardText}>GST</Text>
+            <Text style={styles.ratecardText1}>Which is paid to Government</Text>
+      
+            <Text style={styles.ratecardText}>Handling Fee</Text>
+            <Text style={styles.ratecardText1}>For Facilitating a Safe Ride</Text>
+
       <Text style={styles.note}>
         * Fares may vary based on traffic, surge, or time of day.
       </Text>
        <Button title="More Info" onPress={showAlert} />
        
     </View>
+    </ScrollView>
   );
 };
  
@@ -187,5 +198,17 @@ const styles = StyleSheet.create({
     color: '#607D8B',
     textAlign: 'center',
     marginTop: 12,
+  },
+  ratecardText:{
+    fontSize: 16,
+    color: '#0f4a97',
+    marginTop: 20,
+    fontWeight: 'bold',
+  },
+  ratecardText1:{
+    fontSize: 14,
+    color: '#000',
+    marginTop: 5,
+    fontWeight: 'bold',
   },
 });

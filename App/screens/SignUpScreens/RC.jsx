@@ -1,4 +1,16 @@
-import { View, Text, SafeAreaView, TouchableOpacity, StyleSheet, TextInput, Alert, Keyboard } from 'react-native';
+import { 
+  View, 
+  Text, 
+  SafeAreaView, 
+  TouchableOpacity, 
+  StyleSheet, 
+  TextInput, 
+  Alert, 
+  Keyboard, 
+  KeyboardAvoidingView, 
+  Platform, 
+  ScrollView 
+} from 'react-native';
 import React, { useEffect, useState } from 'react';
 
 const RcNumber = ({ navigation }) => {
@@ -9,16 +21,12 @@ const RcNumber = ({ navigation }) => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  // Function to validate RC Number format (10 characters: 2 alphabets, 2 digits, 2 alphabets, 4 digits)
   const validateRC = (text) => {
-    const uppercasedText = text.toUpperCase(); // Automatically convert to uppercase
-    setRcNumber(uppercasedText);
     const regex = /^[A-Za-z]{2}\d{2}[A-Za-z]{2}\d{4}$/;
-    setIsGoButtonEnabled(regex.test(uppercasedText)); // Enable or disable the Go button
+    setIsGoButtonEnabled(regex.test(text));
   };
 
   const handleGoButtonPress = () => {
-    // Validate RC on button press
     if (!isGoButtonEnabled) {
       Alert.alert('Error', 'Please enter a valid RC Number.');
       return;
@@ -30,7 +38,7 @@ const RcNumber = ({ navigation }) => {
   const handleChange = (text) => {
     const upperCaseText = text.toUpperCase();
     setRcNumber(upperCaseText);
-    validateRC(upperCaseText); // Call validation after text change
+    validateRC(upperCaseText);
   };
 
   const handleTakeRCImage = () => {
@@ -38,7 +46,7 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', 'Please enter a valid RC Number.');
       return;
     }
-    navigation.navigate('RCUpload',{RC}); 
+    navigation.navigate('RCUpload', { RC });
   };
 
   const handleUploadFromFiles = () => {
@@ -46,53 +54,63 @@ const RcNumber = ({ navigation }) => {
       Alert.alert('Error', 'Please enter a valid RC Number.');
       return;
     }
-    navigation.navigate('RCUploadFromFiles',{RC}); // Navigate to the screen for uploading from files
+    navigation.navigate('RCUploadFromFiles', { RC });
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Upload Your RC-Registration Certificate</Text>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+      >
+        <ScrollView 
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text style={styles.title}>Upload Your RC-Registration Certificate</Text>
 
-      <Text style={styles.text}>
-        Enter your vehicle number plate and date of birth, and we'll get the required information from the Parivahan.
-      </Text>
+          <Text style={styles.text}>
+            Enter your vehicle number plate and date of birth, and we'll get the required information from the Parivahan.
+          </Text>
 
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'white', padding: 10, marginBottom: 10 }}>
-          <Text style={{ color: 'white', fontSize: 19, fontFamily: 'SofadiOne' }}>Just Tap!</Text>
-          {' '}to enter your RC Number and upload image
-        </Text>
+          <View style={styles.inputArea}>
+            <Text style={styles.subText}>
+              <Text style={{ fontFamily: 'SofadiOne', fontSize: 20 }}>Just Tap!</Text> to enter your RC Number and upload image
+            </Text>
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Vehicle Number Plate"
-            value={RC}
-            onChangeText={handleChange}
-            keyboardType="default"
-            maxLength={10}  // Allow alphanumeric input
-          />
-          <TouchableOpacity
-            style={[styles.goButton, { backgroundColor: isGoButtonEnabled ? 'yellow' : 'gray' }]}
-            disabled={!isGoButtonEnabled}
-            onPress={handleGoButtonPress}
-          >
-            <Text style={styles.goButtonText}>Go</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Vehicle Number Plate"
+                placeholderTextColor="#aaa"
+                value={RC}
+                onChangeText={handleChange}
+                keyboardType="default"
+                maxLength={10}
+              />
+              <TouchableOpacity
+                style={[styles.goButton, { backgroundColor: isGoButtonEnabled ? 'yellow' : 'gray' }]}
+                disabled={!isGoButtonEnabled}
+                onPress={handleGoButtonPress}
+              >
+                <Text style={styles.goButtonText}>Go</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </ScrollView>
+
+        {/* Buttons always fixed at bottom */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleTakeRCImage}>
+            <Text style={styles.buttonText}>Take RC Image</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
+            <Text style={styles.buttonText}>Upload from Files</Text>
           </TouchableOpacity>
         </View>
-      </View>
-
-      <View style={styles.buttonContainer}>
-        {/* Button to take RC image */}
-        <TouchableOpacity style={styles.button} onPress={handleTakeRCImage}>
-          <Text style={styles.buttonText}>Take RC Image</Text>
-        </TouchableOpacity>
-
-        {/* Button to upload from files */}
-        <TouchableOpacity style={styles.button} onPress={handleUploadFromFiles}>
-          <Text style={styles.buttonText}>Upload from Files</Text>
-        </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -100,25 +118,34 @@ const RcNumber = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#0F4A97',
   },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
   title: {
-    paddingTop: 50,
-    paddingLeft: 10,
-    paddingRight: 10,
     fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
-    marginTop: 30,
-    marginBottom: 40,
+    textAlign: 'center',
+    marginBottom: 20,
   },
   text: {
     color: 'white',
-    padding: 10,
     fontSize: 15,
-    marginBottom: -100,
+    textAlign: 'center',
+    marginBottom: 30,
+  },
+  inputArea: {
+    alignItems: 'center',
+  },
+  subText: {
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: 'center',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -127,20 +154,20 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '70%',
-    height: 40,
+    height: 45,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
+    borderRadius: 8,
+    paddingHorizontal: 10,
     backgroundColor: 'white',
     color: 'black',
   },
   goButton: {
     width: '20%',
-    height: 40,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 8,
     marginLeft: 10,
   },
   goButtonText: {
@@ -151,22 +178,22 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '80%',
-    marginBottom: 20,
+    paddingHorizontal: 10,
+    paddingBottom: Platform.OS === 'ios' ? 30 : 20,
+    backgroundColor: '#0F4A97',
   },
   button: {
     backgroundColor: 'white',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 10,
     flex: 1,
-    marginBottom: 30,
     marginHorizontal: 5,
+    alignItems: 'center',
   },
   buttonText: {
     color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
 });
 

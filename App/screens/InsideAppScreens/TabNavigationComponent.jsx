@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 35,
         elevation: 3,
+        zindex: -1
     },
     placeholder: {
         width: 60,

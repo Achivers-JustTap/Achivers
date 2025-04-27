@@ -98,10 +98,8 @@ import AadharImageChange from './App/screens/InsideAppScreens/MenuScreens/Profil
 import AadharFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharFileChange';
 import PanImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanImageChange';
 import PanFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanFileChange';
-import CarAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CarAll';
 import CarRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CarRides';
 import Intercity from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Intercity';
-import AutoAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoAll';
 import AutoRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoRides';
 import CompletedRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CompletedRides';
 import MissedOrders from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/MissedOrders';
@@ -111,6 +109,7 @@ import HistoryAutoRides from './App/screens/InsideAppScreens/MenuScreens/Earning
 import HistoryAutoAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryAutoAll';
 import EarningsOnDatePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/EarningsOnDatePage';
 import RidesSummary from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/RidesSummary';
+import CancelledOrders from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CancelledOrders';
 
 
 const Stack = createStackNavigator();
@@ -195,6 +194,7 @@ export default function App() {
           
           <Stack.Screen name="CompletedRides" component={CompletedRides} />
           <Stack.Screen name="MissedOrders" component={MissedOrders} />
+          <Stack.Screen name="CancelledOrders" component={CancelledOrders} />
           
           <Stack.Screen name="All" component={All} />
 
@@ -210,10 +210,8 @@ export default function App() {
           <Stack.Screen name="XLCabRateCard" component={XLCabRateCard} />
           <Stack.Screen name="IntercityRateCard" component={IntercityRateCard} />
           <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
-          <Stack.Screen name="CarAll" component={CarAll} />
           <Stack.Screen name="CarRides" component={CarRides} />
           <Stack.Screen name="Intercity" component={Intercity} />
-          <Stack.Screen name="AutoAll" component={AutoAll} />
           <Stack.Screen name="AutoRides" component={AutoRides} />
 
           <Stack.Screen name="EarningsOnDatePage" component={EarningsOnDatePage} />
