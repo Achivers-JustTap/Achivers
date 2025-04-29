@@ -2,13 +2,8 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, SafeAreaVi
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useEffect, useState } from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
-import All from './TodaysScreens/All';
-import Gorceries from './TodaysScreens/Groceries';
-import ParcelDelivery from './TodaysScreens/ParcelDelivery';
-import BikeTaxi from './TodaysScreens/BikeTaxi';
-import CarRides from './TodaysScreens/CarRides'; 
-import Intercity from './TodaysScreens/Intercity'; 
-import AutoRides from './TodaysScreens/AutoRides';
+import TodayAll from './TodaysScreens/TodayAll';
+import TodayRides from './TodaysScreens/TodayRides';
 import { useSelector } from 'react-redux';  
 
 const Tab = createMaterialTopTabNavigator();
@@ -19,15 +14,14 @@ const Today = ({ route, navigation }) => {
     
     // List of available vehicle types for the tabs based on selectedVehicleType
     let vehicleTypes = [];
-    console.log('selectedVehicleType', selectedVehicleType);
     if (selectedVehicleType === 'car') {
-        vehicleTypes = ['All', 'Cab Rides', 'Intercity'];
+        vehicleTypes = ['All', 'Rides', 'Reserved', 'Intercity', 'Rentals'];
     } else if (selectedVehicleType === 'auto') {
-        vehicleTypes = ['All', 'Auto Rides'];
-    } else if (selectedVehicleType === 'bike') {
-        vehicleTypes = ['All', 'Bike Taxi', 'Parcel Delivery', 'Groceries Delivery'];
+        vehicleTypes = ['All', 'Rides', 'Parcels'];
+    } else if (selectedVehicleType === 'moto') {
+        vehicleTypes = ['All', 'Rides', 'Parcels'];
     } else {
-        vehicleTypes = ['All', 'Bike Taxi', 'Parcel Delivery', 'Groceries Delivery'];
+        vehicleTypes = ['All', 'Rides', 'Parcels'];
     }
 
     const handleTabPress = (tab) => {
@@ -97,32 +91,25 @@ const Today = ({ route, navigation }) => {
 
             {/* Horizontal scrollable tabs */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabNav}>
-                {vehicleTypes.map((tab, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={[styles.tabButton, activeTab === tab && styles.tabButtonActive]}
-                        onPress={() => setActiveTab(tab)}
-                    >
-                        <Text style={styles.tabText}>{tab}</Text>
-                    </TouchableOpacity>
-                ))}
+            {vehicleTypes.map((tab, index) => (
+                <TouchableOpacity
+                    key={index}
+                    style={[styles.tabButton, activeTab === tab && styles.tabButtonActive]}
+                    onPress={() => setActiveTab(tab)}
+                >
+                    <Text style={styles.tabText}>{tab}</Text>
+                </TouchableOpacity>
+            ))}
             </ScrollView>
 
             <View style={styles.tabContent}>
  
-    {activeTab === 'All' && <All vehicleType={selectedVehicleType} />}
-    
- 
-    {activeTab === 'Bike Taxi' && <BikeTaxi />}
-    {activeTab === 'Parcel Delivery' && <ParcelDelivery />}
-    {activeTab === 'Groceries Delivery' && <Gorceries />}
-
-    {activeTab === 'Cab Rides' && <CarRides />}
-    {activeTab === 'Intercity' && <Intercity />}
-    
-    {activeTab === 'Auto Rides' && <AutoRides />}
-
-    {activeTab === selectedVehicleType && <Text>{selectedVehicleType} content</Text>}
+    {activeTab === 'All' && <TodayAll vehicleType={selectedVehicleType} />}
+    {activeTab === 'Rides' && <TodayRides vehicleType={selectedVehicleType} tabType="rides" />}
+    {activeTab === 'Reserved' && <TodayRides vehicleType={selectedVehicleType} tabType="reserved" />}
+    {activeTab === 'Intercity' && <TodayRides vehicleType={selectedVehicleType} tabType="intercity" />}
+    {activeTab === 'Rentals' && <TodayRides vehicleType={selectedVehicleType} tabType="rentals" />}
+    {activeTab === 'Parcels' && <TodayRides vehicleType={selectedVehicleType} tabType="parcel" />}
 </View>
         </ScrollView>
     );

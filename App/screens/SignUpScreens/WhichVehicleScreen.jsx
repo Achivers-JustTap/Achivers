@@ -13,7 +13,7 @@ const WhichVehicleScreen = ({ navigation, route }) => {
 
   const vehicles = [
     { 
-      id: 'bike', 
+      id: 'moto', 
       name: 'Moto', 
       image: require('../../../assets/images/moto.png'),
       altImage: require('../../../assets/images/moto.png') // Alt image for Moto

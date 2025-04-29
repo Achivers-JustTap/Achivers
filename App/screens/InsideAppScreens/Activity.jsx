@@ -66,7 +66,7 @@ const Activity = ({ navigation }) => {
         <Text style={styles.fare}>Fare: {item.fare}</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('History')}
+          onPress={() => navigation.navigate('History', { fromActivity: true })}
         >
           <Text style={styles.buttonText}>Know More</Text>
         </TouchableOpacity>

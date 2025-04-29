@@ -3,12 +3,40 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-const CarRides = () => {
+const TodayRides = ({ vehicleType, tabType }) => {
   const navigation = useNavigation();
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
+  };
+
+  // TODO: Add logic to fetch and filter only today's rides data based on vehicleType and tabType
+
+  const getTitle = () => {
+    switch (tabType) {
+      case 'rides':
+        return 'Rides';
+      case 'parcel':
+        return 'Parcels';
+      case 'intercity':
+        return 'Intercity';
+      case 'rentals':
+        return 'Rentals';
+      case 'reserved':
+        return 'Reserved';
+      default:
+        return '';
+    }
+  };
+
+  const renderContent = () => {
+    // Placeholder for actual content rendering logic based on tabType and vehicleType
+    return (
+      <Text>
+        Showing {getTitle()} for {vehicleType} (Today's Data)
+      </Text>
+    );
   };
 
   return (
@@ -23,7 +51,6 @@ const CarRides = () => {
           </Text>
         </TouchableOpacity>
 
-        {/* Conditional rendering of the dropdown content */}
         {isDropdownVisible && (
           <View style={styles.dropdownContent}>
             <Text style={styles.dropdownText}>Bonus 1: ₹000</Text>
@@ -33,8 +60,8 @@ const CarRides = () => {
         )}
       </View>
 
-
-   <TouchableOpacity onPress={() => navigation.navigate('CompletedRides')} style={styles.box4WithShadow}>        <View style={styles.row}>
+      <TouchableOpacity onPress={() => navigation.navigate('CompletedRides')} style={styles.box4WithShadow}>
+        <View style={styles.row}>
           <Text style={styles.boldText}>0</Text>
           <Text style={{ fontSize: 15, padding: 7, color: 'green' }}>Completed Orders</Text>
           <View style={styles.ratingContainer}>
@@ -59,47 +86,49 @@ const CarRides = () => {
           <FontAwesomeIcon name="angle-right" size={18} color="#000" />
         </View>
       </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('MissedOrders')} style={styles.box5WithShadow}>
+                    <View style={styles.row}>
+                      <Text style={styles.boldText}>0</Text>
+                      <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Missed Orders</Text>
+                      <View style={styles.ratingContainer}>
+                        <Text style={styles.text}>₹ 0.0</Text>
+                      </View>
+                    </View>
+                    <View style={styles.row}>
+                      <View style={styles.item}>
+                        <Text style={styles.heading}>Adjustments</Text>
+                        <Text style={styles.value}>₹ 0.0</Text>
+                      </View>
+                      <View style={styles.item}>
+                        <Text style={styles.heading}>Penalty</Text>
+                        <Text style={styles.value}>₹ 0.0</Text>
+                      </View>
+                      <FontAwesomeIcon name="angle-right" size={18} color="#000" />
+                    </View>
+                  </TouchableOpacity>
+            
+                  <TouchableOpacity onPress={() => navigation.navigate('CancelledOrders')} style={styles.box5WithShadow}>
+                    <View style={styles.row}>
+                      <Text style={styles.boldText}>0</Text>
+                      <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Cancelled Orders</Text>
+                      <View style={styles.ratingContainer}>
+                        <Text style={styles.text}>₹ 0.0</Text>
+                      </View>
+                    </View>
+                    <View style={styles.row}>
+                      <View style={styles.item}>
+                        <Text style={styles.heading}>Adjustments</Text>
+                        <Text style={styles.value}>₹ 0.0</Text>
+                      </View>
+                      <View style={styles.item}>
+                        <Text style={styles.heading}>Penalty</Text>
+                        <Text style={styles.value}>₹ 0.0</Text>
+                      </View>
+                      <FontAwesomeIcon name="angle-right" size={18} color="#000" />
+                    </View>
+                  </TouchableOpacity>
+      
 
-       <TouchableOpacity onPress={() => navigation.navigate('MissedOrders')} style={styles.box5WithShadow}>
-        <View style={styles.row}>
-          <Text style={styles.boldText}>0</Text>
-          <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Missed Orders</Text>
-          <View style={styles.ratingContainer}>
-            <Text style={styles.text}>₹ 0.0</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.item}>
-            <Text style={styles.heading}>Adjustments</Text>
-            <Text style={styles.value}>₹ 0.0</Text>
-          </View>
-          <View style={styles.item}>
-            <Text style={styles.heading}>Penalty</Text>
-            <Text style={styles.value}>₹ 0.0</Text>
-          </View>
-          <FontAwesomeIcon name="angle-right" size={18} color="#000" />
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('CancelledOrders')} style={styles.box5WithShadow}>
-              <View style={styles.row}>
-                <Text style={styles.boldText}>0</Text>
-                <Text style={{ fontSize: 15, padding: 7, color: 'red' }}>Cancelled Orders</Text>
-                <View style={styles.ratingContainer}>
-                  <Text style={styles.text}>₹ 0.0</Text>
-                </View>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.item}>
-                  <Text style={styles.heading}>Adjustments</Text>
-                  <Text style={styles.value}>₹ 0.0</Text>
-                </View>
-                <View style={styles.item}>
-                  <Text style={styles.heading}>Penalty</Text>
-                  <Text style={styles.value}>₹ 0.0</Text>
-                </View>
-                <FontAwesomeIcon name="angle-right" size={18} color="#000" />
-              </View>
-            </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -193,4 +222,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarRides;
+export default TodayRides;

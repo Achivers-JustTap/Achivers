@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Animated, Easing, Alert,ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -55,6 +55,7 @@ const RidesSummary = ({ route, navigation }) => {
   };
 
   return (
+    <ScrollView>
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       <View style={styles.header}>
         <TouchableOpacity
@@ -160,6 +161,7 @@ const RidesSummary = ({ route, navigation }) => {
         </View>
       </View>
     </Animated.View>
+    </ScrollView>
   );
 };
 

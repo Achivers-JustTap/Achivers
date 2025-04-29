@@ -3,15 +3,8 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useSelector } from 'react-redux';
-import All from './HistoryScreens/HistoryAll';
-import BikeTaxi from './HistoryScreens/HistoryBikeTaxi';
-import ParcelDelivery from './HistoryScreens/HistoryParcelDelivery';
-import Groceries from './HistoryScreens/HistoryGroceries';
-import CarAll from './HistoryScreens/HistoryCarAll';
-import CabRides from './HistoryScreens/HistoryCabRides';
-import Intercity from './HistoryScreens/HistoryIntercity.jsx';
-import AutoAll from './HistoryScreens/HistoryAutoAll';
-import AutoRides from './HistoryScreens/HistoryAutoRides';
+import HistoryAll from './HistoryScreens/HistoryAll';
+import HistoryRides from './HistoryScreens/HistoryRides';
 
 const History = ({ route, navigation }) => {
     const selectedVehicleType = useSelector(state => state.documents.vehicleType);
@@ -27,42 +20,43 @@ const History = ({ route, navigation }) => {
     }, [route.params]);
 
     const onChange = (event, selectedDate) => {
-      if (selectedDate) {
-        setDate(selectedDate);
-        setIsDateSelected(true);
-      }
-      setShowPicker(false);
+        if (selectedDate) {
+            setDate(selectedDate);
+            setIsDateSelected(true);
+        }
+        setShowPicker(false);
     };
-  
+
     const handleBackPress = () => {
-      setIsDateSelected(false);
+        setIsDateSelected(false);
     };
 
     let vehicleScreens = {};
     if (selectedVehicleType === 'car') {
         vehicleScreens = {
-            All: <CarAll />,
-            'Cab Rides': <CabRides />,
-            Intercity: <Intercity />,
+            All: <HistoryAll vehicleType="car" />,
+            Rides: <HistoryRides vehicleType="car" tabType="rides" />,
+            Reserved: <HistoryRides vehicleType="car" tabType="reserved" />,
+            Intercity: <HistoryRides vehicleType="car" tabType="intercity" />,
+            Rentals: <HistoryRides vehicleType="car" tabType="rentals" />,
         };
     } else if (selectedVehicleType === 'auto') {
         vehicleScreens = {
-            All: <AutoAll />,
-            'Auto Rides': <AutoRides />,
+            All: <HistoryAll vehicleType="auto" />,
+            Rides: <HistoryRides vehicleType="auto" tabType="rides" />,
+            Parcels: <HistoryRides vehicleType="auto" tabType="parcel" />,
         };
-    } else if (selectedVehicleType === 'bike') {
+    } else if (selectedVehicleType === 'moto') {
         vehicleScreens = {
-            All: <All />,
-            'Bike Taxi': <BikeTaxi />,
-            'Parcel Delivery': <ParcelDelivery />,
-            'Groceries Delivery': <Groceries />,
+            All: <HistoryAll vehicleType="moto" />,
+            Rides: <HistoryRides vehicleType="moto" tabType="rides" />,
+            Parcels: <HistoryRides vehicleType="moto" tabType="parcel" />,
         };
     } else {
         vehicleScreens = {
-            All: <All />,
-            'Bike Taxi': <BikeTaxi />,
-            'Parcel Delivery': <ParcelDelivery />,
-            'Groceries Delivery': <Groceries />,
+            All: <HistoryAll vehicleType="moto" />,
+            Rides: <HistoryRides vehicleType="moto" tabType="rides" />,
+            Parcels: <HistoryRides vehicleType="moto" tabType="parcel" />,
         };
     }
 
@@ -71,79 +65,84 @@ const History = ({ route, navigation }) => {
     };
 
     const handleEarningsPress = () => {
-        navigation.navigate('EarningsOnDatePage'); 
+        navigation.navigate('EarningsOnDatePage');
     };
 
     return (
-        <ScrollView style={styles.container}>
-            {/* Date Picker Section */}
-            <View style={styles.datePickerContainer}>
-                {isDateSelected ? (
-                    <View style={styles.dateSelectedContainer}>
-                        <Text style={styles.dateText}>{date.toLocaleDateString('en-GB')}</Text>
+        <>
+            {route.params?.fromActivity && (
+                <View style={styles.headerContainer}>
+                    <TouchableOpacity style={styles.backArrow} onPress={() => navigation.goBack()}>
+                        <FontAwesomeIcon name="arrow-left" size={22} color="#fff" />
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitle}>History</Text>
+                </View>
+            )}
+            <ScrollView style={styles.container}>
+                <View style={styles.datePickerContainer}>
+                    {isDateSelected ? (
+                        <View style={styles.dateSelectedContainer}>
+                            <Text style={styles.dateText}>{date.toLocaleDateString('en-GB')}</Text>
+                            <TouchableOpacity
+                                style={styles.backButton}
+                                onPress={handleBackPress}
+                            >
+                                <Text style={styles.backButtonText}>Back</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ) : (
                         <TouchableOpacity
-                            style={styles.backButton}
-                            onPress={handleBackPress}
+                            style={styles.dateButton}
+                            onPress={() => setShowPicker(true)}
                         >
-                            <Text style={styles.backButtonText}>Back</Text>
+                            <Text style={styles.dateButtonText}>Select Date</Text>
                         </TouchableOpacity>
+                    )}
+
+                    {showPicker && (
+                        <DateTimePicker
+                            value={date}
+                            mode="date"
+                            display="default"
+                            onChange={onChange}
+                        />
+                    )}
+                </View>
+
+                <TouchableOpacity style={styles.boxWithShadow} onPress={handleEarningsPress}>
+                    <View style={styles.headerBox}>
+                        <Text style={styles.headerText}>₹ 0.0</Text>
+                        <Text style={styles.subHeaderText}>
+                            {isDateSelected
+                                ? `Earnings on ${date.toLocaleDateString('en-GB')}`
+                                : 'Today\'s Earnings'}{' '}
+                            <FontAwesomeIcon name="arrow-right" size={13} color="white" />
+                        </Text>
                     </View>
-                ) : (
-                    <TouchableOpacity
-                        style={styles.dateButton}
-                        onPress={() => setShowPicker(true)}
-                    >
-                        <Text style={styles.dateButtonText}>Select Date</Text>
-                    </TouchableOpacity>
-                )}
+                    <View style={styles.line} />
+                    <View style={styles.footer}>
+                        <Text style={styles.footerText}>Cash Collected</Text>
+                        <Text style={styles.footerText}>₹ 0.0</Text>
+                    </View>
+                </TouchableOpacity>
 
-                {/* DateTimePicker */}
-                {showPicker && (
-                    <DateTimePicker
-                        value={date}
-                        mode="date"
-                        display="default"
-                        onChange={onChange}
-                    />
-                )}
-            </View>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabNav}>
+                    {Object.keys(vehicleScreens).map((tab) => (
+                        <TouchableOpacity
+                            key={tab}
+                            style={[styles.tabButton, activeTab === tab && styles.tabButtonActive]}
+                            onPress={() => setActiveTab(tab)}
+                        >
+                            <Text style={styles.tabText}>{tab}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
 
-            {/* Earnings Section - Touchable for navigation */}
-            <TouchableOpacity style={styles.boxWithShadow} onPress={handleEarningsPress}>
-                <View style={styles.headerBox}>
-                    <Text style={styles.headerText}>₹ 0.0</Text>
-                    <Text style={styles.subHeaderText}>
-                        {isDateSelected
-                            ? `Earnings on ${date.toLocaleDateString('en-GB')}`
-                            : 'Today\'s Earnings'}
-                        <FontAwesomeIcon name="arrow-right" size={13} color="white" />
-                    </Text>
+                <View style={styles.tabContent}>
+                    {vehicleScreens[activeTab]}
                 </View>
-                <View style={styles.line} />
-                <View style={styles.footer}>
-                    <Text style={styles.footerText}>Cash Collected</Text>
-                    <Text style={styles.footerText}>₹ 0.0</Text>
-                </View>
-            </TouchableOpacity>
-
-            {/* Tabs Section */}
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabNav}>
-                {Object.keys(vehicleScreens).map((tab) => (
-                    <TouchableOpacity
-                        key={tab}
-                        style={[styles.tabButton, activeTab === tab && styles.tabButtonActive]}
-                        onPress={() => setActiveTab(tab)}
-                    >
-                        <Text style={styles.tabText}>{tab}</Text>
-                    </TouchableOpacity>
-                ))}
             </ScrollView>
-
-            {/* Tab Content Section */}
-            <View style={styles.tabContent}>
-                {vehicleScreens[activeTab]}
-            </View>
-        </ScrollView>
+        </>
     );
 };
 
@@ -152,8 +151,23 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
     },
-    datePickerContainer: {
+    headerContainer: {
         marginTop: 30,
+        backgroundColor: '#0F4A97',
+        padding: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    headerTitle: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+        flex: 1,
+        textAlign: 'center',
+        
+    },
+   
+    datePickerContainer: {
         padding: 10,
         backgroundColor: '#fff',
         borderRadius: 10,

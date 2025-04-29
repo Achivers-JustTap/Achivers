@@ -74,7 +74,7 @@ const EarningsOnDatePage = () => {
         </View>
       </View>
 
-      {/* Loop through the transactions array */}
+     
       {transactions.map((item) => (
         <TouchableOpacity
           key={item.id}  

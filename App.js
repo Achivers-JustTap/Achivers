@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
 import { Provider } from 'react-redux'; 
 import store from './App/screens/SignUpScreens/store_management/store';
 import { StyleSheet, Text } from 'react-native';
@@ -48,16 +47,8 @@ import DriverLicence_list from './App/screens/InsideAppScreens/MenuScreens/Profi
 import PanCard_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanCard_List';
 import RC_List from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RC_List';
 import Today from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/Today';
-import All from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/All';
-import BikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/BikeTaxi';
-import ParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/ParcelDelivery';
 import RateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCard';
-import BikeRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/BikeRateCard';
-import AutoRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/AutoRateCard';
-import MiniCabRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/MiniCabRateCard';
-import MaxiCabRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/MaxiCabRateCard';
-import XLCabRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/XLCabRateCard';
-import IntercityRateCard from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/CarRateCards.js/IntercityRateCard';
+import AllRateCards from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/RateCardItems/AllRateCards';
 import Guidelines from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Guidelines';
 import RechargePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/RechargePage';
 import BuddyRecharge from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/BuddyRecharge';
@@ -68,14 +59,10 @@ import LicenseImageChange from './App/screens/InsideAppScreens/MenuScreens/Profi
 import LicenseFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/LicenseFileChange';
 import RcImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RcImageChange';
 import RcFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/RcFileChange';
-import Groceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Groceries';
 import BikeReference from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferenceDetails/BikeReference';
 import CarReference from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferenceDetails/CarReference';
 import AutoReference from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/ReferenceDetails/AutoReference';
 import HistoryAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryAll';
-import HistoryBikeTaxi from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryBikeTaxi';
-import HistoryParcelDelivery from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryParcelDelivery';
-import HistoryGroceries from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryGroceries';
 import EarningsHelp from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/EarningsHelp';
 import TransactionDetailsPage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/WalletScreens/TransactionDetailsPage';
 import IncentivesAndBonuses from './App/screens/InsideAppScreens/MenuScreens/IncentivesAndBonuses';
@@ -98,18 +85,14 @@ import AadharImageChange from './App/screens/InsideAppScreens/MenuScreens/Profil
 import AadharFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/AadharFileChange';
 import PanImageChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanImageChange';
 import PanFileChange from './App/screens/InsideAppScreens/MenuScreens/ProfileDetailsPages/Documents_lists/PanFileChange';
-import CarRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CarRides';
-import Intercity from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/Intercity';
-import AutoRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/AutoRides';
 import CompletedRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CompletedRides';
 import MissedOrders from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/MissedOrders';
-import HistoryCabRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryCabRides';
-import HistoryCarAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryCarAll';
-import HistoryAutoRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryAutoRides';
-import HistoryAutoAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryAutoAll';
 import EarningsOnDatePage from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/EarningsOnDatePage';
 import RidesSummary from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/RidesSummary';
 import CancelledOrders from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CancelledOrders';
+import HistoryRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/HistoryScreens/HistoryRides';
+import TodayAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/TodayAll';
+import TodayRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/TodayRides';
 
 
 const Stack = createStackNavigator();
@@ -196,23 +179,13 @@ export default function App() {
           <Stack.Screen name="MissedOrders" component={MissedOrders} />
           <Stack.Screen name="CancelledOrders" component={CancelledOrders} />
           
-          <Stack.Screen name="All" component={All} />
-
-          <Stack.Screen name="BikeTaxi" component={BikeTaxi} options={{ headerShown: false }} />
-          <Stack.Screen name="ParcelDelivery" component={ParcelDelivery} options={{ headerShown: false }} />
-          <Stack.Screen name="Groceries" component={Groceries} options={{ headerShown: false }} />
+          <Stack.Screen name="TodayAll" component={TodayAll} />
+          <Stack.Screen name="TodayRides" component={TodayRides} />
           
           <Stack.Screen name="RateCard" component={RateCard} />
-          <Stack.Screen name="BikeRateCard" component={BikeRateCard} />
-          <Stack.Screen name="AutoRateCard" component={AutoRateCard} />
-          <Stack.Screen name="MiniCabRateCard" component={MiniCabRateCard} />
-          <Stack.Screen name="MaxiCabRateCard" component={MaxiCabRateCard} />
-          <Stack.Screen name="XLCabRateCard" component={XLCabRateCard} />
-          <Stack.Screen name="IntercityRateCard" component={IntercityRateCard} />
+          <Stack.Screen name="AllRateCards" component={AllRateCards} />
           <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
-          <Stack.Screen name="CarRides" component={CarRides} />
-          <Stack.Screen name="Intercity" component={Intercity} />
-          <Stack.Screen name="AutoRides" component={AutoRides} />
+
 
           <Stack.Screen name="EarningsOnDatePage" component={EarningsOnDatePage} />
           <Stack.Screen name="RidesSummary" component={RidesSummary} options={{ headerShown: false }}  />
@@ -229,13 +202,7 @@ export default function App() {
           <Stack.Screen name="AutoReference" component={AutoReference}/>
 
           <Stack.Screen name="HistoryAll" component={HistoryAll} />
-          <Stack.Screen name="HistoryBikeTaxi" component={HistoryBikeTaxi} options={{ headerShown: false }} />
-          <Stack.Screen name="HistoryParcelDelivery" component={HistoryParcelDelivery} options={{ headerShown: false }} />
-          <Stack.Screen name="HistoryGroceries" component={HistoryGroceries} options={{ headerShown: false }} />
-          <Stack.Screen name="HistoryAutoAll" component={HistoryAutoAll} options={{ headerShown: false }} />
-          <Stack.Screen name="HistoryAutoRides" component={HistoryAutoRides} options={{ headerShown: false }} />
-          <Stack.Screen name="HistoryCarAll" component={HistoryCarAll} options={{ headerShown: false }} />
-          <Stack.Screen name="HistoryCabRides" component={HistoryCabRides} options={{ headerShown: false }} />
+         <Stack.Screen name="HistoryRides" component={HistoryRides} options={{ headerShown: false }} />
 
 
            {/*Incentives and Bonuses*/}

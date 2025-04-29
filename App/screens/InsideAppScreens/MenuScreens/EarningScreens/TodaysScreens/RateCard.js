@@ -1,87 +1,87 @@
-import { View, Text } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import React from 'react';
-import MiniCabRateCard from './RateCardItems/CarRateCards.js/MiniCabRateCard';
-import MaxiCabRateCard from './RateCardItems/CarRateCards.js/MaxiCabRateCard';
-import XLCabRateCard from './RateCardItems/CarRateCards.js/XLCabRateCard';
-import IntercityRateCard from './RateCardItems/CarRateCards.js/IntercityRateCard';
-import BikeRateCard from './RateCardItems/BikeRateCard';
-import AutoRateCard from './RateCardItems/AutoRateCard';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-
-const Tab = createMaterialTopTabNavigator();
+import AllRateCards from './RateCardItems/AllRateCards';
 
 const RateCard = () => {
-  const vehicle = useSelector((state) => state.documents.vehicleType);
+  const selectedVehicleType = useSelector((state) => state.documents.vehicleType);
+  const [activeTab, setActiveTab] = useState(null);
+  const [vehicleTabs, setVehicleTabs] = useState([]);
 
-  if (vehicle === 'car') {
-    return (
-      <View style={{ flex: 1 }}>
-        <Tab.Navigator
-          initialRouteName="Mini Cab"
-          screenOptions={{
-            tabBarActiveTintColor: '#fff',
-            tabBarInactiveTintColor: '#888',
-            tabBarStyle: { backgroundColor: '#0F4A97' },
-            tabBarLabelStyle: { fontSize: 13, fontWeight: 'bold' },
-            tabBarIndicatorStyle: { backgroundColor: '#fff' },
-            tabBarScrollEnabled: true,
-          }}
-        >
-          <Tab.Screen name="Mini Cab" component={MiniCabRateCard} />
-          <Tab.Screen name="Maxi Cab" component={MaxiCabRateCard} />
-          <Tab.Screen name="XL Cab" component={XLCabRateCard} />
-          <Tab.Screen name="Intercity Cab" component={IntercityRateCard} />
-        </Tab.Navigator>
-      </View>
-    );
-  }
-
-  if (vehicle === 'auto') {
-    return (
-      <View style={{ flex: 1 }}>
-        <Tab.Navigator
-          initialRouteName="Auto Rate Card"
-          screenOptions={{
-            tabBarActiveTintColor: '#fff',
-            tabBarInactiveTintColor: '#888',
-            tabBarStyle: { backgroundColor: '#0F4A97' },
-            tabBarLabelStyle: { fontSize: 13, fontWeight: 'bold' },
-            tabBarIndicatorStyle: { backgroundColor: '#fff' },
-            tabBarScrollEnabled: true,
-          }}
-        >
-          <Tab.Screen name="Auto Rate Card" component={AutoRateCard} />
-        </Tab.Navigator>
-      </View>
-    );
-  }
-
-  if (vehicle === 'bike') {
-    return (
-      <View style={{ flex: 1 }}>
-        <Tab.Navigator
-          initialRouteName="Bike Rate Card"
-          screenOptions={{
-            tabBarActiveTintColor: '#fff',
-            tabBarInactiveTintColor: '#888',
-            tabBarStyle: { backgroundColor: '#0F4A97' },
-            tabBarLabelStyle: { fontSize: 13, fontWeight: 'bold' },
-            tabBarIndicatorStyle: { backgroundColor: '#fff' },
-            tabBarScrollEnabled: true,
-          }}
-        >
-          <Tab.Screen name="Bike Rate Card" component={BikeRateCard} />
-        </Tab.Navigator>
-      </View>
-    );
-  }
+  useEffect(() => {
+    let tabs = [];
+    if (selectedVehicleType === 'car') {
+      tabs = ['Car', 'Reserved', 'Intercity', 'Rentals'];
+    } else if (selectedVehicleType === 'auto') {
+      tabs = ['Auto', 'Parcels'];
+    } else if (selectedVehicleType === 'moto') {
+      tabs = ['Bike', 'Parcels'];
+    } else {
+      tabs = ['Bike', 'Parcels'];
+    }
+    setVehicleTabs(tabs);
+    setActiveTab(tabs[0]); // Always activate the first tab
+  }, [selectedVehicleType]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Select a vehicle type to view rate cards</Text>
+    <View style={styles.container}>
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false} 
+        style={styles.tabNav}
+        contentContainerStyle={{ paddingHorizontal: 10 }}
+      >
+        {vehicleTabs.map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            style={[styles.tabButton, activeTab === tab && styles.tabButtonActive]}
+            onPress={() => setActiveTab(tab)}
+          >
+            <Text style={styles.tabText}>{tab}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+
+      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
+        {vehicleTabs.includes(activeTab) && (
+          <AllRateCards activeTab={activeTab} vehicleType={selectedVehicleType} />
+        )}
+      </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f2f6ff',
+  },
+  tabNav: {
+    backgroundColor: '#0F4A97',
+    borderRadius: 10,
+    margin: 10,
+    padding: 5,
+  },
+  tabButton: {
+    backgroundColor: '#B0BEC5',
+    marginHorizontal: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  tabButtonActive: {
+    backgroundColor: '#FFEB3B',
+    shadowColor: '#FFEB3B',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+  },
+  tabText: {
+    fontSize: 16,
+    color: '#0F4A97',
+    fontWeight: 'bold',
+  },
+});
 
 export default RateCard;

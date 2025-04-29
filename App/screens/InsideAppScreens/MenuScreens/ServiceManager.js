@@ -24,7 +24,7 @@ const ServiceManager = ({ navigation }) => {
     const fetchServices = async () => {
       
       const serviceData = {
-        bike: [
+        moto: [
     { id: 1, name: 'Bike', image: require('../../../../assets/images/moto.png'), altImage: require('../../../../assets/images/bike top right.png'), active: false, duplicate: false },
     { id: 2, name: 'Parcel Delivery', image: require('../../../../assets/images/parcel.png'), altImage: require('../../../../assets/images/parcel top right.png'), active: false, duplicate: false },
     { id: 3, name: 'Groceries Delivery', image: require('../../../../assets/images/Groceries.png'), altImage: require('../../../../assets/images/GroceriesDeliveryTopRight.png'), active: false, duplicate: false },

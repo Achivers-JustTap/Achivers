@@ -40,7 +40,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
 
     const vehicles = [
         {
-            id: 'bike',
+            id: 'moto',
             name: 'Moto',
             image: require('../../../assets/images/bike top.png'),
         },
