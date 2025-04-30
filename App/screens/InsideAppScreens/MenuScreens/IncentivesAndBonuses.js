@@ -22,7 +22,7 @@ const IncentivesAndBonuses = ({ navigation }) => {
             style={styles.cardBackground}
           >
             <View style={styles.cardContent}>
-              <FontAwesomeIcon name="rupee" size={30} color="#fff" />
+              <FontAwesomeIcon name="rupee" size={30} padding={10} color="#fff" />
               <Text style={[styles.cardText, { fontSize:20 }]}>Incentives</Text>
             </View>
             <MaterialIconsIcon name="arrow-forward" size={23} color="#fff" />
@@ -42,13 +42,12 @@ const IncentivesAndBonuses = ({ navigation }) => {
                 source={require('../../../../assets/images/subscribe.png')} 
                 style={styles.subscriptionImage}
               />
-              <Text style={styles.cardText}>
+               <View style={{ marginLeft: 10 }}>
                 <Text style={styles.justTapText}>JUST TAP!</Text>
-              {''} Subscription Plans
-                <View style={styles.subheadingContainer}>
-                  <Text style={styles.subheadingText}>For More Benefits</Text>
-                </View>
-              </Text>
+                <Text style={styles.cardText}>Subscription Plans</Text>
+                <Text style={styles.subheadingText}>For More Benefits</Text>
+              </View>
+                
             </View>
             <MaterialIconsIcon name="arrow-forward" size={23} color="#fff" />
           </LinearGradient>
@@ -63,7 +62,7 @@ const IncentivesAndBonuses = ({ navigation }) => {
             style={styles.cardBackground}
           >
             <View style={styles.cardContent}>
-              <FontAwesomeIcon name='gift' size={30} color="#fff" />
+              <FontAwesomeIcon name='gift' size={30} padding={10}  color="#fff" />
               <Text style={[styles.cardText, { fontSize:20 }]}>Rewards</Text>
             </View>
             <MaterialIconsIcon name="arrow-forward" size={23} color="#fff" />
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 15,
     color: '#fff',
-    marginLeft: 10,
+    
   },
   justTapText: {
     fontFamily: 'SofadiOne',

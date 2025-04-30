@@ -8,10 +8,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const DriverLicence_list = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const { drivingLicense } = useSelector((state) => state.documents);
   const [isEditingDLNumber, setIsEditingDLNumber] = useState(false);
   const [isEditingValidTill, setIsEditingValidTill] = useState(false);
@@ -20,7 +21,6 @@ const DriverLicence_list = ({ route, navigation }) => {
   const [showSendButton, setShowSendButton] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [message, setMessage] = useState('');
-
   const [dlNumberError, setDlNumberError] = useState('');
 
   useEffect(() => {
@@ -37,27 +37,12 @@ const DriverLicence_list = ({ route, navigation }) => {
       }));
     }
   }, [route.params]);
-  
 
-  const handleTakeLicenseImage = () => {
-    navigation.navigate('LicenseImageChange', {
-      dlNumber,
-      validTill,
-    });
-  };
-  
-  const handleUploadFromFiles = () => {
-    navigation.navigate('LicenseFileChange', {
-      dlNumber,
-      validTill,
-    });
-  };
-  
   useEffect(() => {
     if (route.params?.licenseFrontFile && route.params?.licenseBackFile) {
       setMessage(route.params.uploadSuccess ? 'Files uploaded successfully!' : '');
       setShowSendButton(true);
-  
+
       dispatch(
         setDrivingLicenseDetails({
           ...drivingLicense,
@@ -67,7 +52,20 @@ const DriverLicence_list = ({ route, navigation }) => {
       );
     }
   }, [route.params]);
-  
+
+  const handleTakeLicenseImage = () => {
+    navigation.navigate('LicenseImageChange', {
+      dlNumber,
+      validTill,
+    });
+  };
+
+  const handleUploadFromFiles = () => {
+    navigation.navigate('LicenseFileChange', {
+      dlNumber,
+      validTill,
+    });
+  };
 
   const handleSendDetails = () => {
     setMessage('Your details were sent and you will be notified within 24 hours. Until then, you will not be able to take any rides.');
@@ -84,7 +82,7 @@ const DriverLicence_list = ({ route, navigation }) => {
       setShowSendButton(true);
     }
   };
-  
+
   const getCurrentDate = () => {
     const today = new Date();
     const day = String(today.getDate()).padStart(2, '0');
@@ -93,19 +91,20 @@ const DriverLicence_list = ({ route, navigation }) => {
     return `${day}/${month}/${year}`;
   };
 
-  const handleDateChange = (event, selectedDate) => {
-    setShowDatePicker(false);
-    if (selectedDate) {
-      const formattedDate = formatDate(selectedDate);
-      setValidTill(formattedDate);
-      setShowSendButton(true);
-    }
-  };
   const formatDate = (date) => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+  };
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      const formattedDate = formatDate(selectedDate);
+      setValidTill(formattedDate);
+      setIsEditingValidTill(true);
+    }
   };
 
   return (
@@ -136,30 +135,37 @@ const DriverLicence_list = ({ route, navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-     
 
-      
       <Text style={styles.boxHeading}>Valid Till</Text>
       <View style={styles.editableContainer}>
         <TextInput
           style={[styles.licenceNumber, isEditingValidTill && styles.editMode]}
           value={validTill}
-          editable={false} // Make TextInput non-editable
+          editable={false}
         />
         <TouchableOpacity
           style={styles.editButton}
-          onPress={() => setShowDatePicker(true)}
+          onPress={() => {
+            if (isEditingValidTill) {
+              setIsEditingValidTill(false);
+              setShowSendButton(true);
+            } else {
+              setShowDatePicker(true);
+            }
+          }}
         >
-          <Text style={styles.editButtonText}>Edit</Text>
+          <Text style={styles.editButtonText}>
+            {isEditingValidTill ? 'Save' : 'Edit'}
+          </Text>
         </TouchableOpacity>
       </View>
 
       {showDatePicker && (
         <DateTimePicker
-          value={new Date()}
+          isVisible={showDatePicker}
           mode="date"
-          display="default"
-          onChange={handleDateChange}
+          onConfirm={handleDateChange}
+          onCancel={() => setShowDatePicker(false)}
         />
       )}
 
@@ -238,7 +244,7 @@ const styles = StyleSheet.create({
   },
   licenceNumber: {
     height: 40,
-    width: '80%',
+    flex: 1,
     borderColor: '#eaf0fa',
     backgroundColor: '#eaf0fa',
     borderWidth: 1,

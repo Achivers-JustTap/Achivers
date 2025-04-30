@@ -74,13 +74,14 @@ const SubscriptionDetails = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     backgroundColor: '#fff',
   },
   helpButton: {
     position: 'absolute',
     top: 12,
     right: 15,
+    marginLeft: 15,
     backgroundColor: '#0F4A97',
     paddingVertical: 7,
     paddingHorizontal: 15,
@@ -105,19 +106,20 @@ const styles = StyleSheet.create({
   },
   planContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width:'100%',
+    width:'95%',
+    alignSelf: 'center',
     marginBottom: 20,
   },
   planBox: {
     flexDirection: 'row',
+    gap:10,
     width:'100%',
     justifyContent: 'space-between',
   },
   plan: {
     backgroundColor: '#f1f1f1',
     padding: 15,
-    width: '30%',
+    width: '32%',
     borderRadius: 8,
     alignItems: 'center',
   },
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0cc0df'
   },
   planText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
   },
   subHeading: {
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   subText: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#777',
   },
   termsHeading: {

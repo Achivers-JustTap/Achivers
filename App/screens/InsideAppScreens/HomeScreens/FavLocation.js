@@ -7,6 +7,10 @@ import {
   TextInput,
   FlatList,
   Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -65,50 +69,57 @@ const FavLocation = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.purposeText}>
-          Add your favorite stops to pick up rides along your route—maximize your trips and earnings!
-        </Text>
-        <Text style={styles.headerText}>Add Your Favorite Location</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Search to select location"
-          value={location}
-          onChangeText={setLocation}
-        />
-        <TouchableOpacity style={styles.addButton} onPress={handleAddLocation}>
-          <Text style={styles.addButtonText}>Select Location</Text>
-        </TouchableOpacity>
-      </View>
-      {locations.length > 0 && (
-        <FlatList
-          data={locations}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.locationItem}>
-              <Text style={styles.locationText}>{item}</Text>
-              <TouchableOpacity onPress={handleDeleteLocation}>
-                <MaterialIcons name="delete" size={24} color="red" />
-              </TouchableOpacity>
-            </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.innerContainer}>
+          <View style={styles.header}>
+            <Text style={styles.purposeText}>
+              Add your favorite stops to pick up rides along your route—maximize your trips and earnings!
+            </Text>
+            <Text style={styles.headerText}>Add Your Favorite Location</Text>
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Search to select location"
+              value={location}
+              onChangeText={setLocation}
+            />
+            <TouchableOpacity style={styles.addButton} onPress={handleAddLocation}>
+              <Text style={styles.addButtonText}>Select Location</Text>
+            </TouchableOpacity>
+          </View>
+          {locations.length > 0 && (
+            <FlatList
+              data={locations}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <View style={styles.locationItem}>
+                  <Text style={styles.locationText}>{item}</Text>
+                  <TouchableOpacity onPress={handleDeleteLocation}>
+                    <MaterialIcons name="delete" size={24} color="red" />
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
           )}
-        />
-      )}
-      <View style={styles.instructions}>
-        <Text style={styles.instructionText}>
-          1. You can change this location once every 15 days only.
-        </Text>
-        <Text style={styles.instructionText}>
-          2. You can use this favorite location option only two times a day.
-        </Text>
-        <Text style={styles.instructionText}>
-          3. You can add only one location.
-        </Text>
-      </View>
-    </View>
+          <View style={styles.instructions}>
+            <Text style={styles.instructionText}>
+              1. You can change this location once every 15 days only.
+            </Text>
+            <Text style={styles.instructionText}>
+              2. You can use this favorite location option only two times a day.
+            </Text>
+            <Text style={styles.instructionText}>
+              3. You can add only one location.
+            </Text>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -117,8 +128,11 @@ export default FavLocation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: '#c2dcff',
+  },
+  innerContainer: {
+    flex: 1,
+    padding: 20,
   },
   header: {
     marginBottom: 20,

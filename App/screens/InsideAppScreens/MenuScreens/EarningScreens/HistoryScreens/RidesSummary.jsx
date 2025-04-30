@@ -119,10 +119,10 @@ const RidesSummary = ({ route, navigation }) => {
           <Text style={styles.costValue}>{transaction.TripCharges}</Text>
         </View>
         <View style={styles.costRow}>
-          <Text style={styles.costLabel}>Tax Collected</Text>
-          <TouchableOpacity onPress={() => showInfo('tax')}>
+          <Text style={styles.costLabel}>Tax Collected  <TouchableOpacity onPress={() => showInfo('tax')}>
             <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
-          </TouchableOpacity>
+          </TouchableOpacity></Text>
+         
           <Text style={styles.costValue}>{transaction.tax}</Text>
         </View>
         <View style={styles.costRow}>
@@ -135,10 +135,10 @@ const RidesSummary = ({ route, navigation }) => {
         </View>
 
         <View style={styles.costRow}>
-          <Text style={styles.routeLabel}>Time Taken({transaction.timeTaken})</Text>
-          <TouchableOpacity onPress={() => showInfo('timeTaken')}>
+          <Text style={styles.routeLabel}>Time Taken({transaction.timeTaken}) <TouchableOpacity onPress={() => showInfo('timeTaken')}>
             <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
-          </TouchableOpacity>
+          </TouchableOpacity></Text>
+          
           <Text style={styles.costValue}>{transaction.timeCharges}</Text>
         </View>
 
@@ -153,10 +153,10 @@ const RidesSummary = ({ route, navigation }) => {
         </View>
 
         <View style={styles.costRow}>
-          <Text style={styles.routeLabel}>Platform Fee</Text>
-          <TouchableOpacity onPress={() => showInfo('platformFee')}>
+          <Text style={styles.routeLabel}>Platform Fee <TouchableOpacity onPress={() => showInfo('platformFee')}>
             <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
-          </TouchableOpacity>
+          </TouchableOpacity></Text>
+          
           <Text style={styles.costValue}>11.7</Text>
         </View>
       </View>
@@ -295,7 +295,6 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   infoIcon: {
-    marginLeft: -80,
     marginTop: 2
   },
 });

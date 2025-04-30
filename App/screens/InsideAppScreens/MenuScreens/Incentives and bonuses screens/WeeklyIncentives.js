@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const WeeklyIncentives = ({ route, navigation }) => {
   const [selectedVehicleType, setSelectedVehicleType] = useState(route.params?.selectedVehicleName || 'Moto');
-  const [activeTab, setActiveTab] = useState('Bike Taxi');
-  const [week, setWeek] = useState('');
+  const [weekStart, setWeekStart] = useState('');
+  const [weekEnd, setWeekEnd] = useState('');
   const [showPicker, setShowPicker] = useState(false);
   const [isWeekSelected, setIsWeekSelected] = useState(false);
-  const [isFutureWeek, setIsFutureWeek] = useState(false); 
-  const [isCurrentWeek, setIsCurrentWeek] = useState(false); 
+  const [isFutureWeek, setIsFutureWeek] = useState(false);
+  const [isCurrentWeek, setIsCurrentWeek] = useState(false);
 
   const timeSlots = [
     {
@@ -29,24 +29,18 @@ const WeeklyIncentives = ({ route, navigation }) => {
       setSelectedVehicleType(route.params.vehicleType);
     }
 
-    // Set the current week by default
     const currentDate = new Date();
     const startOfWeek = new Date(currentDate);
-    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay()); // Set to Sunday
+    startOfWeek.setDate(currentDate.getDate() - currentDate.getDay());
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 6); // Set to Saturday
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
 
-    setWeek(
-      `${getDayName(startOfWeek)} (${startOfWeek.toLocaleDateString('en-GB')}) - ${getDayName(endOfWeek)} (${endOfWeek.toLocaleDateString('en-GB')})`
-    );
+    setWeekStart(`${getDayName(startOfWeek)} (${startOfWeek.toLocaleDateString('en-GB')})`);
+    setWeekEnd(`${getDayName(endOfWeek)} (${endOfWeek.toLocaleDateString('en-GB')})`);
     setIsWeekSelected(true);
     setIsCurrentWeek(true);
     setIsFutureWeek(false);
   }, [route.params]);
-
-  const handleTabPress = (tab) => {
-    setActiveTab(tab);
-  };
 
   const getDayName = (date) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -61,9 +55,9 @@ const WeeklyIncentives = ({ route, navigation }) => {
   const isCurrentWeekCheck = (selectedDate) => {
     const currentDate = new Date();
     const startOfWeek = new Date(selectedDate);
-    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 6); 
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
     return currentDate >= startOfWeek && currentDate <= endOfWeek;
   };
 
@@ -72,14 +66,13 @@ const WeeklyIncentives = ({ route, navigation }) => {
       const startOfWeek = new Date(selectedDate);
       const endOfWeek = new Date(selectedDate);
 
-      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); 
-      endOfWeek.setDate(endOfWeek.getDate() + 6); 
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+      endOfWeek.setDate(endOfWeek.getDate() + 6);
 
-      setWeek(
-        `${getDayName(startOfWeek)} (${startOfWeek.toLocaleDateString('en-GB')}) - ${getDayName(endOfWeek)} (${endOfWeek.toLocaleDateString('en-GB')})`
-      );
+      setWeekStart(`${getDayName(startOfWeek)} (${startOfWeek.toLocaleDateString('en-GB')})`);
+      setWeekEnd(`${getDayName(endOfWeek)} (${endOfWeek.toLocaleDateString('en-GB')})`);
       setIsWeekSelected(true);
-      
+
       if (isFutureDate(startOfWeek)) {
         setIsFutureWeek(true);
         setIsCurrentWeek(false);
@@ -96,18 +89,17 @@ const WeeklyIncentives = ({ route, navigation }) => {
 
   const handleBackPress = () => {
     setIsWeekSelected(false);
-    setWeek('');
-    setIsFutureWeek(false); 
-    setIsCurrentWeek(false); 
+    setWeekStart('');
+    setWeekEnd('');
+    setIsFutureWeek(false);
+    setIsCurrentWeek(false);
   };
 
   const renderCard = (title, time, gradientColors, rides, amounts, start, end, key) => {
     return (
       <View key={key} style={styles.cardContainer}>
         <LinearGradient colors={gradientColors} style={styles.cardHeaderContainer}>
-          <Text style={[styles.cardHeader, { color: isFutureWeek || isCurrentWeek ? '#fff' : '#fff' }]}>
-            {time}
-          </Text>
+          <Text style={styles.cardHeader}>{time}</Text>
         </LinearGradient>
         <View style={styles.cardBodyContainer}>
           {isWeekSelected ? (
@@ -142,19 +134,17 @@ const WeeklyIncentives = ({ route, navigation }) => {
       <View style={styles.datePickerContainer}>
         {isWeekSelected ? (
           <View style={styles.dateSelectedContainer}>
-            <Text style={styles.dateText}>{week}</Text>
-            <TouchableOpacity
-              style={styles.backButton}
-              onPress={handleBackPress}
-            >
+            <View style={styles.weekDisplay}>
+              <Text style={styles.dateText}>{weekStart}</Text>
+              <Text style={styles.toText}>to</Text>
+              <Text style={styles.dateText}>{weekEnd}</Text>
+            </View>
+            <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
               <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity>
           </View>
         ) : (
-          <TouchableOpacity
-            style={styles.dateButton}
-            onPress={() => setShowPicker(true)}
-          >
+          <TouchableOpacity style={styles.dateButton} onPress={() => setShowPicker(true)}>
             <Text style={styles.dateButtonText}>Select Week</Text>
           </TouchableOpacity>
         )}
@@ -169,8 +159,8 @@ const WeeklyIncentives = ({ route, navigation }) => {
         )}
       </View>
 
-      {timeSlots.map((slot, index) => 
-        renderCard(slot.title, slot.time, slot.gradientColors, slot.rides, slot.amounts, slot.start, slot.end, index) 
+      {timeSlots.map((slot, index) =>
+        renderCard(slot.title, slot.time, slot.gradientColors, slot.rides, slot.amounts, slot.start, slot.end, index)
       )}
     </ScrollView>
   );
@@ -190,14 +180,23 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   dateSelectedContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
+  weekDisplay: {
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   dateText: {
-    fontSize: 12.5,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#0F4A97',
+    textAlign: 'center',
+  },
+  toText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#444',
+    marginVertical: 2,
   },
   dateButton: {
     backgroundColor: '#0F4A97',
@@ -211,8 +210,10 @@ const styles = StyleSheet.create({
   },
   backButton: {
     backgroundColor: '#FFB74D',
-    padding: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderRadius: 5,
+    marginTop: 4,
   },
   backButtonText: {
     color: '#fff',
@@ -260,11 +261,11 @@ const styles = StyleSheet.create({
   },
   rideText: {
     fontSize: 16,
-    left: -90,
+    flex: 1,
     textAlign: 'left',
+    paddingLeft: 10,
   },
   amountText: {
-    right: 10,
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'right',

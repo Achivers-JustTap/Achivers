@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   rcNumber: {
     height: 40,
-    width: '80%',
+    flex: 1, // changed from width: '80%'
     borderColor: '#eaf0fa',
     backgroundColor: '#eaf0fa',
     borderWidth: 1,
@@ -165,13 +165,17 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: 'black',
   },
+
+  
   editMode: {
     backgroundColor: '#fff4c9',
   },
   editableContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    justifyContent: 'space-between',
+    gap: 10, // Optional: if supported
+    marginVertical: 10,
   },
   editButton: {
     marginLeft: 10,

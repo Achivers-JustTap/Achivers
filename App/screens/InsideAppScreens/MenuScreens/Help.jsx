@@ -240,7 +240,7 @@ const Help = () => {
   <Text style={styles.callIconText}>Call Support </Text>
   <MaterialIcons name="call" size={24} color="#0F4A97" style={styles.callIconButton} />
 </TouchableOpacity>
-  <Text style={{textAlign:'center'}}> Or </Text>
+  <Text style={{textAlign:'center', fontSize: 16, fontWeight: 'bold', marginTop: 20 }}> Or </Text>
 
       <View style={styles.submitContainer}>
         <Text style={styles.subheading}>Have a concern?</Text>

@@ -129,13 +129,20 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center', 
+    flexWrap: 'wrap', 
   },
+  
+ 
+  
   cardBody: {
     marginTop: 10,
   },
   transactionText: {
     fontSize: 16,
     fontWeight: 'bold',
+    flex: 1,
+    marginRight: 10, 
   },
   dateText: {
     fontSize: 14,

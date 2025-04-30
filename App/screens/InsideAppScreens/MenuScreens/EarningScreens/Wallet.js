@@ -138,12 +138,14 @@ const styles = StyleSheet.create({
   },
   tabNav: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    gap: 10,
     backgroundColor: '#0F4A97',
     borderRadius: 10,
     padding: 10,
     marginTop: 5,
   },
+  
   tabButton: {
     backgroundColor: '#B0BEC5',
     paddingVertical: 12,
@@ -174,6 +176,7 @@ const styles = StyleSheet.create({
   tabContent: {
     marginTop: 20,
     padding: 15,
+    gap: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#0F4A97',

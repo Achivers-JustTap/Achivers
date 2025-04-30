@@ -153,29 +153,32 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  
+  
   aadharNumber: {
     height: 40,
-    width: '80%',
+    flex: 1, // changed from width: '80%'
     borderColor: '#eaf0fa',
     backgroundColor: '#eaf0fa',
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 16,
     paddingLeft: 10,
-    marginBottom: 20,
     color: 'black',
   },
+  
   editMode: {
     backgroundColor: '#fff4c9',
   },
   editableContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    
+    justifyContent: 'space-between',
+    gap: 10, // Optional: if supported
+    marginVertical: 10,
   },
   editButton: {
-    marginTop: -20,
+    
     marginLeft: 10,
     backgroundColor: '#007bff',
     paddingVertical: 5,
