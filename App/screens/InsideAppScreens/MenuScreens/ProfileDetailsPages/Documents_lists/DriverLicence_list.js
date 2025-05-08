@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import DateTimePicker from 'react-native-modal-datetime-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const DriverLicence_list = ({ route, navigation }) => {
   const dispatch = useDispatch();

@@ -1,18 +1,22 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 
-const MissedOrders = () => {
+const MissedOrders = ({navigation}) => {
   const missedRides = [
     {
+      orderId: 'JTRID123456',
       service: 'Bike',
       time: '9:00 AM',
+      Date:'05-06-2024',
       pickup: 'Koramangala',
       drop: 'BTM Layout',
       status: 'Missed',
     },
     {
-      service: 'Bike',
+      orderId: 'JTRID2345',
+      service: 'Parcel',
       time: '1:45 PM',
+      Date:'05-06-2024',
       pickup: 'Hebbal',
       drop: 'Electronic City',
       status: 'Skipped',
@@ -23,15 +27,17 @@ const MissedOrders = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         {missedRides.map((ride, index) => (
-          <View key={index} style={styles.rideBox}>
-            <View style={styles.rideTopRow}>
-              <Text style={styles.serviceName}>{ride.service}</Text>
-              <Text style={styles.timeText}>{ride.time}</Text>
-              <Text style={styles.rupeeText}>₹0</Text>
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('MissedOrdersSummary', { missedRides: ride })}>
+            <View style={styles.rideBox}>
+              <View style={styles.rideTopRow}>
+                <Text style={styles.serviceName}>{ride.service}</Text>
+                <Text style={styles.timeText}>{ride.time}</Text>
+                <Text style={styles.rupeeText}>₹0</Text>
+              </View>
+              <Text style={styles.locationText}>From: {ride.pickup} → To: {ride.drop}</Text>
+              <Text style={styles.statusText}>{ride.status}</Text>
             </View>
-            <Text style={styles.locationText}>From: {ride.pickup} → To: {ride.drop}</Text>
-            <Text style={styles.statusText}>{ride.status}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -52,11 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     padding: 15,
     borderRadius: 12,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 3,
+    
   },
   rideTopRow: {
     flexDirection: 'row',

@@ -19,7 +19,8 @@ export const AlertsProvider = ({ children }) => {
       fare: 200,
       time: "20 mins",
       distance: "8 km",
-      distanceToPickup: "2.5 km"
+      distanceToPickup: "2.5 km",
+      tip: 50,
     },
     {
       pickup: "789 Oak Avenue, City C",
@@ -39,7 +40,7 @@ export const AlertsProvider = ({ children }) => {
   const playSoundTimeout = useRef(null);
 
   useEffect(() => {
-    // Play or stop sound based on alerts presence and page visibility
+   // Play or stop sound based on alerts presence and page visibility
     if (alerts.length > 0 && isOnline && alertsPageVisible) {
       playSound();
     } else {
@@ -97,7 +98,6 @@ export const AlertsProvider = ({ children }) => {
   const goOffline = () => {
     setIsOnline(false);
     setAlertsPageVisible(false);
-    setIsHalfPageVisible(false);
     if (playSoundTimeout.current) {
       clearTimeout(playSoundTimeout.current);
     }
@@ -108,36 +108,13 @@ export const AlertsProvider = ({ children }) => {
   const openAlertsPage = () => {
     setAlertsPageVisible(true);
   };
-
   const closeAlertsPage = () => {
-    setAlertsPageVisible(false);
-    setIsHalfPageVisible(false);
+ setAlertsPageVisible(false);
     // Do not stop sound here if alerts exist, sound continues
   };
 
-  const openHalfPageAlerts = () => {
-    setIsHalfPageVisible(false);
-    setAlertsPageVisible(true);
-    setTimeout(() => {
-      setIsHalfPageVisible(true);
-    }, 0);
-  };
-
-  const closeHalfPageAlerts = () => {
-    setIsHalfPageVisible(false);
-    setAlertsPageVisible(false);
-  };
-
-  // Ensure isHalfPageVisible is reset when alertsPageVisible changes
-  useEffect(() => {
-    if (!alertsPageVisible) {
-      setIsHalfPageVisible(false);
-    }
-  }, [alertsPageVisible]);
-
-
-  return (
-    <AlertsContext.Provider
+ return (
+   <AlertsContext.Provider
       value={{
         alerts,
         setAlerts,
@@ -147,14 +124,11 @@ export const AlertsProvider = ({ children }) => {
         goOnline,
         goOffline,
         alertsPageVisible,
-        isHalfPageVisible,
         openAlertsPage,
         closeAlertsPage,
-        openHalfPageAlerts,
-        closeHalfPageAlerts,
       }}
     >
-      {children}
+    {children}
     </AlertsContext.Provider>
   );
 };

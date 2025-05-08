@@ -8,7 +8,6 @@ import Activity from './Activity';
 import { useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { AlertsContext } from '../../Context/AlertsContext';
-import RideAlertsPage from './RideAlertsPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,11 +27,11 @@ function TabNavigationComponent() {
 }
 
 function CustomTabBar({ state, descriptors, navigation }) {
-    const { isOnline, goOnline, goOffline, alerts, alertsPageVisible } = useContext(AlertsContext);
+    const { isOnline, goOnline, goOffline, alerts } = useContext(AlertsContext);
     const [animation] = useState(new Animated.Value(0));
     const [alertShown, setAlertShown] = useState(false); // Track if alert has been shown
     const vehicle = useSelector(state => state.documents.vehicleType);
-    const navigationHook = useNavigation(); // Access navigation hook here
+    const navigationHook = useNavigation();
 
     const vehicles = [
         {
@@ -102,20 +101,16 @@ function CustomTabBar({ state, descriptors, navigation }) {
     });
 
     useEffect(() => {
-        if (alertShown) {
-            goOffline(); 
+        if (!isOnline && alertShown) {
+            setAlertShown(false);
         }
-    }, [alertShown]);
+    }, [isOnline]);
 
     useEffect(() => {
         if (isOnline && alerts.length > 0) {
-            openHalfPageAlerts();
-        } else {
-            closeHalfPageAlerts();
+            navigationHook.navigate('RideAlertsPage');
         }
     }, [isOnline, alerts]);
-
-    const { openHalfPageAlerts, closeHalfPageAlerts } = useContext(AlertsContext);
 
     return (
         <>
@@ -173,7 +168,7 @@ function CustomTabBar({ state, descriptors, navigation }) {
                 })}
 
                 {state.index === 1 && (
-                    <TouchableOpacity style={styles.centerButton} onPress={handleCenterButtonPress}>
+                    <TouchableOpacity style={[styles.centerButton, { zIndex: 10 }]} onPress={handleCenterButtonPress}>
                         <View style={styles.placeholder}>
                             {selectedVehicleInfo && (
                                 <Animated.Image
@@ -188,11 +183,9 @@ function CustomTabBar({ state, descriptors, navigation }) {
                     </TouchableOpacity>
                 )}
             </View>
-            {alertsPageVisible && <RideAlertsPage />}
         </>
     );
 }
-
 const styles = StyleSheet.create({
     tabBarContainer: {
         flexDirection: 'row',
@@ -224,7 +217,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 35,
         elevation: 3,
-        zindex: -1
+        zIndex: 10,
     },
     placeholder: {
         width: 60,

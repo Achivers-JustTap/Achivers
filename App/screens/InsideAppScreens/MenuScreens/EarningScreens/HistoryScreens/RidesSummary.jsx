@@ -60,7 +60,7 @@ const RidesSummary = ({ route, navigation }) => {
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={[styles.iconButton, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]} >
+          style={[styles.iconButton, { backgroundColor: isAmountAdded ? '#ff7e5f': '#96c93d' }]} >
           <AntDesign name="arrowleft" size={24} color="white" />
         </TouchableOpacity>
         <View style={styles.orderIdContainer}>
@@ -68,7 +68,7 @@ const RidesSummary = ({ route, navigation }) => {
           <Text style={styles.dateText}>{formattedDate} - {formattedDay}</Text>
         </View>
         <TouchableOpacity
-          style={[styles.helpButton, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}
+          style={[styles.helpButton, { backgroundColor: isAmountAdded ? '#ff7e5f' : '#96c93d' }]}
           onPress={() => navigation.navigate('Help')}>
           <FontAwesomeIcon name="hands-helping" size={15} color="#fff" />
           <Text style={styles.help}>Help</Text>
@@ -76,7 +76,7 @@ const RidesSummary = ({ route, navigation }) => {
       </View>
 
       <LinearGradient
-        colors={isAmountAdded ? ['#00b09b', '#96c93d'] : ['#ff7e5f', '#feb47b']}
+        colors={isAmountAdded ? ['#ff7e5f', '#feb47b'] : ['#00b09b', '#96c93d'] }
         style={styles.serviceStatusContainer}>
         <Text style={styles.serviceType}>{transaction.service}</Text>
         <Text style={styles.status}>{transaction.Status}</Text>
@@ -89,19 +89,19 @@ const RidesSummary = ({ route, navigation }) => {
       <View style={styles.bookingStatusContainer}>
         <View style={styles.routeContainer}>
           <View style={styles.routeStep}>
-            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View>
+            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#ff7e5f' : '#96c93d'  }]}></View>
             <Text style={styles.routeLabel}>Booking Accepted</Text>
             <Text style={styles.routeTime}>{transaction.BookingAccepted}</Text>
           </View>
 
           <View style={styles.routeStep}>
-            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View>
+            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#ff7e5f': '#96c93d'   }]}></View>
             <Text style={styles.routeLabel}>Start Time</Text>
             <Text style={styles.routeTime}>{transaction.startTime}</Text>
           </View>
 
           <View style={styles.routeStep}>
-            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#96c93d' : '#ff7e5f' }]}></View>
+            <View style={[styles.dot, { backgroundColor: isAmountAdded ? '#ff7e5f': '#96c93d'   }]}></View>
             <Text style={styles.routeLabel}>End Time</Text>
             <Text style={styles.routeTime}>{transaction.endTime}</Text>
           </View>
@@ -120,7 +120,7 @@ const RidesSummary = ({ route, navigation }) => {
         </View>
         <View style={styles.costRow}>
           <Text style={styles.costLabel}>Tax Collected  <TouchableOpacity onPress={() => showInfo('tax')}>
-            <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
+            <FontAwesomeIcon name="info-circle" size={18} color="#96c93d" style={styles.infoIcon} />
           </TouchableOpacity></Text>
          
           <Text style={styles.costValue}>{transaction.tax}</Text>
@@ -136,7 +136,7 @@ const RidesSummary = ({ route, navigation }) => {
 
         <View style={styles.costRow}>
           <Text style={styles.routeLabel}>Time Taken({transaction.timeTaken}) <TouchableOpacity onPress={() => showInfo('timeTaken')}>
-            <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
+            <FontAwesomeIcon name="info-circle" size={18} color="#96c93d" style={styles.infoIcon} />
           </TouchableOpacity></Text>
           
           <Text style={styles.costValue}>{transaction.timeCharges}</Text>
@@ -154,7 +154,7 @@ const RidesSummary = ({ route, navigation }) => {
 
         <View style={styles.costRow}>
           <Text style={styles.routeLabel}>Platform Fee <TouchableOpacity onPress={() => showInfo('platformFee')}>
-            <FontAwesomeIcon name="info-circle" size={18} color="#ff7e5f" style={styles.infoIcon} />
+            <FontAwesomeIcon name="info-circle" size={18} color="#96c93d" style={styles.infoIcon} />
           </TouchableOpacity></Text>
           
           <Text style={styles.costValue}>11.7</Text>
@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
   },
   locationText: {
     fontSize: 14,
+    fontWeight: 'bold',
     marginBottom: 5,
   },
   costContainer: {

@@ -1,17 +1,23 @@
-import { SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView,TouchableOpacity } from 'react-native';
 import React from 'react';
 
-const CancelledOrders = () => {
+const CancelledOrders = ({navigation}) => {
   const cancelledRides = [
     {
+      orderId: 'JTRID123456',
       service: 'Parcel',
       time: '10:30 AM',
+      Date:'05-06-2024',
+      pickup:'chintal',
       dropLocation: 'MG Road',
       cancelledBy: 'Customer',
     },
     {
+      orderId: 'JTRID2345',
       service: 'Bike',
       time: '12:15 PM',
+      Date:'05-06-2024',
+      pickup:'chintal',
       dropLocation: 'Indira Nagar',
       cancelledBy: 'Earner',
     },
@@ -20,7 +26,9 @@ const CancelledOrders = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        
         {cancelledRides.map((ride, index) => (
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('CancelledOrdersSummary', { cancelledRides: ride })}>
           <View key={index} style={styles.rideBox}>
             <View style={styles.rideTopRow}>
               <Text style={styles.serviceName}>{ride.service}</Text>
@@ -32,7 +40,9 @@ const CancelledOrders = () => {
               Accepted - Cancelled by {ride.cancelledBy}
             </Text>
           </View>
+          </TouchableOpacity>
         ))}
+        
       </ScrollView>
     </SafeAreaView>
   );

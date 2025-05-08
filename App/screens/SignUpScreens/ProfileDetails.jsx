@@ -97,13 +97,12 @@ const ProfileDetailsScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       {showPicker && (
-        <DateTimePicker
+       <DateTimePicker
           value={tempDate}
           mode="date"
           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
           onChange={onChangeDate}
-          maximumDate={new Date()}
-        />
+          />
       )}
 
       <TouchableOpacity style={styles.button} onPress={handleNext}>

@@ -41,8 +41,8 @@ const CustomerDetails = ({ navigation }) => {
                 </>
             )}
 
-            <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
-                <Text style={styles.buttonText}>Close</Text>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PickUpFlow')}>
+                <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
         </Animated.View>
     );

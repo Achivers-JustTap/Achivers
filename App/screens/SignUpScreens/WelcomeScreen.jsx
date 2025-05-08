@@ -30,7 +30,7 @@ const WelcomeScreen = ({ navigation }) => {
 
       <TouchableOpacity
         style={styles.registerButton}
-        onPress={() => navigation.navigate('WhichVehicleScreen', { isRegister: true })}
+        onPress={() => navigation.navigate('MobileOTPScreen', { isRegister: true })}
       >
         <Text style={styles.registerButtonText}>Register</Text>
       </TouchableOpacity>

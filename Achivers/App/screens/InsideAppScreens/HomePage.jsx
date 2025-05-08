@@ -6,7 +6,6 @@ import { UserLocationContext } from '../../Context/UserLocationContext';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
 import IncentivesCarousel from "../../../components/IncentivesCorousel";
-import RideAlertBox from '../../../components/RideAlertBox';
 import { AlertsContext } from '../../Context/AlertsContext';
 
 const HomePage = ({ navigation }) => {
@@ -16,6 +15,8 @@ const HomePage = ({ navigation }) => {
     const [notificationCount, setNotificationCount] = useState(1); 
     const userImaageUrl = useSelector((state) => state.user.profilePicture);
 
+  
+    
 
     const navigateToIncentives = () => {
         navigation.navigate("IncentivesPage"); 

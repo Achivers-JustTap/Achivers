@@ -36,7 +36,7 @@ const WhichVehicleScreen = ({ navigation, route }) => {
     if (selectedVehicle) {
       const selectedVehicleInfo = vehicles.find(v => v.id === selectedVehicle);
       const { name: selectedVehicleName, altImage } = selectedVehicleInfo;
-      navigation.navigate('MobileOTPScreen', { vehicleAltImage: altImage, selectedVehicleType: selectedVehicleName });
+      navigation.navigate('ProfileDetailsScreen', { vehicleAltImage: altImage, selectedVehicleType: selectedVehicleName });
       dispatch(setVehicleType(selectedVehicle));
     } else {
       Alert.alert('Please select a vehicle type');

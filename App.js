@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { Provider } from 'react-redux'; 
+import { Provider } from 'react-redux';
 import store from './App/screens/SignUpScreens/store_management/store';
 import { StyleSheet, Text } from 'react-native';
 import { useFonts } from 'expo-font';
@@ -94,136 +94,161 @@ import HistoryRides from './App/screens/InsideAppScreens/MenuScreens/EarningScre
 import TodayAll from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/TodayAll';
 import TodayRides from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/TodayRides';
 import RideAlertsPage from './App/screens/InsideAppScreens/RideAlertsPage';
+import CustomerDetails from './App/screens/InsideAppScreens/AcceptRidePages/CustomerDetails';
+
+import DropFlow from './App/screens/InsideAppScreens/AcceptRidePages/DropFlow';
+import PaymentFlow from './App/screens/InsideAppScreens/AcceptRidePages/PaymentFlow';
+import PickUpFlow from './App/screens/InsideAppScreens/AcceptRidePages/PickUpFlow.jsx';
+import MissedOrdersSummary from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/MissedOrdersSummary';
+import CancelledOrdersSummary from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CancelledOrdersSummary';
+import { useState } from 'react';
 
 
 const Stack = createStackNavigator();
 
-export default function App() {
+const AppContent = () => {
 
-    const [fontsLoaded] = useFonts({
-      'SofadiOne': require('./assets/fonts/SofadiOne-Regular.ttf'), // Load your font
-    });
-  
-    if (!fontsLoaded) {
-      return <Text>Loading...</Text>; // Show loading screen until font is loaded
-    }
-  
+  const [fontsLoaded] = useFonts({
+    'SofadiOne': require('./assets/fonts/SofadiOne-Regular.ttf'), // Load your font
+  });
+
+  if (!fontsLoaded) {
+    return <Text>Loading...</Text>; // Show loading screen until font is loaded
+  }
   return (
-    <Provider store={store}> 
-    <UserLocationProvider>
-      <AlertsProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            {/* Initial Sign Up Screens */}
+
+    <NavigationContainer>
+      <Stack.Navigator>
+        {/* Initial Sign Up Screens */}
+
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+        <Stack.Screen name="WhichVehicleScreen" component={WhichVehicleScreen} />
+        <Stack.Screen name="MobileOTPScreen" component={MobileOTPScreen} />
+        <Stack.Screen name="MobileOTPVerifyScreen" component={MobileOTPVerifyScreen} />
+        <Stack.Screen name="ProfileDetailsScreen" component={ProfileDetailsScreen} />
+        <Stack.Screen name="TakeSelfie" component={TakeSelfie} />
+        <Stack.Screen name="ProfileImageScreen" component={ProfileImageScreen} />
+        <Stack.Screen name="AadharUpload" component={AadharUpload} />
+        <Stack.Screen name="AadharImageUpload" component={AadharImageUpload} />
+        <Stack.Screen name="AadharUploadFromFile" component={AadharUploadFromFile} />
+        <Stack.Screen name="PanCard" component={PanCard} />
+        <Stack.Screen name="PanCardUpload" component={PanCardUpload} />
+        <Stack.Screen name="PanCardUploadFromFile" component={PanCardUploadFromFile} />
+        <Stack.Screen name="DriverLicense" component={DriverLicense} />
+        <Stack.Screen name="DrivingLicenseUpload" component={DrivingLicenseUpload} />
+        <Stack.Screen name="LicenseImageUpload" component={LicenseImageUpload} />
+        <Stack.Screen name="RC" component={RC} />
+        <Stack.Screen name="RCUploadFromFiles" component={RCUploadFromFiles} />
+        <Stack.Screen name="RCUpload" component={RCUpload} />
+        <Stack.Screen name="BankDetailsScreen" component={BankDetailsScreen} />
+        <Stack.Screen name="Processing" component={Processing} />
+        <Stack.Screen name="FileDetailsScreen" component={FileDetailsScreen} />
+
+        {/* Home Tab Navigation */}
+        <Stack.Screen name="HomeTabs" component={TabNavigationComponent} options={{ headerShown: false }} />
+        <Stack.Screen name="Notifications" component={Notifications} />
+        <Stack.Screen name="FavLocation" component={FavLocation} />
+        <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
+        <Stack.Screen name="BestPerformance" component={BestPerformance} />
+        <Stack.Screen name="IDCard" component={IDCard} />
+        <Stack.Screen name="Documents" component={Documents} />
+        <Stack.Screen name="LanguageSettings" component={LanguageSetting} />
+        <Stack.Screen name="ProfileHelp" component={ProfileHelp} />
+        <Stack.Screen name="ReferFriends" component={ReferFriends} />
+        <Stack.Screen name="Earnings" component={Earnings} options={{ headerShown: false }} />
+        <Stack.Screen name="MyLoan" component={MyLoan} />
+        <Stack.Screen name="IncentivesAndBonuses" component={IncentivesAndBonuses} />
+        <Stack.Screen name="ServiceManager" component={ServiceManager} options={{ headerShown: false }} />
+        <Stack.Screen name="DemandPlanner" component={DemandPlanner} />
+        <Stack.Screen name="Help" component={Help} />
+
+        <Stack.Screen name="AadharCard_List" component={AadharCard_List} />
+        <Stack.Screen name="AadharImageChange" component={AadharImageChange} />
+        <Stack.Screen name="AadharFileChange" component={AadharFileChange} />
+        <Stack.Screen name="DriverLicence_list" component={DriverLicence_list} />
+        <Stack.Screen name="LicenseImageChange" component={LicenseImageChange} />
+        <Stack.Screen name="LicenseFileChange" component={LicenseFileChange} />
+        <Stack.Screen name="PanCard_List" component={PanCard_List} />
+        <Stack.Screen name="PanImageChange" component={PanImageChange} />
+        <Stack.Screen name="PanFileChange" component={PanFileChange} />
+        <Stack.Screen name="RC_List" component={RC_List} />
+        <Stack.Screen name="RcImageChange" component={RcImageChange} />
+        <Stack.Screen name="RcFileChange" component={RcFileChange} />
+
+        {/* Earnings Screens */}
+        <Stack.Screen name="RideAlertsPage" component={RideAlertsPage} />
+        <Stack.Screen name="CustomerDetails" component={CustomerDetails} options={{ headerShown: false }} />
+        <Stack.Screen name="PickUpFlow" component={PickUpFlow} options={{ headerShown: false }} />
+        <Stack.Screen name="DropFlow" component={DropFlow} options={{ headerShown: false }} />
+        <Stack.Screen name="PaymentFlow" component={PaymentFlow} options={{ headerShown: false }} />
+
+        <Stack.Screen name="EarningsHelp" component={EarningsHelp} />
+        <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
+        <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
+        <Stack.Screen name="History" component={History} options={{ headerShown: false }} />
+
+        <Stack.Screen name="CompletedRides" component={CompletedRides} />
+        <Stack.Screen name="MissedOrders" component={MissedOrders} />
+        <Stack.Screen name="CancelledOrders" component={CancelledOrders} />
+
+        <Stack.Screen name="MissedOrdersSummary" component={MissedOrdersSummary} options={{ headerShown: false }} />
+        <Stack.Screen name="CancelledOrdersSummary" component={CancelledOrdersSummary} options={{ headerShown: false }} />
+
+        <Stack.Screen name="TodayAll" component={TodayAll} />
+        <Stack.Screen name="TodayRides" component={TodayRides} />
+
+        <Stack.Screen name="RateCard" component={RateCard} />
+        <Stack.Screen name="AllRateCards" component={AllRateCards} />
+        <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
+
+
+        <Stack.Screen name="EarningsOnDatePage" component={EarningsOnDatePage} />
+        <Stack.Screen name="RidesSummary" component={RidesSummary} options={{ headerShown: false }} />
+
+
+        <Stack.Screen name="RechargePage" component={RechargePage} options={{ headerShown: false }} />
+        <Stack.Screen name="BuddyRecharge" component={BuddyRecharge} />
+        <Stack.Screen name="AllTransactionPage" component={AllTransactionPage} options={{ headerShown: false }} />
+        <Stack.Screen name="TransactionDetailsPage" component={TransactionDetailsPage} options={{ headerShown: false }} />
+        <Stack.Screen name="PendingPage" component={PendingPage} options={{ headerShown: false }} />
+
+        <Stack.Screen name="BikeReference" component={BikeReference} />
+        <Stack.Screen name="CarReference" component={CarReference} />
+        <Stack.Screen name="AutoReference" component={AutoReference} />
+
+        <Stack.Screen name="HistoryAll" component={HistoryAll} />
+        <Stack.Screen name="HistoryRides" component={HistoryRides} options={{ headerShown: false }} />
+
+
+        {/*Incentives and Bonuses*/}
+        <Stack.Screen name="IncentivesPage" component={IncentivesPage} options={{ headerShown: false }} />
+        <Stack.Screen name="DailyIncentives" component={DailyIncentives} />
+        <Stack.Screen name="WeeklyIncentives" component={WeeklyIncentives} />
+        <Stack.Screen name="Bonuses" component={Bonuses} />
+        <Stack.Screen name="IncentivesHelpPage" component={IncentivesHelpPage} />
+        <Stack.Screen name="SubscriptionDetails" component={SubscriptionDetails} />
+        <Stack.Screen name="SubscriptionHelp" component={SubscriptionHelp} />
+        <Stack.Screen name="Rewards" component={Rewards} options={{ headerShown: false }} />
+        <Stack.Screen name="RewardsHelp" component={RewardsHelp} />
+        <Stack.Screen name="ServiceManagerHelp" component={ServiceManagerHelp} />
+      </Stack.Navigator>
+
+    </NavigationContainer>
+  );
+}
+
+export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <Provider store={store}>
+      <UserLocationProvider>
+        <AlertsProvider>
+         
+              <AppContent />
             
-            <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-            <Stack.Screen name="WhichVehicleScreen" component={WhichVehicleScreen} />
-            <Stack.Screen name="MobileOTPScreen" component={MobileOTPScreen} />
-            <Stack.Screen name="MobileOTPVerifyScreen" component={MobileOTPVerifyScreen} />
-            <Stack.Screen name="ProfileDetailsScreen" component={ProfileDetailsScreen} />
-            <Stack.Screen name="TakeSelfie" component={TakeSelfie} />
-            <Stack.Screen name="ProfileImageScreen" component={ProfileImageScreen} />
-            <Stack.Screen name="AadharUpload" component={AadharUpload} />
-            <Stack.Screen name="AadharImageUpload" component={AadharImageUpload} />
-            <Stack.Screen name="AadharUploadFromFile" component={AadharUploadFromFile} />
-            <Stack.Screen name="PanCard" component={PanCard} />
-            <Stack.Screen name="PanCardUpload" component={PanCardUpload} />
-            <Stack.Screen name="PanCardUploadFromFile" component={PanCardUploadFromFile} />
-            <Stack.Screen name="DriverLicense" component={DriverLicense} />
-            <Stack.Screen name="DrivingLicenseUpload" component={DrivingLicenseUpload} />
-            <Stack.Screen name="LicenseImageUpload" component={LicenseImageUpload} />
-            <Stack.Screen name="RC" component={RC} />
-            <Stack.Screen name="RCUploadFromFiles" component={RCUploadFromFiles} />
-            <Stack.Screen name="RCUpload" component={RCUpload} />
-            <Stack.Screen name="BankDetailsScreen" component={BankDetailsScreen} />
-            <Stack.Screen name="Processing" component={Processing} />
-            <Stack.Screen name="FileDetailsScreen" component={FileDetailsScreen} />
-
-            {/* Home Tab Navigation */}
-            <Stack.Screen name="HomeTabs" component={TabNavigationComponent} options={{ headerShown: false }} />
-            <Stack.Screen name="Notifications" component={Notifications} />
-            <Stack.Screen name="FavLocation" component={FavLocation} />
-            <Stack.Screen name="ProfiledetailsPage" component={ProfiledetailsPage} />
-            <Stack.Screen name="BestPerformance" component={BestPerformance} />
-            <Stack.Screen name="IDCard" component={IDCard} />
-            <Stack.Screen name="Documents" component={Documents} />
-            <Stack.Screen name="LanguageSettings" component={LanguageSetting} />
-            <Stack.Screen name="ProfileHelp" component={ProfileHelp} />
-            <Stack.Screen name="ReferFriends" component={ReferFriends} />
-            <Stack.Screen name="Earnings" component={Earnings} options={{ headerShown: false }} />
-            <Stack.Screen name="MyLoan" component={MyLoan} />
-            <Stack.Screen name="IncentivesAndBonuses" component={IncentivesAndBonuses} />
-            <Stack.Screen name="ServiceManager" component={ServiceManager} options={{ headerShown: false }}/>
-            <Stack.Screen name="DemandPlanner" component={DemandPlanner} />
-            <Stack.Screen name="Help" component={Help} />
-
-            <Stack.Screen name="AadharCard_List" component={AadharCard_List} />
-            <Stack.Screen name="AadharImageChange" component={AadharImageChange} />
-            <Stack.Screen name="AadharFileChange" component={AadharFileChange} />
-            <Stack.Screen name="DriverLicence_list" component={DriverLicence_list}/>
-            <Stack.Screen name="LicenseImageChange" component={LicenseImageChange} />
-            <Stack.Screen name="LicenseFileChange" component={LicenseFileChange} />
-            <Stack.Screen name="PanCard_List" component={PanCard_List}/>
-            <Stack.Screen name="PanImageChange" component={PanImageChange}/>
-            <Stack.Screen name="PanFileChange" component={PanFileChange}/>
-            <Stack.Screen name="RC_List" component={RC_List} />
-            <Stack.Screen name="RcImageChange" component={RcImageChange} />
-            <Stack.Screen name="RcFileChange" component={RcFileChange} />
-
-            {/* Earnings Screens */}
-            <Stack.Screen name="RideAlertsPage" component={RideAlertsPage} />
-            <Stack.Screen name="EarningsHelp" component={EarningsHelp} />
-            <Stack.Screen name="Today" component={Today} options={{ headerShown: false }} />
-            <Stack.Screen name="Wallet" component={Wallet} options={{ headerShown: false }} />
-            <Stack.Screen name="History" component={History} options={{ headerShown: false }} />
-            
-            <Stack.Screen name="CompletedRides" component={CompletedRides} />
-            <Stack.Screen name="MissedOrders" component={MissedOrders} />
-            <Stack.Screen name="CancelledOrders" component={CancelledOrders} />
-            
-            <Stack.Screen name="TodayAll" component={TodayAll} />
-            <Stack.Screen name="TodayRides" component={TodayRides} />
-            
-            <Stack.Screen name="RateCard" component={RateCard} />
-            <Stack.Screen name="AllRateCards" component={AllRateCards} />
-            <Stack.Screen name="Guidelines" component={Guidelines} options={{ headerShown: false }} />
-
-
-            <Stack.Screen name="EarningsOnDatePage" component={EarningsOnDatePage} />
-            <Stack.Screen name="RidesSummary" component={RidesSummary} options={{ headerShown: false }}  />
-
-
-            <Stack.Screen name="RechargePage" component={RechargePage} options={{ headerShown: false }} />
-            <Stack.Screen name="BuddyRecharge" component={BuddyRecharge}/>
-            <Stack.Screen name="AllTransactionPage" component={AllTransactionPage} options={{ headerShown: false }} />
-            <Stack.Screen name="TransactionDetailsPage" component={TransactionDetailsPage} options={{ headerShown: false }} />
-            <Stack.Screen name="PendingPage" component={PendingPage} options={{ headerShown: false }} />
-
-            <Stack.Screen name="BikeReference" component={BikeReference} />
-            <Stack.Screen name="CarReference" component={CarReference} />
-            <Stack.Screen name="AutoReference" component={AutoReference}/>
-
-            <Stack.Screen name="HistoryAll" component={HistoryAll} />
-           <Stack.Screen name="HistoryRides" component={HistoryRides} options={{ headerShown: false }} />
-
-
-             {/*Incentives and Bonuses*/}
-             <Stack.Screen name="IncentivesPage" component={IncentivesPage} options={{ headerShown: false }} /> 
-             <Stack.Screen name="DailyIncentives" component={DailyIncentives} />
-             <Stack.Screen name="WeeklyIncentives" component={WeeklyIncentives} />
-             <Stack.Screen name="Bonuses" component={Bonuses} />
-             <Stack.Screen name="IncentivesHelpPage" component={IncentivesHelpPage} />
-             <Stack.Screen name="SubscriptionDetails" component={SubscriptionDetails} />
-             <Stack.Screen name="SubscriptionHelp" component={SubscriptionHelp} />
-            <Stack.Screen name="Rewards" component={Rewards}  options={{ headerShown: false }}/>
-            <Stack.Screen name="RewardsHelp" component={RewardsHelp} />
-             <Stack.Screen name="ServiceManagerHelp" component={ServiceManagerHelp} />
-          </Stack.Navigator>
-
-        </NavigationContainer>
-       
-      </AlertsProvider>
-    </UserLocationProvider>
+        </AlertsProvider>
+      </UserLocationProvider>
     </Provider>
   );
 }
