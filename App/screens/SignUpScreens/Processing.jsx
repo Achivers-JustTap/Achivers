@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { CaptainDataContext } from '../../Context/CaptainDataContext';
 
 const Processing = ({ navigation }) => {
   const [verificationStatus, setVerificationStatus] = useState('processing');
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
   const document = useSelector((state) => state.documents);
+  const { updateCaptainData } = useContext(CaptainDataContext);
 
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -27,6 +29,9 @@ const Processing = ({ navigation }) => {
     console.log('Preparing to send data to the backend...');
     console.log('User Data:', user);
     console.log('Document Data:', document);
+
+    // Update captain data in context
+    
 
     const formData = new FormData();
 
@@ -77,7 +82,12 @@ const Processing = ({ navigation }) => {
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
-
+      if (!response.data.captain) {
+        console.warn('Warning: captain is undefined or null in response:', response.data);
+      } else {
+        console.log('Updating captainData in context:', response.data.captain);
+      }
+      updateCaptainData(response.data.captain); // Update captain data in context
       console.log('Response from server:', response.data);
     }catch (error) {
       console.error('Error sending data to the backend:', error);
@@ -86,9 +96,9 @@ const Processing = ({ navigation }) => {
     }
   };
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
     console.log('Proceeding to the homepage...');
-    sendToBackend();
+    await sendToBackend();
     navigation.navigate('HomeTabs');
   };
 

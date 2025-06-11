@@ -4,8 +4,10 @@ import AppMapView from '../../../../components/AppMapView';
 
 const { height } = Dimensions.get('window');
 
-const DropFlow = ({ navigation }) => {
+const DropFlow = ({ navigation, route }) => {
   const [status, setStatus] = useState('verifying');
+  const { ride } = route.params
+  console.log('ride', ride) // ⏱ Timer state
 
 
   useEffect(() => {
@@ -24,6 +26,35 @@ const DropFlow = ({ navigation }) => {
     }
   }, [status]);
 
+  const handleEndTrip = async () => {
+    try {
+      const response = await fetch('http://192.168.29.13:5000/rides/end-ride', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          rideId: ride, 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Ride ended successfully:', data);
+        navigation.navigate('PaymentFlow');
+      } else {
+        console.error('Failed to end ride:', data.errors || data.message);
+        console.log('Failed to end ride:', data);
+        alert('Failed to end ride. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error ending ride:', error);
+      alert('An error occurred while ending the ride.');
+    }
+  };
+
+
   return (
     <View style={status === 'verifying' ? styles.rideVerifiedContainer : styles.container}>
       {status === 'verifying' && (
@@ -32,25 +63,21 @@ const DropFlow = ({ navigation }) => {
 
       {(status === 'showMap' || status === 'endTrip') && (
         <>
-          
+
           <AppMapView style={styles.map} />
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              if (status === 'endTrip') {
-                navigation.navigate('PaymentFlow');
-              }
-            }}
+            onPress={handleEndTrip}
             disabled={status !== 'endTrip'}>
             <Text style={styles.buttonText}>
               {status === 'endTrip' ? 'End Trip' : 'Go to Maps'}
             </Text>
           </TouchableOpacity>
           {status === 'showMap' && (
-  <TouchableOpacity style={styles.cancelButton}>
-    <Text style={styles.cancelText}>Cancel</Text>
-  </TouchableOpacity>
-)}
+            <TouchableOpacity style={styles.cancelButton}>
+              <Text style={styles.cancelText}>Cancel</Text>
+            </TouchableOpacity>
+          )}
 
         </>
       )}
@@ -106,8 +133,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     marginTop: 8,
     width: '50%',
-    alignSelf:'center',
-    textAlign:'center'
+    alignSelf: 'center',
+    textAlign: 'center'
   },
   cancelText: {
     color: 'red',

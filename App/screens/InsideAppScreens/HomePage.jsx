@@ -4,21 +4,68 @@ import AppMapView from '../../../components/AppMapView';
 import * as Location from 'expo-location';
 import { UserLocationContext } from '../../Context/UserLocationContext';
 import { useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/FontAwesome'; 
+import Icon from 'react-native-vector-icons/FontAwesome';
 import IncentivesCarousel from "../../../components/IncentivesCorousel";
-import RideAlertBox from '../../../components/RideAlertBox';
 import { AlertsContext } from '../../Context/AlertsContext';
+import { CaptainDataContext } from '../../Context/CaptainDataContext';
+import { SocketContext } from '../../Context/SocketContext';
 
 const HomePage = ({ navigation }) => {
     const { location, setLocation } = useContext(UserLocationContext);
     const { alerts, openAlertsPage, alertsPageVisible, isOnline } = useContext(AlertsContext);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [notificationCount, setNotificationCount] = useState(1); 
-    const userImaageUrl = useSelector((state) => state.user.profilePicture);
+    const [notificationCount, setNotificationCount] = useState(1);
+    const userImageUrl = useSelector(state => state.user.profileImage);
+
+    const { captainData } = useContext(CaptainDataContext);
+    const { socket } = useContext(SocketContext);
+
+
+    useEffect(() => {
+        if (!captainData?._id || !socket) {
+            console.log("Captain data or socket not ready yet.");
+            return;
+        }
+    
+        socket.emit('join', {
+            userId: captainData._id,
+            userType: 'captain'
+        });
+    
+        const updateLocation = async () => {
+            try {
+                const position = await Location.getCurrentPositionAsync({});
+                const coords = {
+                    
+                    lng: position.coords.longitude,
+                    lat: position.coords.latitude
+                };
+                console.log('location:', { userId: captainData._id, location: coords });
+    
+                socket.emit('update-location-captain', {
+                    userId: captainData._id,
+                    location: coords
+                });
+            } catch (error) {
+                console.error("Location fetch failed:", error);
+            }
+        };
+
+        const locationInterval = setInterval(updateLocation, 10000);
+                   updateLocation(); // Initial fetch
+    
+        //return () => clearInterval(locationInterval);
+    }, [captainData._id, socket]);
+    
+        socket.on('new-ride', (data) => {
+
+       console.log('ride',data)
+
+    })
 
 
     const navigateToIncentives = () => {
-        navigation.navigate("IncentivesPage"); 
+        navigation.navigate("IncentivesPage");
     };
 
     useEffect(() => {
@@ -74,19 +121,25 @@ const HomePage = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
-                {userImaageUrl ? (
+                {userImageUrl ? (
                     <TouchableOpacity onPress={handleProfileImagePress}>
                         <View style={styles.profileContainer}>
                             <Image
                                 style={styles.profileImage}
-                                source={{ uri: 'https://cdni.iconscout.com/illustration/premium/thumb/male-user-image-illustration-download-in-svg-png-gif-file-formats--person-picture-profile-business-pack-illustrations-6515860.png' }} 
+                                source={{ uri: userImageUrl }}
                                 onError={(error) => console.log('Error loading image: ', error)}
                             />
                         </View>
                     </TouchableOpacity>
                 ) : (
-                    <Text>No profile image available</Text>
+                    <Image
+                        style={styles.profileImage}
+                        source={{
+                            uri: 'https://cdni.iconscout.com/illustration/premium/thumb/male-user-image-illustration-download-in-svg-png-gif-file-formats--person-picture-profile-business-pack-illustrations-6515860.png'
+                        }}
+                    />
                 )}
+
 
                 <View style={styles.iconContainer}>
                     <TouchableOpacity onPress={handleFavLocationPress}>
@@ -111,7 +164,10 @@ const HomePage = ({ navigation }) => {
             </View>
 
             <View style={styles.mapContainer}>
-                <AppMapView style={styles.map} />
+            {isOnline && (
+                 <AppMapView style={styles.map} />
+            )}
+               
                 <View style={styles.carouselContainer}>
                     <IncentivesCarousel onRideAndEarnPress={navigateToIncentives} />
                 </View>

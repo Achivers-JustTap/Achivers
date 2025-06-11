@@ -9,20 +9,23 @@ import {
   SafeAreaView,
 } from 'react-native';
 import AppMapView from '../../../../components/AppMapView';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
 const PickUpFlow = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const [status, setStatus] = useState('navigate');
   const [otp, setOtp] = useState('');
   const [otpVerified, setOtpVerified] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0); // ⏱ Timer state
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const {ride} = route.params 
+  console.log('ride',ride)// ⏱ Timer state
 
   useEffect(() => {
     if (otpVerified) {
-      navigation.navigate('DropFlow');
+      navigation.navigate('DropFlow',{ride});
     }
   }, [otpVerified]);
 
@@ -37,11 +40,37 @@ const PickUpFlow = () => {
     return () => clearInterval(timer);
   }, [status]);
 
-  const handleVerifyOtp = () => {
-    if (otp === '1234') {
+  const handleVerifyOtp = async () => {
+  try {
+    const response = await fetch('http://192.168.29.13:5000/rides/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        rideId: ride,
+        otp: otp
+      }),
+    });
+    console.log('OTP:', otp);
+    console.log('Ride ID:', ride._id);
+    const data = await response.json();
+
+
+    if (response.ok) {
+     
       setOtpVerified(true);
+
+    } else {
+      alert(data.message || 'OTP Verification failed');
+      console.log(data);
     }
-  };
+  } catch (err) {
+    alert('Something went wrong',err);
+    console.log(err);
+  }
+};
+
+
+   
 
   return (
     <SafeAreaView style={styles.container}>
@@ -95,7 +124,7 @@ const PickUpFlow = () => {
           <TextInput
             style={styles.input}
             keyboardType="number-pad"
-            maxLength={4}
+            maxLength={6}
             placeholder="Enter OTP"
             value={otp}
             onChangeText={setOtp}
@@ -197,5 +226,4 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
 });
-
 export default PickUpFlow;

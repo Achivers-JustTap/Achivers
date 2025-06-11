@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, ActivityIndicator } from 'react-native';
 
-const CustomerDetails = ({ navigation }) => {
+
+const CustomerDetails = ({ navigation,route }) => {
     const slideAnim = useRef(new Animated.Value(500)).current;
     const [customerData, setCustomerData] = useState(null);
     const [loading, setLoading] = useState(true);
+     const { ride } = route.params;
+
 
     useEffect(() => {
         
@@ -41,7 +44,7 @@ const CustomerDetails = ({ navigation }) => {
                 </>
             )}
 
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PickUpFlow')}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('PickUpFlow',{ride})}>
                 <Text style={styles.buttonText}>Next</Text>
             </TouchableOpacity>
         </Animated.View>

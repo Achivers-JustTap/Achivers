@@ -1,43 +1,34 @@
-import React, { createContext, useState, useEffect, useRef } from 'react';
+import React, { createContext, useState, useEffect, useRef, useContext } from 'react';
 import { Audio } from 'expo-av';
+import { SocketContext } from '../Context/SocketContext';
 
 export const AlertsContext = createContext();
 
 export const AlertsProvider = ({ children }) => {
-  const [alerts, setAlerts] = useState([
-    {
-      pickup: "48-320/sri nilayam,ganesh Nagar, chintal,qutbullarpur,hyderadab,telangana",
-      destination: "Opp. Laxmikaka and Sashikala Theaters, Bhavani Nagar Moosapet, Near State Bank Of Hyderabad, Hyderabad, Telangana 500018, India",
-      fare: 150,
-      time: "15 mins",
-      distance: "5 km",
-      distanceToPickup: "1.0 km"
-    },
-    {
-      pickup: "123 Main Street, City A",
-      destination: "456 Elm Street, City B",
-      fare: 200,
-      time: "20 mins",
-      distance: "8 km",
-      distanceToPickup: "2.5 km",
-      tip: 50,
-    },
-    {
-      pickup: "789 Oak Avenue, City C",
-      destination: "321 Pine Road, City D",
-      fare: 180,
-      time: "18 mins",
-      distance: "6 km",
-      distanceToPickup: "1.8 km"
-    }
-  ]);
+  const { socket } = useContext(SocketContext);
+
+  const [alerts, setAlerts] = useState([]);
 
   const [isOnline, setIsOnline] = useState(false);
   const [alertsPageVisible, setAlertsPageVisible] = useState(false);
-  const [isHalfPageVisible, setIsHalfPageVisible] = useState(false);
   const [sound, setSound] = useState(null);
   const [isSoundPlaying, setIsSoundPlaying] = useState(false);
   const playSoundTimeout = useRef(null);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNewRide = (data) => {
+      console.log('Received new ride:', data);
+      setAlerts((prevAlerts) => [data, ...prevAlerts]);
+    };
+
+    socket.on('new-ride', handleNewRide);
+
+    return () => {
+      socket.off('new-ride', handleNewRide);
+    };
+  }, [socket]);
 
   useEffect(() => {
    // Play or stop sound based on alerts presence and page visibility

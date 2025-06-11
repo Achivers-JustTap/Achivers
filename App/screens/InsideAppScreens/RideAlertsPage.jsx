@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Bac
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AlertsContext } from '../../Context/AlertsContext';
 import { Audio } from 'expo-av';
+import { CaptainDataContext } from '../../Context/CaptainDataContext';
 
 const RideAlertsPage = ({ navigation }) => {
   const { alerts, closeAlertsPage, alertsPageVisible, removeAlert, isOnline } = useContext(AlertsContext);
+  const { captainData } = useContext(CaptainDataContext);
   const [alertOpacity] = useState(new Animated.Value(0));
   const soundRef = useRef(null);
   const [activeAlerts, setActiveAlerts] = useState([]);
@@ -115,22 +117,42 @@ const RideAlertsPage = ({ navigation }) => {
     }
   };
 
-  const handleAccept = async (index) => {
-    await stopSound();
-    removeAlert(index);
-    navigation.navigate("CustomerDetails");
-  };
+const handleAccept = async (index) => {
+  await stopSound();
+  const rideId = activeAlerts[index]._id;
+  const captainId = captainData?._id;
+  console.log(rideId, captainId);
+
+  try {
+    const response = await fetch('http://192.168.29.13:5000/rides/accept-ride', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rideId, captainId }),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    if (response.ok) {
+      removeAlert(index);
+      navigation.navigate("CustomerDetails", { ride: result.ride._id });
+    } else {
+      alert(result.message || 'Failed to accept ride');
+    }
+  } catch (error) {
+    console.error(error);
+    alert('Something went wrong');
+  }
+};
+
+
+
 
   const handleSkip = async (index) => {
     await stopSound();
     removeAlert(index);
   };
 
-  const handleAlertAccept = (alert, index) => {
-    if (!alert.accepted) {
-      handleAccept(index);
-    }
-  };
+ 
 
   const handleAlertSkip = (index) => {
     handleSkip(index);
@@ -158,11 +180,11 @@ const RideAlertsPage = ({ navigation }) => {
                   <Text style={styles.pinText}>Destination: {alert.destination}</Text>
                 </View>
                 <View style={styles.fareContainer}>
-                  <Text style={styles.fareText}>Fare: ₹ {alert.fare}.00</Text>
-                  <Text style={styles.fareText}>Time: {alert.time}</Text>
-                  <Text style={styles.fareText}>Distance: {alert.distance}</Text>
+                  <Text style={styles.fareText}>Fare: ₹ {alert.fare}</Text>
+                  <Text style={styles.fareText}>Time: {alert.pickupToDestination.duration.text}</Text>
+                  <Text style={styles.fareText}>Distance: {alert.pickupToDestination.distance.text}</Text>
                 </View>
-                <Text style={styles.fareText}>{alert.distanceToPickup} to Pickup Point</Text>
+                <Text style={styles.fareText}>{alert.captainToPickup.duration.text} to Pickup Point</Text>
                 {alert.tip && (
                   <Text style={styles.tipText}>Customer added tip: ₹ {alert.tip}.00</Text>
                 )}
@@ -174,7 +196,7 @@ const RideAlertsPage = ({ navigation }) => {
                   <Text style={styles.sorryText}>Sorry! Other drivers accepted</Text>
                 ) : (
                   <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={() => handleAlertAccept(alert, index)} style={styles.button}>
+                    <TouchableOpacity onPress={() => handleAccept(index)} style={styles.button}>
                       <Text style={styles.buttonText}>Accept</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleAlertSkip(index)} style={styles.button}>

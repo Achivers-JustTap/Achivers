@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useSelector } from 'react-redux';
+import { CaptainDataContext } from '../../Context/CaptainDataContext';
+
 
 const MobileOTPVerifyScreen = ({ navigation }) => {
   const [otp, setOtp] = useState('');
   const phoneNumber = useSelector((state) => state.user.mobileNumber);
   const mobileNumberExists = useSelector((state) => state.documents.mobileNumberExists); // Check if mobile number exists
-
+  const { updateCaptainData } = useContext(CaptainDataContext); // Access the context
   useEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
   const handleVerifyOTP = async () => {
     try {
+      const response = await fetch(`http://192.168.29.13:5000/api/captains//searchMobileNumber?mobileNumber=${phoneNumber}`);
+      const result = await response.json();
+        console.log("result",result)
       // const response = await fetch('http://192.168.0.126:5000/api/captains/verifyOTP', {
       //   method: 'POST',
       //   headers: {
@@ -30,9 +35,10 @@ const MobileOTPVerifyScreen = ({ navigation }) => {
 
       // if (data.success && mobileNumberExists)
         if (otp === '1234' && mobileNumberExists) {
+          updateCaptainData(result);
         navigation.navigate('HomeTabs'); // Navigate to home page
       } else {
-        navigation.navigate('ProfileDetailsScreen'); // Navigate to ProfileDetailsScreen if OTP is incorrect
+        navigation.navigate('WhichVehicleScreen'); // Navigate to ProfileDetailsScreen if OTP is incorrect
       }
     } catch (error) {
       console.error('Error verifying OTP:', error);
