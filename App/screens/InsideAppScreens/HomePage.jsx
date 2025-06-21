@@ -40,7 +40,7 @@ const HomePage = ({ navigation }) => {
                     lng: position.coords.longitude,
                     lat: position.coords.latitude
                 };
-                console.log('location:', { userId: captainData._id, location: coords });
+                console.log('captain location:', { userId: captainData._id, location: coords });
     
                 socket.emit('update-location-captain', {
                     userId: captainData._id,

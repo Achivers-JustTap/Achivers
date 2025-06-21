@@ -35,7 +35,8 @@ const MobileOTPVerifyScreen = ({ navigation }) => {
 
       // if (data.success && mobileNumberExists)
         if (otp === '1234' && mobileNumberExists) {
-          updateCaptainData(result);
+          updateCaptainData(result.captain);
+          console.log('OTP verified successfully:', result);
         navigation.navigate('HomeTabs'); // Navigate to home page
       } else {
         navigation.navigate('WhichVehicleScreen'); // Navigate to ProfileDetailsScreen if OTP is incorrect

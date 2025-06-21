@@ -7,7 +7,7 @@ const { height } = Dimensions.get('window');
 const DropFlow = ({ navigation, route }) => {
   const [status, setStatus] = useState('verifying');
   const { ride } = route.params
-  console.log('ride', ride) // ⏱ Timer state
+  console.log('ride', ride) 
 
 
   useEffect(() => {
