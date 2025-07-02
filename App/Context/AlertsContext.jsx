@@ -1,11 +1,9 @@
 import React, { createContext, useState, useEffect, useRef, useContext } from 'react';
 import { Audio } from 'expo-av';
-import { SocketContext } from '../Context/SocketContext';
 
 export const AlertsContext = createContext();
 
 export const AlertsProvider = ({ children }) => {
-  const { socket } = useContext(SocketContext);
 
   const [alerts, setAlerts] = useState([]);
 
@@ -15,20 +13,6 @@ export const AlertsProvider = ({ children }) => {
   const [isSoundPlaying, setIsSoundPlaying] = useState(false);
   const playSoundTimeout = useRef(null);
 
-  useEffect(() => {
-    if (!socket) return;
-
-    const handleNewRide = (data) => {
-      console.log('Received new ride:', data);
-      setAlerts((prevAlerts) => [data, ...prevAlerts]);
-    };
-
-    socket.on('new-ride', handleNewRide);
-
-    return () => {
-      socket.off('new-ride', handleNewRide);
-    };
-  }, [socket]);
 
   useEffect(() => {
    // Play or stop sound based on alerts presence and page visibility

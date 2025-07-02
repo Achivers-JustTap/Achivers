@@ -102,7 +102,6 @@ import PickUpFlow from './App/screens/InsideAppScreens/AcceptRidePages/PickUpFlo
 import MissedOrdersSummary from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/MissedOrdersSummary';
 import CancelledOrdersSummary from './App/screens/InsideAppScreens/MenuScreens/EarningScreens/TodaysScreens/CancelledOrdersSummary';
 import { useState } from 'react';
-import SocketProvider from './App/Context/SocketContext';
 import { CaptainDataProvider } from './App/Context/CaptainDataContext';
 
 
@@ -245,13 +244,11 @@ export default function App() {
   return (
     <Provider store={store}>
       <UserLocationProvider>
-        <SocketProvider>
           <AlertsProvider>
             <CaptainDataProvider>
               <AppContent />
             </CaptainDataProvider>
           </AlertsProvider>
-        </SocketProvider>
       </UserLocationProvider>
     </Provider>
   );

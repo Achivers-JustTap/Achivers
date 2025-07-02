@@ -36,7 +36,7 @@ const ProfiledetailsPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView ontentContainerStyle={styles.scrollContent}>
         <View>
           <Image
             source={require('./../../../assets/images/profileBackground.jpg')}

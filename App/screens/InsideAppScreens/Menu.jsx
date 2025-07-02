@@ -1,11 +1,12 @@
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, FlatList,Image } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'; 
-import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';  
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { useSelector } from 'react-redux';
 
 const Menu = ({ navigation, route }) => {
-   const{name,profilePicture} = useSelector(state=>state.user); 
+  const { name, profilePicture } = useSelector(state => state.user);
+  const userImageUrl = useSelector(state => state.user.profileImage);
 
   const [rating, setRating] = useState(0);
 
@@ -33,7 +34,7 @@ const Menu = ({ navigation, route }) => {
       stars.push(
         <FontAwesomeIcon
           key={i}
-          name={i <= rating ? 'star' : 'star-o'} 
+          name={i <= rating ? 'star' : 'star-o'}
           size={18}
           color="#FFD700"
         />
@@ -59,20 +60,33 @@ const Menu = ({ navigation, route }) => {
       <Text style={styles.name}>{name}</Text>
       <View style={styles.ratingContainer}>
         <View style={styles.starsContainer}>
-          {renderStars()} 
+          {renderStars()}
         </View>
-        <Text style={styles.ratingText}>{rating.toFixed(1)}/5</Text> 
+        <Text style={styles.ratingText}>{rating.toFixed(1)}/5</Text>
       </View>
 
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={handleProfileImagePress}>
           <View style={styles.profileContainer}>
             {/* Uncomment and provide the image URL here */}
-            <Image
-             source={{ uri: profilePicture }} 
-              style={styles.profileImage}
-              onError={(error) => console.log('Error loading image: ', error)}
-            /> 
+            {userImageUrl ? (
+              <TouchableOpacity onPress={handleProfileImagePress}>
+                <View style={styles.profileContainer}>
+                  <Image
+                    style={styles.profileImage}
+                    source={{ uri: userImageUrl }}
+                    onError={(error) => console.log('Error loading image: ', error)}
+                  />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <Image
+                style={styles.profileImage}
+                source={{
+                  uri: 'https://cdni.iconscout.com/illustration/premium/thumb/male-user-image-illustration-download-in-svg-png-gif-file-formats--person-picture-profile-business-pack-illustrations-6515860.png'
+                }}
+              />
+            )}
           </View>
         </TouchableOpacity>
       </View>
@@ -91,7 +105,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 20, 
+    paddingHorizontal: 20,
   },
   headerContainer: {
     position: 'absolute',
@@ -102,7 +116,7 @@ const styles = StyleSheet.create({
   name: {
     marginTop: 53,
     fontSize: 35,
-    fontWeight: 'bold',  
+    fontWeight: 'bold',
   },
   ratingContainer: {
     flexDirection: 'row',
@@ -111,7 +125,7 @@ const styles = StyleSheet.create({
   },
   starsContainer: {
     flexDirection: 'row',
-    marginRight: 10, 
+    marginRight: 10,
   },
   ratingText: {
     fontSize: 16,
@@ -135,7 +149,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     padding: 15,
-    top:30,
+    top: 30,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },

@@ -8,7 +8,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import IncentivesCarousel from "../../../components/IncentivesCorousel";
 import { AlertsContext } from '../../Context/AlertsContext';
 import { CaptainDataContext } from '../../Context/CaptainDataContext';
-import { SocketContext } from '../../Context/SocketContext';
 
 const HomePage = ({ navigation }) => {
     const { location, setLocation } = useContext(UserLocationContext);
@@ -18,50 +17,8 @@ const HomePage = ({ navigation }) => {
     const userImageUrl = useSelector(state => state.user.profileImage);
 
     const { captainData } = useContext(CaptainDataContext);
-    const { socket } = useContext(SocketContext);
 
 
-    useEffect(() => {
-        if (!captainData?._id || !socket) {
-            console.log("Captain data or socket not ready yet.");
-            return;
-        }
-    
-        socket.emit('join', {
-            userId: captainData._id,
-            userType: 'captain'
-        });
-    
-        const updateLocation = async () => {
-            try {
-                const position = await Location.getCurrentPositionAsync({});
-                const coords = {
-                    
-                    lng: position.coords.longitude,
-                    lat: position.coords.latitude
-                };
-                console.log('captain location:', { userId: captainData._id, location: coords });
-    
-                socket.emit('update-location-captain', {
-                    userId: captainData._id,
-                    location: coords
-                });
-            } catch (error) {
-                console.error("Location fetch failed:", error);
-            }
-        };
-
-        const locationInterval = setInterval(updateLocation, 10000);
-                   updateLocation(); // Initial fetch
-    
-        //return () => clearInterval(locationInterval);
-    }, [captainData._id, socket]);
-    
-        socket.on('new-ride', (data) => {
-
-       console.log('ride',data)
-
-    })
 
 
     const navigateToIncentives = () => {
